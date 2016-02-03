@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CHUYAChuya.Web", "CHUYAChuya.Web\CHUYAChuya.Web.csproj", "{A18195C6-01C6-47CE-AD86-F11E1F2717E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{D48C0722-242F-4F53-A713-98AC7080F062}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A18195C6-01C6-47CE-AD86-F11E1F2717E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A18195C6-01C6-47CE-AD86-F11E1F2717E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A18195C6-01C6-47CE-AD86-F11E1F2717E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A18195C6-01C6-47CE-AD86-F11E1F2717E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A18195C6-01C6-47CE-AD86-F11E1F2717E1} = {D48C0722-242F-4F53-A713-98AC7080F062}
+	EndGlobalSection
+EndGlobal
