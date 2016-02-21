@@ -10,9 +10,9 @@ namespace CHUYAChuya.LogicaNegocio
 {
     public class SeguridadLN
     {
-        public Usuario ObtenerDatosUsuario(Usuario oUsuario)
+        public Usuario ObtenerUsuarioContrasena(Usuario oUsuario)
         {
-            return new SeguridadAD().ObtenerDatosUsuario(oUsuario);
+            return new SeguridadAD().ObtenerUsuarioContrasena(oUsuario);
         }
     }
 }

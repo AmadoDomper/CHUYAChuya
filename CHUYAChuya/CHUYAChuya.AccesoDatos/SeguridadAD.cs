@@ -18,33 +18,28 @@ namespace CHUYAChuya.AccesoDatos
 
         private Database oDatabase = EnterpriseLibraryContainer.Current.GetInstance<Database>(Conexion.cnsCHUYAChuya);
 
-        public Usuario ObtenerDatosUsuario(Usuario oUsuario)
+           
+        public Usuario ObtenerUsuarioContrasena(Usuario oUsuario)
         {
 
-            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_GetDataUser, oUsuario.cNomUsuario);
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerUsuarioContrasena, oUsuario.cNomUsuario);
 
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
-                int icPersNombre = oIDataReader.GetOrdinal("cPersNombre");
-                string cUser = oUsuario.cNomUsuario.ToUpper();
-                int icPersCod = oIDataReader.GetOrdinal("cPersCod");
-                int icDNI = oIDataReader.GetOrdinal("DNI");
-                int icRUC = oIDataReader.GetOrdinal("RUC");
-                int icRHCargoDescripcion = oIDataReader.GetOrdinal("cRHCargoDescripcion");
-                int icAgenciaActual = oIDataReader.GetOrdinal("cAgenciaActual");
+                int inUsuId = oIDataReader.GetOrdinal("nUsuId");
+                int inUsuNombre = oIDataReader.GetOrdinal("cUsuNombre");
+                int icUsuContrasena = oIDataReader.GetOrdinal("cUsuContrasena");
+                int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
 
                 while (oIDataReader.Read())
                 {
                     oUsuario = new Usuario();
                     oUsuario.oDatoPersona = new Persona();
-                    oUsuario.cNomUsuario = cUser;
-                    oUsuario.cCargo = DataUtil.DbValueToDefault<String>(oIDataReader[icRHCargoDescripcion]);
-                    oUsuario.oDatoPersona.cPersNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNombre]);
-                    oUsuario.oDatoPersona.cPersCod = DataUtil.DbValueToDefault<String>(oIDataReader[icPersCod]);
-                    //oUsuario.oDatoPersona.cPersDNI = DataUtil.DbValueToDefault<String>(oIDataReader[icDNI]);ErrorCambio
-                    //oUsuario.oDatoPersona.cPersRUC = DataUtil.DbValueToDefault<String>(oIDataReader[icRUC]);
-                    oUsuario.cCodAge = DataUtil.DbValueToDefault<String>(oIDataReader[icAgenciaActual]);
+                    oUsuario.nUsuId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inUsuId]);
+                    oUsuario.cNomUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[inUsuNombre]);
+                    oUsuario.cContrasena = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuContrasena]);
+                    oUsuario.oDatoPersona.cPersNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
                 }
             }
 

@@ -155,57 +155,24 @@ namespace CHUYAChuya.Seguridad
 
 #endregion
 
-        public override bool ValidateUser(string username, string password)
+        public override bool ValidateUser(string userName, string password)
         {
             try
             {
-                //DirectoryEntry objDirectoryEntry;
-                string usu = "";
-                string cla = "";
-
-                usu = password.Substring(0, 4).ToUpper();
-                if (usu == "AMDO")
-                {
-                    cla = password.Substring(4, password.Length - 4);
-                }
-                else
-                {
-                    usu = username;
-                    cla = password;
-                }
-
-                //objDirectoryEntry = new DirectoryEntry(_path, usu, cla);
-                //DirectorySearcher objDirectorySearcher = new DirectorySearcher(objDirectoryEntry);
-
-                //DirectoryEntry _objUser;
-                //SearchResult _objSearchResult;
-
-                //objDirectorySearcher.Filter = "(SAMAccountName=" + username + ")";
-                //_objSearchResult = objDirectorySearcher.FindOne();
-                //_objUser = _objSearchResult.GetDirectoryEntry();
-
                 SeguridadLN oSeguridadLN = new SeguridadLN();
-                //ConstSistemaLN oConstSistemaLN = new ConstSistemaLN();
+                Usuario oUsuario = new Usuario();
+                oUsuario.cNomUsuario = userName;
 
-
-                Usuario oUsuarioIni = new Usuario();
-                oUsuarioIni.cNomUsuario = username;
+                oUsuario = oSeguridadLN.ObtenerUsuarioContrasena(oUsuario);
 
                 bool validar = false;
-                //if (_objUser != null)
+                if (oUsuario != null)
                 {
-                    Usuario oUsuario = new Usuario();
-                    validar = true;
-                    //string fecha = oConstSistemaLN.DevolverValor(16);
-                    oUsuario = oSeguridadLN.ObtenerDatosUsuario(oUsuarioIni);
-                    oUsuario.NombrePC = "CMACMAYNAS";// FunGlobales.ObtenerNombrePC();
-                    //oUsuario.IpPC = FunGlobales.ObtenerIpPC();
-
-                    HttpContext.Current.Session["Datos"] = oUsuario;
-                    //HttpContext.Current.Session["W1"] = FunGlobales.base64Encode(usu);
-                    //HttpContext.Current.Session["W2"] = FunGlobales.base64Encode(cla);
-
-                    //HttpContext.Current.Session["FecSis"] = new DateTime(Int32.Parse(fecha.Substring(6, 4)), Int32.Parse(fecha.Substring(3, 2)), Int32.Parse(fecha.Substring(0, 2)));
+                    if (oUsuario.cContrasena == password)
+                    {
+                        HttpContext.Current.Session["Datos"] = oUsuario;
+                        validar = true;
+                    }
                 }
                 return validar;
             }

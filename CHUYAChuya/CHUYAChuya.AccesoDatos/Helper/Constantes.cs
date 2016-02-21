@@ -10,7 +10,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
     {
 
         #region Usuario
-        public const string stp_sel_GetDataUser = "stp_sel_GetDataUser";
+        public const string stp_sel_ObtenerUsuarioContrasena = "stp_sel_ObtenerUsuarioContrasena";
         #endregion
     }
 }
