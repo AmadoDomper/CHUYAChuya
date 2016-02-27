@@ -12,11 +12,15 @@ namespace CHUYAChuya.Seguridad.Filters
             {
                 if ((!filterContext.HttpContext.Request.IsAuthenticated) || (HttpContext.Current.Session["Datos"] == null))
                 {
-                    JavaScriptResult result = new JavaScriptResult()
-                    {
-                        Script = "window.location='" + "/LogIn/LogIn" + "';"
-                    };
-                    filterContext.Result = result;
+                    //JavaScriptResult result = new JavaScriptResult()
+                    //{
+                    //    Script = "window.location='" + "/LogIn/LogIn" + "';"
+                    //};
+                    //filterContext.Result = result;
+                    filterContext.Result = new RedirectToRouteResult(
+                        new RouteValueDictionary(new { controller = "LogIn", action = "LogIn" }
+                    ));
+
                 }
             }
             else

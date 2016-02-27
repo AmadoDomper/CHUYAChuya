@@ -1,0 +1,59 @@
+﻿@using CHUYAChuya.Web.Models;
+@using CHUYAChuya.EntidadesNegocio;
+@model List<Menu>
+
+<ul class="nav" id="side-menu">
+    @foreach (Menu m in Model)
+    {
+        if (m.listaMenu.Count() > 0)
+        {
+        <li>
+            <a href="#"><i class="fa @m.icono fa-fw"></i> @m.descripcion@*<span class="fa arrow"></span>*@</a>
+            @SubMenu(m.listaMenu)
+        </li>
+        }
+        else
+        {<li>
+            @{string des = "#" + @m.descripcion;}
+            <a href="@des" data-url="@m.url"><i class="fa @m.icono fa-fw"></i>@m.descripcion@*<span class="fa arrow"></span>*@</a>
+         </li>}
+    }
+        <li>@Html.ActionLink("Cerrar Session", "CerrarSession", "LogIn")</li>
+</ul>
+
+@helper SubMenu(List<Menu> L)
+{
+    <ul class="nav nav-second-level">
+        @foreach (Menu m in L)
+        {
+            if (m.listaMenu.Count() > 0)
+            {
+            <li>
+                <a href="#">@m.descripcion</a>
+                @SubMenu(m.listaMenu)
+            </li>
+            }
+            else
+            {
+             <li>
+               @{
+                string modelo = "Home";
+                string controlador = "Index";
+                int separador = 0;
+                string des = "#" + @m.descripcion;
+                separador = @m.url.IndexOf("/");
+                    
+                }
+
+                @if (separador > 0)
+                {  
+                    modelo = @m.url.Substring(0, separador);
+                    controlador = @m.url.Substring(separador + 1, @m.url.Length - (separador + 1));
+                }
+
+                 <a href="@des" data-url="@Url.Action(controlador, modelo)">@m.descripcion</a>
+             </li>
+            }
+        }
+    </ul>
+}
