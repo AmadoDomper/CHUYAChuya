@@ -9,24 +9,24 @@ namespace CHUYAChuya.EntidadesNegocio
 {
     public class Constante
     {
-        private string _ConstanteID;
-        private string _Nombre;
-        private List<Constante> _oSubConstante;
-        private bool _Estado;
+        private string _cConstanteID;
+        private string _cNombre;
+        private List<Constante> _oSubConstante = new List<Constante>();
+        private bool _bEstado;
         private int _nMin;
 
         [JsonProperty(PropertyName = "id")]
-        public string ConstanteID
+        public string cConstanteID
         {
-            get { return _ConstanteID; }
-            set { _ConstanteID = value; }
+            get { return _cConstanteID; }
+            set { _cConstanteID = value; }
         }
 
         [JsonProperty(PropertyName = "nom")]
         public string Nombre
         {
-            get { return _Nombre; }
-            set { _Nombre = value; }
+            get { return _cNombre; }
+            set { _cNombre = value; }
         }
 
         [JsonProperty(PropertyName = "sub")]
@@ -39,8 +39,8 @@ namespace CHUYAChuya.EntidadesNegocio
         [JsonIgnore]
         public bool Estado
         {
-            get { return _Estado; }
-            set { _Estado = value; }
+            get { return _bEstado; }
+            set { _bEstado = value; }
         }
 
         [JsonProperty(PropertyName = "min")]

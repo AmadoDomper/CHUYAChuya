@@ -54,6 +54,8 @@
     <Compile Include="Helper\DataUtil.cs" />
     <Compile Include="MenuAD.cs" />
     <Compile Include="PersonaAD.cs" />
+    <Compile Include="PersonaJurAD.cs" />
+    <Compile Include="PersonaNatAD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeguridadAD.cs" />
   </ItemGroup>

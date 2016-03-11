@@ -21,6 +21,19 @@ namespace CHUYAChuya.AccesoDatos.Helper
 
         #region Persona
         public const string stp_sel_RS_getAllUsers = "stp_sel_RS_getAllUsers";
+        public const string stp_sel_ListarClientes = "stp_sel_ListarClientes";
         #endregion
+
+
+        #region PersonaNat
+        public const string stp_ins_upd_ClienteNatural = "stp_ins_upd_ClienteNatural";
+        public const string stp_sel_ClienteNatural = "stp_sel_ClienteNatural";
+        #endregion
+
+        #region PersonaJur
+        public const string stp_ins_upd_ClienteJuridico = "stp_ins_upd_ClienteJuridico";
+        public const string stp_sel_ClienteJuridico = "stp_sel_ClienteJuridico";
+        #endregion
+
     }
 }

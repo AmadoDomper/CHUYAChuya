@@ -35,11 +35,11 @@ namespace CHUYAChuya.AccesoDatos
                 while (oIDataReader.Read())
                 {
                     oUsuario = new Usuario();
-                    oUsuario.oDatoPersona = new Persona();
+                    //oUsuario.oDatoPersona = new Persona();
                     oUsuario.nUsuId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inUsuId]);
                     oUsuario.cNomUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[inUsuNombre]);
                     oUsuario.cContrasena = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuContrasena]);
-                    oUsuario.oDatoPersona.cPersNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                    oUsuario.oDatoPersona.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
                 }
             }
 

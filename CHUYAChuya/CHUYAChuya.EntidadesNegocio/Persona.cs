@@ -9,132 +9,90 @@ namespace CHUYAChuya.EntidadesNegocio
 {
     public class Persona
     {
-        private string _cPersCod;
-        private string _cPersNombre;
+        private int _nPersId;
+        private string _cPersDesc;
+        private string _cPersTelefono1;
+        private string _cPersTelefono2;
+        private string _cPersEmail;
+        private string _cPersDireccion;
+        private Constante _oPersUbigeo = new Constante();
+
+
         private string _cPersSexo;
-        private string _cNacionalidad; //Verificar
-        private int _nResidente; //Verificar
-        private int _nPersPersoneria; //Verificar
-        //private CIIU _oCIIU;
-        private string _cPersDireccDomicilio;
-        private List<Documento> _ListaDocumento;
+        private string _cPersDOI;
+        private string _cPersTipo;
 
 
-        private DateTime _dFecNacCreacion;
-        private decimal _nIngPromedio;
-        private string _cTelefono;
-        private string _cCorreo;
-        private Constante _EstCivil;
-        private Constante _oCIIU;
-        private Constante _Ubigeo;
-
-
-        [JsonProperty(PropertyName = "id", Order = 0)]
-        public string cPersCod
+        [JsonProperty(PropertyName = "id")]
+        public int nPersId
         {
-            get { return _cPersCod; }
-            set { _cPersCod = value; }
+            get { return _nPersId; }
+            set { _nPersId = value; }
         }
 
-        [JsonProperty(PropertyName = "nom", Order = 1)]
-        public string cPersNombre
+        [JsonProperty(PropertyName = "nom")]
+        public string cPersDesc
         {
-            get { return _cPersNombre; }
-            set { _cPersNombre = value; }
+            get { return _cPersDesc; }
+            set { _cPersDesc = value; }
         }
 
-        [JsonProperty(PropertyName = "direc", Order = 2)]
-        public string cPersDireccDomicilio
+        [JsonProperty(PropertyName = "tel1")]
+        public string cPersTelefono1
         {
-            get { return _cPersDireccDomicilio; }
-            set { _cPersDireccDomicilio = value; }
+            get { return _cPersTelefono1; }
+            set { _cPersTelefono1 = value; }
         }
 
-        [JsonProperty(PropertyName = "sexo", Order = 3)]
+        [JsonProperty(PropertyName = "tel2")]
+        public string cPersTelefono2
+        {
+            get { return _cPersTelefono2; }
+            set { _cPersTelefono2 = value; }
+        }
+
+        [JsonProperty(PropertyName = "mail")]
+        public string cPersEmail
+        {
+            get { return _cPersEmail; }
+            set { _cPersEmail = value; }
+        }
+
+        [JsonProperty(PropertyName = "direc")]
+        public string cPersDireccion
+        {
+            get { return _cPersDireccion; }
+            set { _cPersDireccion = value; }
+        }
+
+        [JsonProperty(PropertyName = "oUbigeo")]
+        public Constante oPersUbigeo
+        {
+            get { return _oPersUbigeo; }
+            set { _oPersUbigeo = value; }
+        }
+
+        [JsonProperty(PropertyName = "sexo")]
         public string cPersSexo
         {
             get { return _cPersSexo; }
             set { _cPersSexo = value; }
         }
 
-        [JsonProperty(PropertyName = "nacion", Order = 4)]
-        public string cNacionalidad
+        [JsonProperty(PropertyName = "doi")]
+        public string cPersDOI
         {
-            get { return _cNacionalidad; }
-            set { _cNacionalidad = value; }
+            get { return _cPersDOI; }
+            set { _cPersDOI = value; }
         }
 
-        [JsonProperty(PropertyName = "resi", Order = 5)]
-        public int nResidente
+        [JsonProperty(PropertyName = "tipo")]
+        public string cPersTipo
         {
-            get { return _nResidente; }
-            set { _nResidente = value; }
-        }
-
-        //public CIIU oCIIU
-        //{
-        //    get { return _oCIIU; }
-        //    set { _oCIIU = value; }
-        //}
-
-        [JsonProperty(PropertyName = "lstdoc", Order = 6)]
-        public List<Documento> ListaDocumento
-        {
-            get { return _ListaDocumento; }
-            set { _ListaDocumento = value; }
-        }
-
-        [JsonProperty(PropertyName = "personeria", Order = 7)]
-        public int nPersPersoneria
-        {
-            get { return _nPersPersoneria; }
-            set { _nPersPersoneria = value; }
+            get { return _cPersTipo; }
+            set { _cPersTipo = value; }
         }
 
 
-        [JsonIgnore]
-        public DateTime dFecNacCreacion
-        {
-            get { return _dFecNacCreacion; }
-            set { _dFecNacCreacion = value; }
-        }
-
-        [JsonIgnore]
-        public decimal nIngPromedio
-        {
-            get { return _nIngPromedio; }
-            set { _nIngPromedio = value; }
-        }
-
-        [JsonIgnore]
-        public string cTelefono
-        {
-            get { return _cTelefono; }
-            set { _cTelefono = value; }
-        }
-        [JsonIgnore]
-        public string cCorreo
-        {
-            get { return _cCorreo; }
-            set { _cCorreo = value; }
-        }
-        [JsonIgnore]
-        public Constante EstCivil
-        {
-            get { return _EstCivil; }
-            set { _EstCivil = value; }
-        }
-        [JsonProperty(PropertyName = "oCIIU")]
-        public Constante oCIIU
-        {
-            get { return _oCIIU; }
-            set { _oCIIU = value; }
-        }
-        [JsonIgnore]
-        public Constante Ubigeo
-        {
-            get { return _Ubigeo; }
-            set { _Ubigeo = value; }
-        }
     }
 }

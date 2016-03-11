@@ -8,7 +8,7 @@ namespace CHUYAChuya.EntidadesNegocio
 {
     public class Usuario
     {
-        private Persona _oDatoPersona;
+        private Persona _oDatoPersona = new Persona();
         private int _nUsuId;
         private string _cNomUsuario;
         private string _cCargo;

@@ -28,5 +28,13 @@ namespace CHUYAChuya.LogicaNegocio
                 throw new Exception(ex.Message);
             }
         }
+
+        public List<Persona> ListaClientes()
+        {
+            return oPersonaAD.ListaClientes();
+        }
+
+
+
     }
 }

@@ -43,5 +43,40 @@ namespace CHUYAChuya.AccesoDatos
             return ListaUsuarios;
         }
 
+
+        public List<Persona> ListaClientes()
+        {
+            List<Persona> ListaClientes = new List<Persona>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListarClientes);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int inPersId = oIDataReader.GetOrdinal("nPersId");
+                int icPersNombre = oIDataReader.GetOrdinal("cNombre");
+                int icSexo = oIDataReader.GetOrdinal("cSexo");
+                int icDOI = oIDataReader.GetOrdinal("cDOI");
+                int inPersTipo = oIDataReader.GetOrdinal("nPersTipo");
+                int icPersTelefono1 = oIDataReader.GetOrdinal("cPersTelefono1");
+                int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
+
+                while (oIDataReader.Read())
+                {
+                    Persona oPersona = new Persona();
+
+                    oPersona.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
+                    oPersona.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNombre]);
+                    oPersona.cPersSexo = DataUtil.DbValueToDefault<String>(oIDataReader[icSexo]);
+                    oPersona.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
+                    oPersona.cPersTipo = DataUtil.DbValueToDefault<String>(oIDataReader[inPersTipo]);
+                    oPersona.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
+                    oPersona.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
+
+                    ListaClientes.Add(oPersona);
+                }
+            }
+            return ListaClientes;
+        }
+
     }
 }
