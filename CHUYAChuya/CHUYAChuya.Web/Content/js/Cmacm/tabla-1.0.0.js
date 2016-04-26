@@ -38,6 +38,9 @@
         m.visible = m.visible || "";
         m.subLista = m.subLista || "Si";
         m.cargando = m.cargando || false;
+        m.cellLen = m.cellLen || false;
+        m.alinear = m.alinear || false;
+        m.empty = m.empty || "No existen datos";
 
         var col = m.cabecera.split(",");
         var camp;
@@ -68,7 +71,7 @@
 
         //Cuerpo
         html += '<tbody>';
-
+        var i = 0;
             for (i in m.datos)
             {
                 html += '<tr>';
@@ -78,9 +81,17 @@
                 if (camp.length > 0)
                 {
                     var dat;
+                    var k = 0;
                     for (k in camp)
                     {
                         dat = eval("m.datos[i]." + camp[k]);
+
+                        if (dat) {
+
+                        } else {
+
+                        }
+                        dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
                         html += '<td>' + (dat == null ? "" : dat) + '</td>';
                     }
                 }
@@ -91,6 +102,7 @@
                             html += '<td>' + m.datos[i] + '</td>';
                     } else
                     {
+                        var j = 0;
                         for (j in m.datos[i])
                         {
                             html += '<td>' + m.datos[i][j] + '</td>';
@@ -101,11 +113,17 @@
                 html += '</tr>';
             }
         //}
+        
+            if (typeof (m.datos) != 'undefined' && m.datos.length == 0) {
+                html += '<tr><td colspan="' + camp.length + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
+            }
+
 
         html += '</tbody>';
 
 
         $(m.contenedor).html(html);
+
 
         $("#" + m.tblId + " tbody tr").bind("click", function ()
         {
@@ -115,6 +133,21 @@
                 $(this).addClass("seleccionado");
             }
         })
+
+        if (m.cellLen) {
+            m.cellLen = m.cellLen.split(",");
+            var i=0;
+            for (i in m.cellLen) { $("#" + m.tblId).find('th:eq(' + i + ')').css("width", m.cellLen[i] + "px"); }
+        }
+
+        if (m.alinear) {
+            var $a;
+            var i=0;
+            $a = m.alinear.split(",");
+            for (i in $a) { $("#" + m.tblId +" tbody tr").find('td:eq(' + i + ')').css("text-align", $a[i] == 'L' ? 'Left' : $a[i] == 'C' ? 'Center' : $a[i] == 'R' ? 'Right' : ''); }
+        }
+
+        
 
     }
 })(jQuery);

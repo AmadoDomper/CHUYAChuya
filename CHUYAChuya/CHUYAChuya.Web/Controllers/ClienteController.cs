@@ -29,8 +29,6 @@ namespace CHUYAChuya.Web.Controllers
         /// <summary>
         /// Metodo para listas todos los clientes que se muestran en la pantalla inicial de Clientes
         /// </summary>
-        /// <param name="codage"></param>
-        /// <param name="estados"></param>
         /// <returns>Lista en de Clientes en formato JSON</returns>
         public JsonResult ListaClientes()
         {
@@ -40,7 +38,25 @@ namespace CHUYAChuya.Web.Controllers
             return Json(JsonConvert.SerializeObject(ListaClientes, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
+        /// <summary>
+        /// Metodo para buscar clientes por DOI o Nombre
+        /// </summary>
+        /// <param name="cPersDOI">Documento del cliente</param>
+        /// <param name="cNombre">Nombre del cliente</param>
+        /// <returns></returns>
+        public JsonResult BuscarClientes(string cPersDOI = null, string cNombre = null)
+        {
+            PersonaLN oPersonaLN = new PersonaLN();
+            List<Persona> ListaClientes = new List<Persona>();
+            ListaClientes = oPersonaLN.BuscarClientes(cPersDOI, cNombre);
+            return Json(JsonConvert.SerializeObject(ListaClientes, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+        }
 
+        /// <summary>
+        /// Metodo para el mantenimiento de persona Natural
+        /// </summary>
+        /// <param name="oClienteViewModel"></param>
+        /// <returns></returns>
         [RequiresAuthenticationAttribute]
         public JsonResult RegistrarPersNatural(ClienteViewModel oClienteViewModel)
         {
@@ -50,7 +66,11 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
-
+        /// <summary>
+        /// Metodo para el matenimiento de Persona Juridica
+        /// </summary>
+        /// <param name="oClienteViewModel"></param>
+        /// <returns></returns>
         [RequiresAuthenticationAttribute]
         public JsonResult RegistrarPersJuridica(ClienteViewModel oClienteViewModel)
         {
@@ -60,6 +80,12 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
+        /// <summary>
+        /// Metodo para obtener los datos del cliente por tipo
+        /// </summary>
+        /// <param name="nPersId">Codigo del cliente</param>
+        /// <param name="cTipo">Tipo de cliente</param>
+        /// <returns></returns>
         public JsonResult CargoDatosCliente(int nPersId, string cTipo)
         {
             object cliente = null;

@@ -35,6 +35,12 @@ namespace CHUYAChuya.LogicaNegocio
         }
 
 
+        public List<Persona> BuscarClientes(string cPersDOI, string cNombre)
+        {
+            return oPersonaAD.BuscarClientes(cPersDOI, cNombre);
+        }
+
+
 
     }
 }

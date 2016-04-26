@@ -114,6 +114,9 @@
     <Compile Include="Controllers\ClienteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\NotaEntregaController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -121,7 +124,9 @@
     <Compile Include="Helper\Constantes.cs" />
     <Compile Include="Models\ClienteViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
-    <Compile Include="Models\UsuarioViewModels.cs" />
+    <Compile Include="Models\NotaEntregaViewModel.cs" />
+    <Compile Include="Models\ProductoViewModel.cs" />
+    <Compile Include="Models\UsuarioViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +162,7 @@
     <Content Include="Content\img\icono.png" />
     <Content Include="Content\js\Cmacm\buscarPersona-1.0.0.js" />
     <Content Include="Content\js\Cmacm\conexion-1.0.0.js" />
+    <Content Include="Content\js\Cmacm\buscarProducto-1.0.0.js" />
     <Content Include="Content\js\Cmacm\credito\aprobacion.js" />
     <Content Include="Content\js\Cmacm\credito\solicitud.js" />
     <Content Include="Content\js\Cmacm\credito\sugerencia.js" />
@@ -180,6 +186,8 @@
     <Content Include="Content\js\vendor\bootstrap.min.js" />
     <Content Include="Content\js\vendor\jquery-1.11.0.min.js" />
     <Content Include="Content\js\vendor\jquery.blockUI.js" />
+    <Content Include="Content\js\vendor\jquery.maskedinput.js" />
+    <Content Include="Content\js\vendor\jquery.maskedinput.min.js" />
     <Content Include="Content\js\vendor\jquery.mousewheel.js" />
     <Content Include="Content\js\vendor\jquery.widget.min.js" />
     <Content Include="Content\js\vendor\metisMenu.js" />
@@ -272,6 +280,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Cliente\Clientes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Usuario\Usuarios.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Producto\Productos.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\NotaEntrega\NotaEntregas.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

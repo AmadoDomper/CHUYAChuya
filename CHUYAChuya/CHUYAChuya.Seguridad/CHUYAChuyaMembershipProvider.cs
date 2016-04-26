@@ -161,14 +161,14 @@ namespace CHUYAChuya.Seguridad
             {
                 SeguridadLN oSeguridadLN = new SeguridadLN();
                 Usuario oUsuario = new Usuario();
-                oUsuario.cNomUsuario = userName;
+                oUsuario.cUsuNombre = userName;
 
                 oUsuario = oSeguridadLN.ObtenerUsuarioContrasena(oUsuario);
 
                 bool validar = false;
                 if (oUsuario != null)
                 {
-                    if (oUsuario.cContrasena == password)
+                    if (oUsuario.cUsuContrasena == password)
                     {
                         HttpContext.Current.Session["Datos"] = oUsuario;
                         validar = true;

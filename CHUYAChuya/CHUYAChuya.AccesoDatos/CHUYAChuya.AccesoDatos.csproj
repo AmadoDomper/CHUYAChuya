@@ -53,11 +53,14 @@
     <Compile Include="Helper\Constantes.cs" />
     <Compile Include="Helper\DataUtil.cs" />
     <Compile Include="MenuAD.cs" />
+    <Compile Include="NotaEntregaAD.cs" />
     <Compile Include="PersonaAD.cs" />
     <Compile Include="PersonaJurAD.cs" />
     <Compile Include="PersonaNatAD.cs" />
+    <Compile Include="ProductoAD.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeguridadAD.cs" />
+    <Compile Include="UsuarioAD.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CHUYAChuya.EntidadesNegocio\CHUYAChuya.EntidadesNegocio.csproj">

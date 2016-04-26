@@ -22,7 +22,7 @@ namespace CHUYAChuya.AccesoDatos
         public Usuario ObtenerUsuarioContrasena(Usuario oUsuario)
         {
 
-            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerUsuarioContrasena, oUsuario.cNomUsuario);
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerUsuarioContrasena, oUsuario.cUsuNombre);
 
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
@@ -37,9 +37,9 @@ namespace CHUYAChuya.AccesoDatos
                     oUsuario = new Usuario();
                     //oUsuario.oDatoPersona = new Persona();
                     oUsuario.nUsuId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inUsuId]);
-                    oUsuario.cNomUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[inUsuNombre]);
-                    oUsuario.cContrasena = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuContrasena]);
-                    oUsuario.oDatoPersona.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                    oUsuario.cUsuNombre = DataUtil.DbValueToDefault<String>(oIDataReader[inUsuNombre]);
+                    oUsuario.cUsuContrasena = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuContrasena]);
+                    oUsuario.oPersNat.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
                 }
             }
 

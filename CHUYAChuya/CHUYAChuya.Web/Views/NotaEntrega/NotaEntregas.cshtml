@@ -1,0 +1,450 @@
+﻿@{
+    Layout = null;
+}
+<div class="col-lg-11 col-lg-offset-0-5">
+    @*<div>
+    <a href="#target1" class="panel">Target 1</a><br/>
+    <a href="#target2" class="panel">Target 2</a><br/>
+</div>*@
+
+
+    <div id="">
+        @*<div class="row color19">*@
+        <h3 class="text-center">NOTA DE ENTREGA</h3>
+        <input id="hdnEstado" type="hidden" name="Producto.nProdId" />
+        @*        <div id="target1" class="panel panel-inverse active" style="display: block;">
+            <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Productos</div>
+            <div class="panel-body">
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <input href="#target2" id="btnNuevoProducto" type="button" class="btn btn-sm btn-success target" value="Nuevo Producto" />
+                </div>
+
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="cntListaProductos" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+        @*Otro formulario*@
+
+        @*sdafsafasf*@
+        <div id="target2" class="panel panel-inverse" data-sortable-id="form-stuff-1" style="display: block;">
+            <div class="panel-heading">
+                <h4 class="panel-title">Nueva Nota</h4>
+            </div>
+            <div class="panel-body" style="display: block;">
+                <form action="/NotaEntrega/RegistrarNotaEntrega" id="frmNotaEntrega" method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-3">
+                            <div class="form-inline ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <input type="text" class="form-control " id="txtBuscarCliente" placeholder="Buscar cliente...">
+                                    <button id="btnBuscarPers" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#vntBuscaPersona"><span class="glyphicon glyphicon-search"></span></button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-5">
+                            <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;"><i class="glyphicon glyphicon-user m-r-10"></i><input id="hdnPersId" type="hidden" name="oNotEnt.oPers.nPersId" /><span id="lblNom"></span></h3>
+                        </div>
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-2">
+                            <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;"><i class="glyphicon glyphicon-user m-r-10"></i><span id="lblDOI"></span></h3>
+                        </div>
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-2">
+                            <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;"><i class="glyphicon glyphicon-earphone m-r-10"></i><span id="lblTel"></span></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-3">
+                            <div class="form-inline ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <input type="text" class="form-control " id="txtBuscarProducto" placeholder="Buscar producto...">
+                                    <button id="btnBuscarProd" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#vntBuscaProducto"><span class="glyphicon glyphicon-search"></span></button>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <label class="checkbox-inline">
+                                            <input id="chkLav" type="checkbox" value="true">Lavado</label>
+                                        <label class="checkbox-inline">
+                                            <input id="chkSec" type="checkbox" value="true">Secado</label>
+                                        <label class="checkbox-inline">
+                                            <input id="chkPla" type="checkbox" value="true">Planchado</label>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;">
+                                            <i class="glyphicon glyphicon-user m-r-10"></i>
+                                            <span id="lblProducto"></span>
+                                        </h3>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Cantidad</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="txtCant" class="form-control" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Precio Unitario</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="txtPrec" class="form-control" placeholder="" disabled>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Importe</label>
+                                    <div class="col-md-9">
+                                        <input type="text" id="txtImp" class="form-control" placeholder="" disabled>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-12">
+                            <div id="cntRegProd" class="table-responsive">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-12">
+                            <input id="btnAgregar" type="button" class="btn btn-sm btn-success" value="Agregar">
+                            <input id="btnEditar" type="button" class="btn btn-sm btn-success" value="Editar">
+                            <input id="btnCancelar" type="button" class="btn btn-sm btn-success" value="Cancelar">
+                            <input id="btnEliminar" type="button" class="btn btn-sm btn-success" value="Eliminar">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-9 col-md-9 col-lg-3">
+                            <div class="form-inline ng-pristine ng-valid">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Pago</label>
+                                    <div class="col-md-5">
+                                        <select id="cmbPago" name="" class="form-control">
+                                            <option value="1">Total</option>
+                                            <option value="2">Parcial</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Fecha de Entrega</label>
+                                    <div class="col-md-6">
+                                        <input type="text" id="txtFechaEnt" name="oNotEnt.dFechaEntrega" class="form-control" placeholder="dd/mm/yyyy">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Subtotal</label>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">S/.</span>
+                                            <input type="text" id="txtSubTotal" name="oNotEnt.nNotaSubTotal" class="form-control" placeholder="0.00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Anticipo</label>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">S/.</span>
+                                            <input type="text" id="txtAnticipo" name="" class="form-control" placeholder="0.00">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Total</label>
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">S/.</span>
+                                            <input type="text" id="txtTotal" name="oNotEnt.nNotaMontoTotal" class="form-control" placeholder="" disabled>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col-md-6">
+                                        <div class="input-group">
+                                            <input id="btnGrabar" type="button" class="btn btn-sm btn-success" value="Aceptar">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="cntHidden"></div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $("#txtFechaEnt").mask("99/99/9999", { placeholder: "dd/mm/yyyy" });
+        DeshabilitarBotones();
+    });
+
+    var vista = function ($target) {
+        var $target = $($target),
+            $other = $target.siblings('.active');
+
+        if (!$target.hasClass('active')) {
+            $other.each(function (index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 500).hide();
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 500);
+        }
+    };
+
+    /*Variable Global de Datos*/
+    datos = {};
+
+    var lstProd = !datos.lstProd ? [] : datos.lstProd.slice(0);
+    var estado = "";
+
+    //Buscar datos persona
+
+    var persSelec = {}
+    $("#btnBuscarPers").bind("click", function () {
+        var aceptar = function (d) {
+            persSelec = d;
+            $("#hdnPersId").val(d.id);
+            $("#lblNom").html(d.nom);
+            $("#lblDOI").html(d.doi);
+            $("#lblTel").html(d.tel1);
+            $('#vntBuscaPersona').modal('hide');
+        };
+
+        var cancelar = function () {
+            //$("#btnCancelar").click();
+        }
+        $.fn.BuscarPersona({
+            funcionAceptar: aceptar,
+            funcionCancelar: cancelar
+        });
+    });
+
+
+    //Buscar datos producto
+    $("#txtCant").keyup(function () { $("#txtImp").val(number_format(Math.round10($("#txtCant").val() * $("#txtPrec").val(), -1), 2)) });
+
+    var prodSel = {}
+    $("#btnBuscarProd").bind("click", function () {
+        var aceptar = function (d) {
+            prodSel = d;
+            LlenarDatos(d);
+
+            $('#btnAgregar,#btnCancelar').removeAttr("disabled", "disabled");
+            $('#btnEliminar,#btnEditar').attr("disabled", true);
+            $('#vntBuscaProducto').modal('hide');
+        };
+
+        var cancelar = function () {
+            //$("#btnCancelar").click();
+        }
+        $.fn.BuscarProducto({
+            funcionAceptar: aceptar,
+            funcionCancelar: cancelar
+        });
+
+    });
+
+    //Tabla Registro de Servicios
+
+    CrearTabla();
+
+    //Agregar nuevo registro
+
+    $("#btnAgregar").bind("click", function () {
+        Agregar();
+    });
+
+    $("#txtCant").bind("keyup", function (e)
+    {
+        if (e.which == 13 && prodSel != null) { Agregar(); };
+    });
+
+    $("#btnEditar").bind("click", function () {
+        Editar();
+    });
+
+    $("#btnCancelar").bind("click", function () {
+        Limpiar();
+    });
+
+    $("#btnEliminar").bind("click", function () {
+        Eliminar();
+    });
+
+    $("#btnGrabar").bind("click", function () {
+        Grabar();
+    });
+
+    function Agregar() {
+        var nCant = $("#txtCant").val();
+        var nPrPrecU = $("#txtPrec").val();
+        var nImp = $("#txtImp").val();
+
+        if (estado == "E") {
+            var index = $("#tblRegProd tr.seleccionado").index();
+            lstProd[index].nCant = nCant;
+            lstProd[index].nImp = nImp;
+
+        } else {
+
+            var obj = { nPrId: prodSel.nPrId, cPrDesc: prodSel.cPrDesc, bPrSerLav: prodSel.bPrSerLav, bPrSerPla: prodSel.bPrSerPla, bPrSerSec: prodSel.bPrSerSec, nCant: nCant, nPrPrecU: nPrPrecU, nImp: nImp };
+            lstProd = lstProd.concat([obj]);
+        }
+
+        CrearTabla(lstProd);
+        Limpiar();
+
+        $("#btnEliminar,#btnEditar").attr("disabled", false);
+
+        //$("#btnAgregar,#btnEditar,#btnEliminar").show().removeClass("disabled");
+        //$("#btnAceptar,#btnCancelar,#btnAceptarEdi").hide();
+        //$("#txtCliente,#txtDoc,#txtNombre,#txtRuc").val("");
+        estado = "A";
+        prodSel = null;
+    }
+
+    function Editar() {
+        var index = $("#tblRegProd tr.seleccionado").index();
+
+        if (index == -1) {
+            $.fn.Mensaje({ mensaje: "Seleccione un producto para editar", tamano: "sm" });
+            return false;
+        } else {
+            $("#lblProducto").html(lstProd[index].cDesc);
+            estado = "E";
+            LlenarDatos(lstProd[index]);
+
+            //$("#btnEditar,#btnAgregar,#btnEliminar").hide();
+            //$("#btnCancelar,#btnAceptarEdi").show();
+            //$("#btnGrabar, #btnSalir").addClass("disabled");
+            $("#tblRegProd").attr("data-edit", true);
+            $("#btnEditar,#btnEliminar").attr("disabled", true);
+            $("#btnAgregar,#btnCancelar").attr("disabled", false);
+        }
+    }
+
+
+    function Limpiar() {
+        $("#txtCant,#txtPrec,#txtImp").val("");
+        $("#lblProducto").html("")
+        $("#chkLav,#chkSec,#chkPla").prop("checked", "");
+        //$("#btnBuscarProd").focus();
+        DeshabilitarBotones();
+        $("#tblRegProd").attr("data-edit", false);
+        estado = "";
+
+        if (lstProd.length == 0) {
+            $("#btnEliminar,#btnEditar").attr("disabled", true);
+        } else {
+            $("#btnEliminar,#btnEditar").attr("disabled", false);
+        }
+
+    }
+
+    function DeshabilitarBotones() {
+        $("#btnAgregar,#btnEditar,#btnEliminar,#btnCancelar").attr("disabled", "disabled");
+    }
+
+    function Eliminar() {
+        var index = $("#tblRegProd tr.seleccionado").index();
+
+        if (index == -1) {
+            $.fn.Mensaje({ mensaje: "Seleccione un producto para eliminarlo", tamano: "sm" });
+            return false;
+        }
+        else {
+            lstProd.splice(index, 1);
+
+            CrearTabla(lstProd);
+        }
+        Limpiar();
+    }
+
+    function LlenarDatos(d) {
+        $("#lblProducto").html(d.cPrDesc);
+        $("#txtPrec").val(number_format(d.nPrPrecU, 2));
+        $("#txtCant").val(estado == "E" ? d.nCant : 1);
+        $("#txtImp").val(number_format(Math.round10($("#txtCant").val() * $("#txtPrec").val(), -1), 2));
+        $("#chkLav").prop("checked", d.bPrSerLav);
+        $("#chkPla").prop("checked", d.bPrSerPla);
+        $("#chkSec").prop("checked", d.bPrSerSec);
+    }
+
+    function CrearTabla(reg) {
+        $("#cntRegProd").Tabla({
+            tblId: "tblRegProd",
+            cabecera: "Codígo,Descripción,Lavado,Secado,Planchado,Cantidad,Precio Unit,Importe",
+            campos: "nPrId,cPrDesc,bPrSerLav,bPrSerPla,bPrSerSec,nCant,nPrPrecU,nImp",
+            cellLen: "100,300,100,100,100,100,100,100",
+            alinear: "C,L,C,C,C,C,R,R",
+            scrollVertical: "Si",
+            datos: reg
+        });
+    }
+
+
+    //Grabar Nota Entrega
+
+    function Grabar() {
+
+        if (!(typeof (lstProd) == "undefined" || lstProd == null)) {
+            if (!(jQuery.isEmptyObject(lstProd))) {
+                for (i in lstProd) {
+                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].oProd.nProdId", lstProd[i].nPrId);
+                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nDetCantidad", lstProd[i].nCant);
+                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nProdPrecioUnit", lstProd[i].nPrPrecU);
+                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nDetImporte", lstProd[i].nImp);
+                }
+            }
+        }
+
+        var form = $("#frmNotaEntrega");
+        valores = form.serializeArray();
+
+        $.fn.Conexion({
+            direccion: form.attr("action"),
+            datos: valores,
+            terminado: function (data, textStatus, jqXHR) {
+                Resultado(data);
+            },
+            bloqueo: true
+        });
+    }
+
+    function Resultado(dato) {
+        if (dato != -1) {
+            if ($("#hdnEstado").val() == "E") {
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: vista("#target1") });
+            } else {
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: vista("#target1") });
+            }
+        } else {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+        }
+    }
+
+
+
+
+    //$("#btnAgregar,#btnEditar,#btnEliminar,#btnCancelar").attr("disabled", "disabled");
+
+    //$("#btnAgregar").removeAttr("disabled", "disabled");
+
+</script>

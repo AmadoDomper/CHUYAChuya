@@ -4,10 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using CHUYAChuya.EntidadesNegocio;
+using Newtonsoft.Json;
 
 namespace CHUYAChuya.Web.Models
 {
-    public class UsuarioViewModels
+    public class UsuarioViewModel
     {
         [Required(ErrorMessage = "El nombre de usuario NO puede estar vacío")]
         public string usuario { get; set; }
@@ -16,6 +18,8 @@ namespace CHUYAChuya.Web.Models
         public string clave { get; set; }
 
         public bool Persistir { get; set; }
+
+        public Usuario Usuario { get; set; }
     }
     
     public interface IFormsAuthenticationService

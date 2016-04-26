@@ -1,5 +1,6 @@
 (function ($)
 {
+    var lstBuscaPers = [];
     $.fn.BuscarPersona = function (m)
     {
         m = m || {};
@@ -22,17 +23,16 @@
             tamano: "lg"
         });
 
-
         //Contenido Estatico
 
-  var html = '<div class="row"><div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="row"><div class="col-xs-7 col-sm-12 col-md-12 col-lg-12"><div class="row"><div class="panel panel-cmacm"><div class="panel-heading">Buscar Por</div><div class="panel-body"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><label class="manito"><input id="rbtApellido" name="rad" type="radio" value="1" checked="checked" />Apellido</label></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><label class="manito"><input id="rbtCodigo" name="rad" value="2" type="radio" />C\u00F3digo</label></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><label class="manito"><input id="rbtDoc" name="rad" value="3" type="radio" />Documento</label></div></div></div></div></div><div class="col-xs-5 col-sm-12 col-md-12 col-lg-12"><div class="row"><div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"><input id="btnPersAceptar" type="button" class="btn btn-cmacm btn-block" value="Aceptar" /></div><div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"><button id="btnPersCancelar" type="button" class="btn btn-cmacm btn-block" data-dismiss="modal" aria-hidden="true">Cancelar</button></div></div></div></div></div><div class="col-xs-12 col-sm-9 col-md-9 col-lg-9"><div class="row"><div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">Ingrese Dato a Buscar:</div></div><div class="row"><div class="col-xs-12 col-sm-9 col-md-9 col-lg-9"><input id="txtBuscar" type="text" class="form-control" tabindex="1" /></div></div><div class="row"><div id="' + 'cntBuscarPersona' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div></div></div>';
+        //var html = '<div class="row"><div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="row"><div class="col-xs-7 col-sm-12 col-md-12 col-lg-12"><div class="row"><div class="panel panel-cmacm"><div class="panel-heading">Buscar Por</div><div class="panel-body"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><label class="manito"><input id="rbtApellido" name="rad" type="radio" value="1" checked="checked" />Apellido</label></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><label class="manito"><input id="rbtCodigo" name="rad" value="2" type="radio" />C\u00F3digo</label></div><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><label class="manito"><input id="rbtDoc" name="rad" value="3" type="radio" />Documento</label></div></div></div></div></div><div class="col-xs-5 col-sm-12 col-md-12 col-lg-12"><div class="row"><div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"><input id="btnPersAceptar" type="button" class="btn btn-cmacm btn-block" value="Aceptar" /></div><div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"><button id="btnPersCancelar" type="button" class="btn btn-cmacm btn-block" data-dismiss="modal" aria-hidden="true">Cancelar</button></div></div></div></div></div><div class="col-xs-12 col-sm-9 col-md-9 col-lg-9"><div class="row"><div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">Ingrese Dato a Buscar:</div></div><div class="row"><div class="col-xs-12 col-sm-9 col-md-9 col-lg-9"><input id="txtBuscar" type="text" class="form-control" tabindex="1" /></div></div><div class="row"><div id="' + 'cntBuscarPersona' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div></div></div>';
+        var html = '<div class="row"><div class="col-xs-12 col-sm-9 col-md-12 col-lg-12"><div class="form-inline ng-pristine ng-valid"><input id="txtBuscar" type="text" onclick="this.select();" class="form-control " placeholder="Buscar cliente..." tabindex="1" style="border-bottom-width: 1px;margin-bottom: 10px;width: 70%;"><button id="btnBuscar" type="button" style="border-bottom-width: 1px;margin-left: 5px;margin-bottom: 10px;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-search"></span></button></div></div><div class="row"><div id="' + 'cntBuscarPersona' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div><div class="row"><div class="col-md-3 col-md-offset-9 text-right"><button id="btnPersAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnPersCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div>'
 
         var tablaId = "tblPersonas";
         var btnAceptar = "#vntBuscaPersona #btnPersAceptar";
         var tabla_Id = "#" + tablaId;
         var buscarId = "txtBuscar";
         var buscar_Id = "#" + buscarId;
-        var lstBuscaPers = [];
 
         $("#vntBuscaPersona .panel-body").html(html);
         var focus = function () { $(buscar_Id).focus().select(); };
@@ -40,8 +40,8 @@
 
         $("#cntBuscarPersona").Tabla({
             tblId: tablaId,
-            cabecera: "Nombre Cliente, Direccion, C\u00F3digo,DNI,RUC",
-            campos: "nom,direc,id,lstdoc[0].num,lstdoc[1].num",
+            cabecera: "Nombre,Sexo,DOI,Tipo,Tel&eacute;fono,Direcci&oacute;n",
+            campos: "nom,sexo,doi,tipo,tel1,direc",
             scrollVertical: "Si",
             cantRegVertical: 5
         });
@@ -62,22 +62,7 @@
                 $(buscar_Id).focus();
             } else
             {
-                var men = {};
-                $.fn.Conexion({
-                    direccion: '/Persona/ValidaAceptarBuscarPersona',
-                    datos: {"oPersona" : JSON.stringify(lstBuscaPers[index]) },
-                    terminado: function (data)
-                    {
-                        men = JSON.parse(data);
-                        if (men.men == null)
-                        {
-                            m["funcionAceptar"](lstBuscaPers[index]);
-                        } else
-                        {
-                            $.fn.Mensaje({ mensaje: men.men, tipo: men.tipo });
-                        }
-                    }
-                });
+                m["funcionAceptar"](lstBuscaPers[index]);
             }
         });
 
@@ -85,6 +70,8 @@
         {
             m["funcionCancelar"]();
         });
+
+        $("#btnBuscar").bind("click", function () { Buscar(tablaId, btnAceptar); });
         
         $(buscar_Id).bind("keydown", function (e)
         {
@@ -143,55 +130,7 @@
             }
             else if (e.which == 13)
             {
-                if ($("#"+tablaId).find("tr.seleccionado").index() == -1)
-                {
-                    var nTipoBusqueda = $('#vntBuscaPersona input:radio:checked').val();
-                    var cValor = $(this).val();
-
-                    $.fn.Conexion({
-                        direccion: '/Persona/BuscarPersonas',
-                        datos: { "nTipoBusqueda": nTipoBusqueda, "cValor": cValor },
-                        terminado: function (data)
-                        {
-                            lstBuscaPers = JSON.parse(data).lstPersonas;
-                            $(".seleccionado").remove();
-
-                            $("#cntBuscarPersona").Tabla({
-                                tblId: tablaId,
-                                scrollVertical: "Si",
-                                cantRegVertical: 5,
-                                cabecera: "Nombre Cliente, Direccion, C\u00F3digo,DNI,RUC",
-                                campos: "nom,direc,id,lstdoc[0].num,lstdoc[1].num",
-                                datos: lstBuscaPers
-                            });
-
-                            $(tabla_Id).parent().scrollTop(0);
-
-                            $(tabla_Id + " tbody tr").bind({
-                                "dblclick": function ()
-                                {
-                                    $(btnAceptar).click();
-                                }
-                                //,
-                                //"mouseenter": function ()
-                                //{
-                                //    $("tr.seleccionado").removeClass("seleccionado");
-                                //    $(this).addClass("seleccionado");
-                                //}
-                            });
-
-                            $(".seleccionado").bind("click", function ()
-                            {
-                                $(btnAceptar).click();
-                            });
-                        },
-                        error: function (v, s) { $.fn.Mensaje({ mensaje: "Realizar la busqueda nuevamente o informar al departamento de TI"}); }
-                    });
-                }
-                else
-                {
-                    $(btnAceptar).click();
-                }
+                Buscar(tablaId, btnAceptar);
             }
             else
             {
@@ -199,4 +138,56 @@
             }
         });
     }
+
+
+    function Buscar(tablaId, btnAceptar) {
+        if ($("#" + tablaId).find("tr.seleccionado").index() == -1) {
+            var cPersDOI,cNombre;
+            var valor = $("#txtBuscar").val();
+
+            isNaN(valor) ? cNombre = valor : cPersDOI = valor;
+
+            $.fn.Conexion({
+                direccion: '/Cliente/BuscarClientes',
+                datos: { "cPersDOI": cPersDOI, "cNombre": cNombre },
+                terminado: function (data) {
+                    lstBuscaPers = JSON.parse(data);
+                    $(".seleccionado").remove();
+
+                    $("#cntBuscarPersona").Tabla({
+                        tblId: tablaId,
+                        scrollVertical: "Si",
+                        cantRegVertical: 5,
+                        cabecera: "Nombre,Sexo,DOI,Tipo,Tel&eacute;fono,Direcci&oacute;n",
+                        campos: "nom,sexo,doi,tipo,tel1,direc",
+                        empty:"La persona no se encuentra registrada",
+                        datos: lstBuscaPers
+                    });
+
+                    if (lstBuscaPers.length == 0) {
+                        $("#btnPersAceptar").addClass("disabled");
+                    } else {
+                        $("#btnPersAceptar").removeClass("disabled");
+                        $("#" + tablaId).parent().scrollTop(0);
+
+                        $("#" + tablaId + " tbody tr").bind({
+                            "dblclick": function () {
+                                $(btnAceptar).click();
+                            }
+                        });
+
+                        $(".seleccionado").bind("click", function () {
+                            $(btnAceptar).click();
+                        });
+                    }
+                },
+                error: function (v, s) { $.fn.Mensaje({ mensaje: "Realizar la busqueda nuevamente o informar al departamento de TI" }); }
+            });
+        }
+        else {
+            $(btnAceptar).click();
+        }
+    }
+
+
 })(jQuery);

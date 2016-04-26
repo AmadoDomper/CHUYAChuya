@@ -18,9 +18,8 @@
         var html = "";
         html += '<div class="modal fade" id="' + m.id + '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-focus-on="input:first">' +
                     '<div class="' + cssModal + '">' +
-                       '<div class="panel panel-cmacm">' +
+                       '<div class="panel panel-inverse">' +
                            '<div class="panel-heading">' +
-                               '<img src="../Content/img/icono.png" style="height: 20px; width: 20px; margin-right: 5px;" />' +
                                     m.titulo +
                                '<button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">&times;</button>' +
                            '</div>' +

@@ -3,55 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace CHUYAChuya.EntidadesNegocio
 {
     public class Usuario
     {
-        private Persona _oDatoPersona = new Persona();
+        private PersonaNat _oPersNat = new PersonaNat();
         private int _nUsuId;
-        private string _cNomUsuario;
-        private string _cCargo;
-        private string _cCodAge;
-        private string _cContrasena;
-        //private string _NombrePC;
-        //private string _IpPC;
+        private string _cUsuNombre;
+        private string _cUsuContrasena;
+        //private string _cCargo;
+        //private string _cCodAge;
 
-        public Persona oDatoPersona
+        [JsonProperty(PropertyName = "oPersNat")]
+        public PersonaNat oPersNat
         {
-            get { return _oDatoPersona; }
-            set { _oDatoPersona = value; }
+            get { return _oPersNat; }
+            set { _oPersNat = value; }
         }
 
+        [JsonProperty(PropertyName = "nUsuId")]
         public int nUsuId
         {
             get { return _nUsuId; }
             set { _nUsuId = value; }
         }
 
-        public string cNomUsuario
+        [JsonProperty(PropertyName = "cUsuNom")]
+        public string cUsuNombre
         {
-            get { return _cNomUsuario; }
-            set { _cNomUsuario = value; }
+            get { return _cUsuNombre; }
+            set { _cUsuNombre = value; }
         }
 
-        public string cCargo
+        [JsonProperty(PropertyName = "cUsuCon")]
+        public string cUsuContrasena
         {
-            get { return _cCargo; }
-            set { _cCargo = value; }
+            get { return _cUsuContrasena; }
+            set { _cUsuContrasena = value; }
         }
 
-        public string cCodAge
-        {
-            get { return _cCodAge; }
-            set { _cCodAge = value; }
-        }
+        //public string cCargo
+        //{
+        //    get { return _cCargo; }
+        //    set { _cCargo = value; }
+        //}
 
-        public string cContrasena
-        {
-            get { return _cContrasena; }
-            set { _cContrasena = value; }
-        }
+        //public string cCodAge
+        //{
+        //    get { return _cCodAge; }
+        //    set { _cCodAge = value; }
+        //}
 
         //public string NombrePC
         //{

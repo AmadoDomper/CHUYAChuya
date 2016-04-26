@@ -4,6 +4,7 @@ C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\C
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Common.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.ServiceLocation.dll
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Newtonsoft.Json.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.Unity.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.Unity.Interception.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\CHUYAChuya.EntidadesNegocio.pdb
@@ -12,10 +13,9 @@ C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\M
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.pdb
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.EnterpriseLibrary.Data.xml
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Newtonsoft.Json.xml
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.Unity.pdb
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Microsoft.Practices.Unity.Interception.pdb
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\obj\Debug\CHUYAChuya.AccesoDatos.csprojResolveAssemblyReference.cache
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\obj\Debug\CHUYAChuya.AccesoDatos.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\obj\Debug\CHUYAChuya.AccesoDatos.pdb
-C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Newtonsoft.Json.dll
-C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.AccesoDatos\bin\Debug\Newtonsoft.Json.xml
