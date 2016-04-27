@@ -21,7 +21,7 @@
 
         $.ajax({
             type: "POST",
-            async: async,
+            async: m.async,
             url: m.direccion,
             //dataType: "json",
             data: m.datos,

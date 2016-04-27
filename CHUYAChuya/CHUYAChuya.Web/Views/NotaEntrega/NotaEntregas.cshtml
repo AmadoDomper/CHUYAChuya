@@ -217,7 +217,8 @@
     //Buscar datos persona
 
     var persSelec = {}
-    $("#btnBuscarPers").bind("click", function () {
+
+    function BuscarCliente(valor) {
         var aceptar = function (d) {
             persSelec = d;
             $("#hdnPersId").val(d.id);
@@ -232,8 +233,17 @@
         }
         $.fn.BuscarPersona({
             funcionAceptar: aceptar,
-            funcionCancelar: cancelar
+            funcionCancelar: cancelar,
+            valor: valor
         });
+    }
+
+    $("#btnBuscarPers").bind("click", function () {
+        BuscarCliente();
+    });
+
+    $("#txtBuscarCliente").bind("keyup", function (e) {
+        if (e.which == 13) { BuscarCliente($(this).val()); };
     });
 
 
@@ -242,6 +252,14 @@
 
     var prodSel = {}
     $("#btnBuscarProd").bind("click", function () {
+        BuscarProd();
+    });
+
+    $("#txtBuscarProducto").bind("keyup", function (e) {
+        if (e.which == 13) { BuscarProd($(this).val()); };
+    });
+    
+    function BuscarProd(valor) {
         var aceptar = function (d) {
             prodSel = d;
             LlenarDatos(d);
@@ -256,10 +274,10 @@
         }
         $.fn.BuscarProducto({
             funcionAceptar: aceptar,
-            funcionCancelar: cancelar
+            funcionCancelar: cancelar,
+            valor: valor
         });
-
-    });
+    }
 
     //Tabla Registro de Servicios
 
