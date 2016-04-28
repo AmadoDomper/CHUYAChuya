@@ -36,5 +36,7 @@ namespace CHUYAChuya.LogicaNegocio
         {
             return oProductoAD.BuscarProductos(nProdId, cProdDesc);
         }
+
+
     }
 }

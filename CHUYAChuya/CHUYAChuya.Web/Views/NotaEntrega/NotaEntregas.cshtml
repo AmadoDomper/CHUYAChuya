@@ -2,53 +2,45 @@
     Layout = null;
 }
 <div class="col-lg-11 col-lg-offset-0-5">
-    @*<div>
-    <a href="#target1" class="panel">Target 1</a><br/>
-    <a href="#target2" class="panel">Target 2</a><br/>
-</div>*@
-
-
-    <div id="">
-        @*<div class="row color19">*@
+    @*<div class="row color19">*@
         <h3 class="text-center">NOTA DE ENTREGA</h3>
         <input id="hdnEstado" type="hidden" name="Producto.nProdId" />
-        @*        <div id="target1" class="panel panel-inverse active" style="display: block;">
-            <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Productos</div>
+        
+        <div id="target1" class="panel move panel-inverse active">
+            <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Nota de Entregas</div>
             <div class="panel-body">
 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <input href="#target2" id="btnNuevoProducto" type="button" class="btn btn-sm btn-success target" value="Nuevo Producto" />
+                    <input href="#target2" id="btnNuevaNota" type="button" class="btn btn-sm btn-success target" value="Nueva Nota de Entrega" />
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div id="cntListaProductos" class="table-responsive">
+                    <div id="cntListaNotaEntrega" class="table-responsive">
                     </div>
                 </div>
             </div>
-        </div>*@
+        </div>
 
-
-        @*Otro formulario*@
-
-        @*sdafsafasf*@
-        <div id="target2" class="panel panel-inverse" data-sortable-id="form-stuff-1" style="display: block;">
+        @*Formulario Nota de Entrega*@
+        <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
             <div class="panel-heading">
                 <h4 class="panel-title">Nueva Nota</h4>
             </div>
             <div class="panel-body" style="display: block;">
-                <form action="/NotaEntrega/RegistrarNotaEntrega" id="frmNotaEntrega" method="post" class="form-horizontal ng-pristine ng-valid">
+                <form action="/NotaEntrega/RegistrarNotaEntrega" autocomplete="off" id="frmNotaEntrega" method="post" class="form-horizontal ng-pristine ng-valid">
                     <div class="row">
                         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-3">
                             <div class="form-inline ng-pristine ng-valid">
                                 <div class="form-group">
                                     <input type="text" class="form-control " id="txtBuscarCliente" placeholder="Buscar cliente...">
-                                    <button id="btnBuscarPers" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#vntBuscaPersona"><span class="glyphicon glyphicon-search"></span></button>
+                                    <button id="btnBuscarPers" type="button" class="btn btn-sm btn-default" data-toggle="modal"><span class="glyphicon glyphicon-search"></span></button>
                                 </div>
                             </div>
 
                         </div>
                         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-5">
-                            <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;"><i class="glyphicon glyphicon-user m-r-10"></i><input id="hdnPersId" type="hidden" name="oNotEnt.oPers.nPersId" /><span id="lblNom"></span></h3>
+                            <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;"><i class="glyphicon glyphicon-user m-r-10"></i>
+                                <input id="hdnPersId" type="hidden" name="oNotEnt.oPers.nPersId" /><span id="lblNom"></span></h3>
                         </div>
                         <div class="col-xs-12 col-sm-9 col-md-9 col-lg-2">
                             <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;"><i class="glyphicon glyphicon-user m-r-10"></i><span id="lblDOI"></span></h3>
@@ -62,7 +54,7 @@
                             <div class="form-inline ng-pristine ng-valid">
                                 <div class="form-group">
                                     <input type="text" class="form-control " id="txtBuscarProducto" placeholder="Buscar producto...">
-                                    <button id="btnBuscarProd" type="button" class="btn btn-sm btn-default" data-toggle="modal" data-target="#vntBuscaProducto"><span class="glyphicon glyphicon-search"></span></button>
+                                    <button id="btnBuscarProd" type="button" class="btn btn-sm btn-default" data-toggle="modal"><span class="glyphicon glyphicon-search"></span></button>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-md-12">
@@ -178,7 +170,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -186,6 +177,9 @@
     jQuery(function ($) {
         $("#txtFechaEnt").mask("99/99/9999", { placeholder: "dd/mm/yyyy" });
         DeshabilitarBotones();
+        $('input.target').click(function () {
+            vista($(this).attr('href'));
+        });
     });
 
     var vista = function ($target) {
@@ -207,6 +201,57 @@
             }, 500);
         }
     };
+
+
+    ListarNotaEntrega();
+
+    function ListarNotaEntrega() {
+        $.fn.Conexion({
+            direccion: '/NotaEntrega/BuscarNotaEntregas',
+            datos: {},
+            terminado: function (data) {
+
+                $("#cntListaNotaEntrega").Tabla({
+                    tblId: "tblNotaEntrega",
+                    cabecera: "Cod. Nota,Cliente,DOI,Fecha Registro,Fecha Entrega,Monto Total",
+                    campos: "nNotaEntId,oPers.nom,oPers.doi,dFecReg,dFecEnt,nNotaMonTot",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,,D",
+                    cantRegVertical: 15,
+                    datos: JSON.parse(data)
+                });
+
+
+                //$("#tblProducto tbody tr").bind("dblclick", function () {
+
+                //    var nProdId = $(this).find("td").eq(0).html();
+                //    $("#hdnEstado").val("E");
+                //    $('input.target')[0].click();
+
+                //    $.fn.Conexion({
+                //        direccion: '/Producto/CargoDatosProducto',
+                //        datos: { "nProdId": nProdId },
+                //        terminado: function (data, textStatus, jqXHR) {
+                //            var oPro = JSON.parse(data);
+
+                //            $("#hdnProd").val(oPro.nPrId);
+                //            $("#txtCod").val(oPro.nPrId);
+                //            $("#txtDesc").val(oPro.cPrDesc);
+                //            $("#txtPrecioUnit").val(number_format(oPro.nPrPrecU, 2));
+                //            $("#cmbMedida").val(oPro.oPrMed.id);
+                //            $("#chkLav").prop("checked", oPro.bPrSerLav);
+                //            $("#chkPla").prop("checked", oPro.bPrSerPla);
+                //            $("#chkSec").prop("checked", oPro.bPrSerSec);
+                //        },
+                //        bloqueo: false
+                //    });
+                //});
+            }
+        });
+    }
+
+
+
 
     /*Variable Global de Datos*/
     datos = {};
@@ -239,7 +284,7 @@
     }
 
     $("#btnBuscarPers").bind("click", function () {
-        BuscarCliente();
+        BuscarCliente($("#txtBuscarCliente").val());
     });
 
     $("#txtBuscarCliente").bind("keyup", function (e) {
@@ -252,13 +297,13 @@
 
     var prodSel = {}
     $("#btnBuscarProd").bind("click", function () {
-        BuscarProd();
+        BuscarProd($("#txtBuscarProducto").val());
     });
 
     $("#txtBuscarProducto").bind("keyup", function (e) {
         if (e.which == 13) { BuscarProd($(this).val()); };
     });
-    
+
     function BuscarProd(valor) {
         var aceptar = function (d) {
             prodSel = d;
@@ -289,8 +334,7 @@
         Agregar();
     });
 
-    $("#txtCant").bind("keyup", function (e)
-    {
+    $("#txtCant").bind("keyup", function (e) {
         if (e.which == 13 && prodSel != null) { Agregar(); };
     });
 

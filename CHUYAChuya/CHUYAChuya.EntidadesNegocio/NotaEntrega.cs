@@ -10,7 +10,7 @@ namespace CHUYAChuya.EntidadesNegocio
     public class NotaEntrega
     {
         private int _nNotaEntId;
-        private Persona _oPers;
+        private Persona _oPers = new Persona();
         private string _cNotaDireccion;
         private string _cNotaComentario;
         private DateTime _dFechaReg;

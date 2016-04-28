@@ -25,6 +25,14 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
+        public JsonResult BuscarNotaEntregas()
+        {
+            NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
+            List<NotaEntrega> ListaNotaEntregas = new List<NotaEntrega>();
+            ListaNotaEntregas = oNotaEntregaLN.BuscarNotaEntregas();
+            return Json(JsonConvert.SerializeObject(ListaNotaEntregas, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+        }
+
         [RequiresAuthenticationAttribute]
         public JsonResult RegistrarNotaEntrega(NotaEntregaViewModel oNotaEntregaViewModel)
         {
@@ -35,6 +43,8 @@ namespace CHUYAChuya.Web.Controllers
             resultado = oNotaEntLN.RegistrarNotaEntrega(oNotaEntregaViewModel.oNotEnt);
             return Json(resultado);
         }
+
+
 
 
 

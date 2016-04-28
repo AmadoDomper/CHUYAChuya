@@ -31,12 +31,11 @@
             if (lstBuscaPers.length == 1) {
                 Aceptar(0);
             } else {
-                CrearVentana(lstBuscaPers);
-                $('#vntBuscaPersona').modal('show');
+                CrearVentana(m.valor, lstBuscaPers);
             }
         }
 
-        function CrearVentana(lista) {
+        function CrearVentana(valor,lista) {
             $.fn.Ventana({
                 id: "vntBuscaPersona",
                 titulo: "Buscar Persona",
@@ -48,8 +47,9 @@
 
             var focus = function () { $(buscar_Id).focus().select(); };
             setTimeout(focus(), 500);
-
             CrearTabla(lista);
+            $("#txtBuscar").val(valor);
+            $('#vntBuscaPersona').modal('show');
         }
 
         function Aceptar(index) {

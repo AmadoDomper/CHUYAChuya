@@ -40,7 +40,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@nNotaSubTotal", SqlDbType.Money).Value = (object)oNotEnt.nNotaSubTotal ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaMontoTotal", SqlDbType.Money).Value = (object)oNotEnt.nNotaMontoTotal ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaEstado", SqlDbType.TinyInt).Value = (object)Convert.ToByte(oNotEnt.oNotaEstado.cConstanteID) ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@cNotaUsuReg", SqlDbType.VarChar,4).Value = (object)oNotEnt.cNotaUsuReg ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cNotaUsuReg", SqlDbType.VarChar, 4).Value = (object)oNotEnt.cNotaUsuReg ?? DBNull.Value;
 
                     oSqlCommand.Parameters.Add("@T_NotaEntregaProducto", SqlDbType.Structured).Value = NotaEntregaProductoCollection.TSqlDataRecord(oNotEnt.ListaNotaEntProd.ToList());
                     oSqlConnection.Open();
@@ -87,6 +87,42 @@ namespace CHUYAChuya.AccesoDatos
                 //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
             }
             return resultado;
+        }
+
+        public List<NotaEntrega> BuscarNotaEntregas()
+        {
+            List<NotaEntrega> ListaNotasEntrega = new List<NotaEntrega>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarNotaEntregas);
+            //oDatabase.AddInParameter(oDbCommand, "@nProdId", DbType.String, (object)nProdId ?? DBNull.Value);
+            //oDatabase.AddInParameter(oDbCommand, "@cProdDesc", DbType.String, (object)cProdDesc ?? DBNull.Value);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                int icDOI = oIDataReader.GetOrdinal("cDOI");
+                int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
+                int idFechaEntrega = oIDataReader.GetOrdinal("dFechaEntrega");
+                int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
+                int inNotaEstado = oIDataReader.GetOrdinal("nNotaEstado");
+
+                while (oIDataReader.Read())
+                {
+                    NotaEntrega oNotaEntrega = new NotaEntrega();
+
+                    oNotaEntrega.nNotaEntId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inNotaEntId]);
+                    oNotaEntrega.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                    oNotaEntrega.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
+                    oNotaEntrega.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
+                    oNotaEntrega.dFechaEntrega = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaEntrega]);
+                    oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
+                    oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
+
+                    ListaNotasEntrega.Add(oNotaEntrega);
+                }
+            }
+            return ListaNotasEntrega;
         }
 
     }

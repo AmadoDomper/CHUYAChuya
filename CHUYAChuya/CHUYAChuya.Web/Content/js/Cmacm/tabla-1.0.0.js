@@ -35,6 +35,7 @@
         m.scrollVertical = m.scrollVertical || "No";
         m.cantRegVertical = m.cantRegVertical || 4;
         m.campos = m.campos || "";
+        m.tipoCampo = m.tipoCampo || "";
         m.visible = m.visible || "";
         m.subLista = m.subLista || "Si";
         m.cargando = m.cargando || false;
@@ -43,6 +44,7 @@
         m.empty = m.empty || "No existen datos";
 
         var col = m.cabecera.split(",");
+        var tipo = m.tipoCampo.split(",");
         var camp;
         if (m.campos!="") {
             camp = m.campos.split(",");
@@ -86,11 +88,10 @@
                     {
                         dat = eval("m.datos[i]." + camp[k]);
 
-                        if (dat) {
-
-                        } else {
-
+                        if (tipo[k] == "D") {
+                            dat = number_format(dat, 2)
                         }
+
                         dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
                         html += '<td>' + (dat == null ? "" : dat) + '</td>';
                     }
