@@ -44,7 +44,14 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
+        public JsonResult CargoDatosNotaEntrega(int nNotaId)
+        {
+            NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
+            NotaEntrega oNotaEntrega = new NotaEntrega();
+            oNotaEntrega = oNotaEntregaLN.CargoDatosNotaEntrega(nNotaId);
 
+            return Json(JsonConvert.SerializeObject(oNotaEntrega));
+        }
 
 
 

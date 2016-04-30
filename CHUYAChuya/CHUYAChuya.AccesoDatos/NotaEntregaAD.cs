@@ -125,5 +125,95 @@ namespace CHUYAChuya.AccesoDatos
             return ListaNotasEntrega;
         }
 
+
+        public NotaEntrega CargoDatosNotaEntrega(int nNotaId)
+        {
+            try
+            {
+                NotaEntrega oNotaEntrega = new NotaEntrega();
+
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_CargarNotaEntrega);
+                oDatabase.AddInParameter(oDbCommand, "@nNotaId", DbType.Int32, (object)nNotaId ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inPersId = oIDataReader.GetOrdinal("nPersId");
+                    int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                    int icDOI = oIDataReader.GetOrdinal("cDOI");
+                    int icPersTelefono1 = oIDataReader.GetOrdinal("cPersTelefono1");
+                    int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                    int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
+                    int idFechaEntrega = oIDataReader.GetOrdinal("dFechaEntrega");
+                    int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
+                    int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
+                    int inNotaEstado = oIDataReader.GetOrdinal("nNotaEstado");
+
+                    while (oIDataReader.Read())
+                    {
+                        oNotaEntrega.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
+                        oNotaEntrega.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                        oNotaEntrega.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
+                        oNotaEntrega.oPers.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
+                        oNotaEntrega.nNotaEntId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inNotaEntId]);
+                        oNotaEntrega.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
+                        oNotaEntrega.dFechaEntrega = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaEntrega]);
+                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
+                        oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
+                        oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
+
+                        oNotaEntrega.ListaNotaEntProd = ListaNotaEntProductos(nNotaId);
+                    }
+                }
+
+                return oNotaEntrega;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public List<NotaEntProd> ListaNotaEntProductos(int nNotaId)
+        {
+            List<NotaEntProd> ListaNotaEntProd = new List<NotaEntProd>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaNotaEntProductos);
+            oDatabase.AddInParameter(oDbCommand, "@nNotaId", DbType.String, nNotaId);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int inProdId = oIDataReader.GetOrdinal("nProdId");
+                int icProdDesc = oIDataReader.GetOrdinal("cProdDesc");
+                int ibProdSerLavado = oIDataReader.GetOrdinal("bProdSerLavado");
+                int ibProdSerSecado = oIDataReader.GetOrdinal("bProdSerSecado");
+                int ibProdSerPlanchado = oIDataReader.GetOrdinal("bProdSerPlanchado");
+                int inDetCantidad = oIDataReader.GetOrdinal("nDetCantidad");
+                int inDetProdPrecioUnit = oIDataReader.GetOrdinal("nDetProdPrecioUnit");
+                int inDetImporte = oIDataReader.GetOrdinal("nDetImporte");
+
+                while (oIDataReader.Read())
+                {
+                    NotaEntProd oNotaEntPro = new NotaEntProd();
+
+                    oNotaEntPro.oProd.nProdId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inProdId]);
+                    oNotaEntPro.oProd.cProdDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icProdDesc]);
+                    oNotaEntPro.oProd.bProdSerLavado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerLavado]);
+                    oNotaEntPro.oProd.bProdSerSecado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerSecado]);
+                    oNotaEntPro.oProd.bProdSerPlanchado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerPlanchado]);
+
+                    oNotaEntPro.nDetCantidad = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDetCantidad]);
+                    oNotaEntPro.nProdPrecioUnit = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDetProdPrecioUnit]);
+                    oNotaEntPro.nDetImporte = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDetImporte]);
+
+                    ListaNotaEntProd.Add(oNotaEntPro);
+                }
+            }
+            return ListaNotaEntProd;
+        }
+
+
+
     }
 }

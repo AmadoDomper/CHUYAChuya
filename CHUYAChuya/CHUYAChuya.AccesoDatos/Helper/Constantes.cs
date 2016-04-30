@@ -52,6 +52,9 @@ namespace CHUYAChuya.AccesoDatos.Helper
         #region NotaEntrega
         public const string stp_ins_NotaEntrega = "stp_ins_NotaEntrega";
         public const string stp_sel_BuscarNotaEntregas = "stp_sel_BuscarNotaEntregas";
+        public const string stp_sel_CargarNotaEntrega = "stp_sel_CargarNotaEntrega";
+        public const string stp_sel_ListaNotaEntProductos = "stp_sel_ListaNotaEntProductos";
+
         #endregion
 
 

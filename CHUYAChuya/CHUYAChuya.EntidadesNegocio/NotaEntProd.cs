@@ -9,7 +9,7 @@ namespace CHUYAChuya.EntidadesNegocio
 {
     public class NotaEntProd
     {
-        private Producto _oProd;
+        private Producto _oProd = new Producto();
         private decimal _nDetCantidad;
         private decimal _nDetProdPrecioUnit;
         private decimal _nDetImporte;

@@ -16,11 +16,11 @@
         var buscarId = "txtBuscar";
         var buscar_Id = "#" + buscarId;
 
-        if (!m.valor) {
-            CrearVentana();
-        } else {
-            BuscarProducto(m.valor);
+        BuscarProducto(m.valor);
 
+        if (!m.valor) {
+            CrearVentana("", lstBuscaProd);
+        } else {
             if (lstBuscaProd.length == 1) {
                 Aceptar(0);
             } else {
@@ -155,7 +155,9 @@
 
     function BuscarProducto(valor) {
         var cProdId, cNombre;
-        isNaN(valor) ? cNombre = valor : cProdId = valor;
+
+        valor === null ? cNombre = "" : isNaN(valor) ? cNombre = valor : cProdId = valor;
+
         $.fn.Conexion({
             direccion: '/Producto/BuscarProductos',
             datos: { "nProdId": cProdId, "cProdDesc": cNombre },

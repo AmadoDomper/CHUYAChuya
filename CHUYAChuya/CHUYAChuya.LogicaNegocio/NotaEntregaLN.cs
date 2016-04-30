@@ -27,6 +27,13 @@ namespace CHUYAChuya.LogicaNegocio
             return oNotaEntregaAD.BuscarNotaEntregas();
         }
 
+        public NotaEntrega CargoDatosNotaEntrega(int nNotadId)
+        {
+            return oNotaEntregaAD.CargoDatosNotaEntrega(nNotadId);
+        }
+
+        
+
 
     }
 }
