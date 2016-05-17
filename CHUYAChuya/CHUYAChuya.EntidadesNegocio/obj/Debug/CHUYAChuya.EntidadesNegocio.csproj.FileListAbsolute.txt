@@ -4,4 +4,3 @@ C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\bin\De
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\bin\Debug\Newtonsoft.Json.xml
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\obj\Debug\CHUYAChuya.EntidadesNegocio.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\obj\Debug\CHUYAChuya.EntidadesNegocio.pdb
-C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\obj\Debug\CHUYAChuya.EntidadesNegocio.csprojResolveAssemblyReference.cache

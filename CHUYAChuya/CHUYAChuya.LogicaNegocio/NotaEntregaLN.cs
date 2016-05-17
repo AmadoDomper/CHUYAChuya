@@ -22,9 +22,9 @@ namespace CHUYAChuya.LogicaNegocio
             return oNotaEntregaAD.RegistrarNotaEntrega(oNotEnt);
         }
 
-        public List<NotaEntrega> BuscarNotaEntregas()
+        public List<NotaEntrega> BuscarNotaEntregas(int nNotaEst, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
-            return oNotaEntregaAD.BuscarNotaEntregas();
+            return oNotaEntregaAD.BuscarNotaEntregas(nNotaEst, nNotaEntId, cPersDOI, cPersDesc, dIni, dFin);
         }
 
         public NotaEntrega CargoDatosNotaEntrega(int nNotadId)

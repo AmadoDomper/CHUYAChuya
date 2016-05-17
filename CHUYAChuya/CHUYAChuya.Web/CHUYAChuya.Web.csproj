@@ -153,6 +153,12 @@
     <Content Include="Content\css\normalize.min.css" />
     <Content Include="Content\css\sb-admin-2.css" />
     <Content Include="Content\css\simple.datagrid.css" />
+    <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker-4.15.35.css" />
+    <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker-standalone.css" />
+    <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker-4.17.37.css" />
+    <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker.min.css" />
+    <Content Include="Content\extend\datepickerTime\js\bootstrap-datetimepicker.js" />
+    <Content Include="Content\extend\datepickerTime\js\bootstrap-datetimepicker.min.js" />
     <Content Include="Content\extend\datepicker\css\bootstrap-datepicker.css" />
     <Content Include="Content\extend\datepicker\css\bootstrap-datepicker.min.css" />
     <Content Include="Content\extend\datepicker\css\bootstrap-datepicker.standalone.css" />
@@ -164,6 +170,7 @@
     <Content Include="Content\extend\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\extend\datepicker\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\extend\datepicker\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Content\extend\moment\moment-with-locales.js" />
     <Content Include="Content\font-awesome-4.1.0\css\font-awesome.css" />
     <Content Include="Content\font-awesome-4.1.0\css\font-awesome.min.css" />
     <Content Include="Content\font-awesome-4.1.0\fonts\fontawesome-webfont.svg" />

@@ -35,9 +35,12 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@nPersId", SqlDbType.Int).Value = (object)oNotEnt.oPers.nPersId ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaDireccion", SqlDbType.VarChar, 150).Value = (object)oNotEnt.cNotaDireccion ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaComentario", SqlDbType.VarChar, 250).Value = (object)oNotEnt.cNotaComentario ?? DBNull.Value;
-                    //oSqlCommand.Parameters.Add("@dFechaReg", SqlDbType.DateTime).Value = (object)oNotEnt.dFechaReg ?? DBNull.Value;
-                    //oSqlCommand.Parameters.Add("@dFechaEntrega", SqlDbType.DateTime).Value = (object)oNotEnt.dFechaEntrega ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@dFechaReg", SqlDbType.DateTime).Value = (object)oNotEnt.dFechaReg ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@dFechaEntrega", SqlDbType.DateTime).Value = (object)oNotEnt.dFechaEntrega ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaSubTotal", SqlDbType.Money).Value = (object)oNotEnt.nNotaSubTotal ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nNotaAnticipo", SqlDbType.Money).Value = (object)oNotEnt.nNotaAnticipo ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nNotaEfectivo", SqlDbType.Money).Value = (object)oNotEnt.nNotaEfectivo ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nNotaCambio", SqlDbType.Money).Value = (object)oNotEnt.nNotaCambio ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaMontoTotal", SqlDbType.Money).Value = (object)oNotEnt.nNotaMontoTotal ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaEstado", SqlDbType.TinyInt).Value = (object)Convert.ToByte(oNotEnt.oNotaEstado.cConstanteID) ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaUsuReg", SqlDbType.VarChar, 4).Value = (object)oNotEnt.cNotaUsuReg ?? DBNull.Value;
@@ -89,13 +92,17 @@ namespace CHUYAChuya.AccesoDatos
             return resultado;
         }
 
-        public List<NotaEntrega> BuscarNotaEntregas()
+        public List<NotaEntrega> BuscarNotaEntregas(int nNotaEst, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
             List<NotaEntrega> ListaNotasEntrega = new List<NotaEntrega>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarNotaEntregas);
-            //oDatabase.AddInParameter(oDbCommand, "@nProdId", DbType.String, (object)nProdId ?? DBNull.Value);
-            //oDatabase.AddInParameter(oDbCommand, "@cProdDesc", DbType.String, (object)cProdDesc ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@nNotaEstado", DbType.Int16, (object)nNotaEst ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@nNotaEntId", DbType.Int32, (object)nNotaEntId ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cPersDOI", DbType.String, (object)cPersDOI ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cPersDesc", DbType.String, (object)cPersDesc ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@dFechaEntI", DbType.Date, (object)dIni ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@dFechaEntF", DbType.Date, (object)dFin ?? DBNull.Value);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -145,6 +152,12 @@ namespace CHUYAChuya.AccesoDatos
                     int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
                     int idFechaEntrega = oIDataReader.GetOrdinal("dFechaEntrega");
                     int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
+
+                    int inNotaAnticipo = oIDataReader.GetOrdinal("nNotaAnticipo");
+                    int inNotaEfectivo = oIDataReader.GetOrdinal("nNotaEfectivo");
+                    int inNotaCambio = oIDataReader.GetOrdinal("nNotaCambio");
+
+
                     int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
                     int inNotaEstado = oIDataReader.GetOrdinal("nNotaEstado");
 
@@ -158,6 +171,12 @@ namespace CHUYAChuya.AccesoDatos
                         oNotaEntrega.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
                         oNotaEntrega.dFechaEntrega = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaEntrega]);
                         oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
+
+                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaEfectivo]);
+                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaCambio]);
+
+
                         oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
                         oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
 

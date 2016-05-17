@@ -97,6 +97,31 @@ function formatDate(dateValue, format) {
     return result;
 }
 
+function SetRangoFecha(id) {
+    $(id).datepicker({
+        format: "dd/mm/yyyy",
+        weekStart: 1,
+        todayBtn: "linked",
+        language: "es",
+        daysOfWeekHighlighted: "0",
+        autoclose: true,
+        toggleActive: true
+    });
+}
+
+function SetFecha(id) {
+    $(id).datepicker({
+        format: "dd/mm/yyyy",
+        weekStart: 1,
+        todayBtn: "linked",
+        language: "es",
+        daysOfWeekDisabled: "0",
+        daysOfWeekHighlighted: "0",
+        autoclose: true,
+        toggleActive: true
+    });
+}
+
 function val_09(e) {
     tecla = (document.all) ? e.keyCode : e.which;
     if (tecla == 8) return true;

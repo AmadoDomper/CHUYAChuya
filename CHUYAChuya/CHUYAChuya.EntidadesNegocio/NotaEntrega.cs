@@ -13,9 +13,12 @@ namespace CHUYAChuya.EntidadesNegocio
         private Persona _oPers = new Persona();
         private string _cNotaDireccion;
         private string _cNotaComentario;
-        private DateTime _dFechaReg;
-        private DateTime _dFechaEntrega;
+        private DateTime? _dFechaReg;
+        private DateTime? _dFechaEntrega;
         private decimal _nNotaSubTotal;
+        private decimal _nNotaAnticipo;
+        private decimal _nNotaEfectivo;
+        private decimal _nNotaCambio;
         private decimal _nNotaMontoTotal;
         private Constante _oNotaEstado = new Constante();
         private string _cNotaUsuReg;
@@ -50,14 +53,14 @@ namespace CHUYAChuya.EntidadesNegocio
         }
 
         [JsonProperty(PropertyName = "dFecReg")]
-        public DateTime dFechaReg
+        public DateTime? dFechaReg
         {
             get { return _dFechaReg; }
             set { _dFechaReg = value; }
         }
 
         [JsonProperty(PropertyName = "dFecEnt")]
-        public DateTime dFechaEntrega
+        public DateTime? dFechaEntrega
         {
             get { return _dFechaEntrega; }
             set { _dFechaEntrega = value; }
@@ -68,6 +71,27 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _nNotaSubTotal; }
             set { _nNotaSubTotal = value; }
+        }
+
+        [JsonProperty(PropertyName = "nNotaAnt")]
+        public decimal nNotaAnticipo
+        {
+            get { return _nNotaAnticipo; }
+            set { _nNotaAnticipo = value; }
+        }
+
+        [JsonProperty(PropertyName = "nNotaEfe")]
+        public decimal nNotaEfectivo
+        {
+            get { return _nNotaEfectivo; }
+            set { _nNotaEfectivo = value; }
+        }
+
+        [JsonProperty(PropertyName = "nNotaCam")]
+        public decimal nNotaCambio
+        {
+            get { return _nNotaCambio; }
+            set { _nNotaCambio = value; }
         }
 
         [JsonProperty(PropertyName = "nNotaMonTot")]

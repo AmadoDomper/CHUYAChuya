@@ -42,6 +42,8 @@
         m.cellLen = m.cellLen || false;
         m.alinear = m.alinear || false;
         m.empty = m.empty || "No existen datos";
+        m.edit = m.edit || false;
+        m.editEvent = m.editEvent || function () { };
 
         var col = m.cabecera.split(",");
         var tipo = m.tipoCampo.split(",");
@@ -63,12 +65,13 @@
 
 
         var html = '';
-        html = '<div class="' + cssTbl + '"><table data-edit="false" id="' + m.tblId + '" class="table table-bordered table-hover manito">';
+        html = '<div class="' + cssTbl + '"><table data-edit="false" id="' + m.tblId + '" class="table table-bordered table-hover">';
 
         //Cabecera
         html += '<thead><tr>';
         if (m.numerado === "Si") { html += '<th>N°</th>'; }
         for (i in col) { html += '<th>' + col[i] + '</th>'; }
+        if (m.edit) { html += '<th>Edit.</th>'; }
         html += '</tr></thead>';
 
         //Cuerpo
@@ -95,6 +98,11 @@
                         dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
                         html += '<td>' + (dat == null ? "" : dat) + '</td>';
                     }
+
+                    if (m.edit) {
+                        html += '<td style="cursor: pointer;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+                    }
+
                 }
                 else
                 {
@@ -148,8 +156,18 @@
             for (i in $a) { $("#" + m.tblId +" tbody tr").find('td:eq(' + i + ')').css("text-align", $a[i] == 'L' ? 'Left' : $a[i] == 'C' ? 'Center' : $a[i] == 'R' ? 'Right' : ''); }
         }
 
-        
 
+        if (m.edit) {
+            $("#" + m.tblId + " tbody tr").find('td:last').bind("click", function () {
+                m["editEvent"]($(this).parent());
+            });
+        }
+
+        if (m.dblClick) {
+            $("#" + m.tblId + " tbody tr").bind("dblclick", function () {
+                m["editEvent"]($(this));
+            });
+        }
     }
 })(jQuery);
 
