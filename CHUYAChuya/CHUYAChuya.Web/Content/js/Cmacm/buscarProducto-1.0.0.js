@@ -165,7 +165,7 @@
             terminado: function (data) {
                 lstBuscaProd = JSON.parse(data);
             },
-            error: function (v, s) { $.fn.Mensaje({ mensaje: "Realizar la busqueda nuevamente o informar al departamento de TI" }); }
+            error: function (v, s) { $.fn.Mensaje({ mensaje: "Realizar la busqueda nuevamente" }); }
         });
     }
 

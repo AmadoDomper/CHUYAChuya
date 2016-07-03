@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constante.cs" />
+    <Compile Include="MovCaja.cs" />
     <Compile Include="NotaEntProd.cs" />
     <Compile Include="Documento.cs" />
     <Compile Include="Menu.cs" />

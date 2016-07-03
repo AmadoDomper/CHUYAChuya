@@ -112,8 +112,10 @@
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\Base\LogInController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\CorteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\MovCajaController.cs" />
     <Compile Include="Controllers\NotaEntregaController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
@@ -181,6 +183,7 @@
     <Content Include="Content\js\Cmacm\buscarPersona-1.0.0.js" />
     <Content Include="Content\js\Cmacm\conexion-1.0.0.js" />
     <Content Include="Content\js\Cmacm\buscarProducto-1.0.0.js" />
+    <Content Include="Content\js\Cmacm\buscarProveedor-1.0.0.js" />
     <Content Include="Content\js\Cmacm\credito\aprobacion.js" />
     <Content Include="Content\js\Cmacm\credito\solicitud.js" />
     <Content Include="Content\js\Cmacm\credito\sugerencia.js" />
@@ -307,6 +310,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\NotaEntrega\NotaEntregas.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\MovCaja\MovCaja.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Corte\Corte.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

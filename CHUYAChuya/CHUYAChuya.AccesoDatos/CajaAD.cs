@@ -1,0 +1,250 @@
+﻿using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+using Microsoft.Practices.EnterpriseLibrary.Data;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Data.SqlClient;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.SqlServer.Server;
+using CHUYAChuya.AccesoDatos.Helper;
+using CHUYAChuya.EntidadesNegocio;
+
+namespace CHUYAChuya.AccesoDatos
+{
+    public class CajaAD
+    {
+        private Database oDatabase = EnterpriseLibraryContainer.Current.GetInstance<Database>(Conexion.cnsCHUYAChuya);
+
+        public int RegistrarSalidaEfePagoProv(int nPersId, decimal nMontoSalida, string cComprobante, byte nTipoComp, DateTime dFechaEmi, string cUsuario, string cAgencia)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_SalidaEfectivoPagoProveedor;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nPersId", SqlDbType.Int).Value = (object)nPersId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nMontoSalida", SqlDbType.Money).Value = (object)nMontoSalida ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cComprobante", SqlDbType.VarChar, 11).Value = (object)cComprobante ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nTipoComprobante", SqlDbType.TinyInt).Value = (object)nTipoComp ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@dFechaEmision", SqlDbType.DateTime).Value = (object)dFechaEmi ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar,4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar,2).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                    //if (resultado[1].Length != 18 || resultado[1].IndexOf("109", 0, 3) == -1)
+                    //{
+                    //    /*Error de BD*/
+                    //    resultado[0] = "2";
+                    //    resultado[1] = "Ha ocurrido un error: " + "TIPO 2-" + resultado[1];
+                    //}
+                    //else
+                    //{
+                    //    /*Resultado OK*/
+                    //    if (oCred.oColocaciones.oProducto.cCtaCod != null)
+                    //    {
+                    //        resultado[0] = "1";
+                    //        resultado[1] = "Se actualizó correctamente los datos";
+                    //    }
+                    //    else
+                    //    {
+                    //        resultado[0] = "0";
+                    //    }
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+                //oError.cErrDescription = ex.Message.ToString();
+                //oError.cErrSource = ex.StackTrace.ToString();
+                //oError.cProceso = ex.TargetSite.ToString();
+
+                //resultado[0] = "3";
+                //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
+            }
+            return resultado;
+        }
+
+
+        public int RegistrarSalidaEfe(decimal nMontoSalida, string cMotivo, string cUsuario, string cAgencia)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_SalidaEfectivoOtros;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nMontoSalida", SqlDbType.Money).Value = (object)nMontoSalida ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cMotOtro", SqlDbType.VarChar,150).Value = (object)cMotivo ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar,4).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                    //if (resultado[1].Length != 18 || resultado[1].IndexOf("109", 0, 3) == -1)
+                    //{
+                    //    /*Error de BD*/
+                    //    resultado[0] = "2";
+                    //    resultado[1] = "Ha ocurrido un error: " + "TIPO 2-" + resultado[1];
+                    //}
+                    //else
+                    //{
+                    //    /*Resultado OK*/
+                    //    if (oCred.oColocaciones.oProducto.cCtaCod != null)
+                    //    {
+                    //        resultado[0] = "1";
+                    //        resultado[1] = "Se actualizó correctamente los datos";
+                    //    }
+                    //    else
+                    //    {
+                    //        resultado[0] = "0";
+                    //    }
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+                //oError.cErrDescription = ex.Message.ToString();
+                //oError.cErrSource = ex.StackTrace.ToString();
+                //oError.cProceso = ex.TargetSite.ToString();
+
+                //resultado[0] = "3";
+                //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
+            }
+            return resultado;
+        }
+
+
+
+        public int RegistrarEntradaEfe(decimal nMontoEntrada, string cUsuario, string cAgencia)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_IngresoEfectivo;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nMontoIngreso", SqlDbType.Money).Value = (object)nMontoEntrada ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar,4).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                    //if (resultado[1].Length != 18 || resultado[1].IndexOf("109", 0, 3) == -1)
+                    //{
+                    //    /*Error de BD*/
+                    //    resultado[0] = "2";
+                    //    resultado[1] = "Ha ocurrido un error: " + "TIPO 2-" + resultado[1];
+                    //}
+                    //else
+                    //{
+                    //    /*Resultado OK*/
+                    //    if (oCred.oColocaciones.oProducto.cCtaCod != null)
+                    //    {
+                    //        resultado[0] = "1";
+                    //        resultado[1] = "Se actualizó correctamente los datos";
+                    //    }
+                    //    else
+                    //    {
+                    //        resultado[0] = "0";
+                    //    }
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+                //oError.cErrDescription = ex.Message.ToString();
+                //oError.cErrSource = ex.StackTrace.ToString();
+                //oError.cProceso = ex.TargetSite.ToString();
+
+                //resultado[0] = "3";
+                //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
+            }
+            return resultado;
+        }
+
+        public List<MovCaja> BuscarMovCaja(string cMovDesc = null)
+        {
+            List<MovCaja> ListaMovCaja = new List<MovCaja>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarMovCaja);
+            oDatabase.AddInParameter(oDbCommand, "@cMovDesc", DbType.String, (object)cMovDesc ?? DBNull.Value);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int idMovFecha = oIDataReader.GetOrdinal("dMovFecha");
+                int icOpeDesc = oIDataReader.GetOrdinal("cOpeDesc");
+                int icMonIngreso = oIDataReader.GetOrdinal("cMonIngreso");
+                int icMonEgreso = oIDataReader.GetOrdinal("cMonEgreso");
+                int icMonActual = oIDataReader.GetOrdinal("cMonActual");
+
+                while (oIDataReader.Read())
+                {
+                    MovCaja MovCaja = new MovCaja();
+
+                    MovCaja.dMovFecha = DataUtil.DbValueToDefault<String>(oIDataReader[idMovFecha]);
+                    MovCaja.cOpeDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icOpeDesc]);
+                    MovCaja.cMonIngreso = DataUtil.DbValueToDefault<String>(oIDataReader[icMonIngreso]);
+                    MovCaja.cMonEgreso = DataUtil.DbValueToDefault<String>(oIDataReader[icMonEgreso]);
+                    MovCaja.cMonActual = DataUtil.DbValueToDefault<String>(oIDataReader[icMonActual]);
+
+                    ListaMovCaja.Add(MovCaja);
+                }
+            }
+            return ListaMovCaja;
+        }
+
+    }
+}

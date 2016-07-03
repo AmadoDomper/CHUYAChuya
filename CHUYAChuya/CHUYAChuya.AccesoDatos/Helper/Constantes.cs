@@ -23,7 +23,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_RS_getAllUsers = "stp_sel_RS_getAllUsers";
         public const string stp_sel_ListarClientes = "stp_sel_ListarClientes";
         public const string stp_sel_BuscarClientes = "stp_sel_BuscarClientes";
-        
+        public const string stp_sel_BuscarProveedores = "stp_sel_BuscarProveedores";
         #endregion
 
         #region PersonaNat
@@ -54,9 +54,14 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_BuscarNotaEntregas = "stp_sel_BuscarNotaEntregas";
         public const string stp_sel_CargarNotaEntrega = "stp_sel_CargarNotaEntrega";
         public const string stp_sel_ListaNotaEntProductos = "stp_sel_ListaNotaEntProductos";
-
         #endregion
 
+        #region Caja
+        public const string stp_ins_SalidaEfectivoPagoProveedor = "stp_ins_SalidaEfectivoPagoProveedor";
+        public const string stp_ins_SalidaEfectivoOtros = "stp_ins_SalidaEfectivoOtros";
+        public const string stp_ins_IngresoEfectivo = "stp_ins_IngresoEfectivo";
+        public const string stp_sel_BuscarMovCaja = "stp_sel_BuscarMovCaja";
+        #endregion
 
     }
 }

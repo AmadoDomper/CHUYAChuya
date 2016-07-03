@@ -49,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CajaAD.cs" />
     <Compile Include="Helper\Conexion.cs" />
     <Compile Include="Helper\Constantes.cs" />
     <Compile Include="Helper\DataUtil.cs" />

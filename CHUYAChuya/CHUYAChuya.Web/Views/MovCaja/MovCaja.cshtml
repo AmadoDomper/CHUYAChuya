@@ -1,0 +1,343 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="col-lg-11 col-lg-offset-0-5">
+    @*<div class="row color19">*@
+    <h3 class="text-center">MOVIMIENTO DE CAJA</h3>
+    <input id="hdnEstado" type="hidden" style="display: block;" />
+
+    <div id="target1" class="panel move panel-inverse active">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Movimientos de Caja</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
+                    <input href="#target3" id="btnSalEfectivo" type="button" class="btn btn-sm btn-danger target" value="Salida Efectivo">
+                    <input href="#target2" id="btnEntEfectivo" type="button" class="btn btn-sm btn-success target" value="Entrada Efectivo">
+                </div>
+            </div>
+            <div class="row m-b-10 m-t-10">
+                <div class="col-sm-5">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <input type="text" id="txtValor" class="form-control" placeholder="Buscar Movimientos">
+                        </div>
+                        <input id="btnBuscarMov" type="button" value="Buscar" class="btn btn-sm btn-primary">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="cntListaMovCaja" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4 col-lg-offset-4">
+    <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
+        <div class="panel-heading">
+            <h4 class="panel-title">Entrega de Efectivo</h4>
+        </div>
+        <div class="panel-body" style="display: block;">
+            <div id="frmEntradaEfectivo" class="form-horizontal ng-pristine ng-valid">
+                <div class="form-group">
+                    <label class="col-md-7 control-label">Escriba el dinero a ingresar en caja</label>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">S/.</span>
+                            <input type="text" id="txtMonEnt" name="" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <button id="btnEntAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button>
+                        <button id="btnEntCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-4 col-lg-offset-4">
+    <div id="target3" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
+        <div class="panel-heading">
+            <h4 class="panel-title">Salida de Efectivo</h4>
+        </div>
+        <div class="panel-body" style="display: block;">
+            <div id="frmSalidaEfectivo" class="form-horizontal ng-pristine ng-valid">
+                <div class="form-group m-b-5">
+                    <label class="col-md-7 control-label">Escriba el dinero de salida de caja</label>
+                    <div class="col-md-5">
+                        <div class="input-group">
+                            <span class="input-group-addon">S/.</span>
+                            <input type="text" id="txtMonSalida" name="" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <div id="tpoSalida" class="col-md-12 text-center">
+                        <label class="radio-inline m-r-20">
+                            <input type="radio" value="1" name="tpoSalida" hre="#cntProveedor" checked>Pago Proveedor</label>
+                        <label class="radio-inline">
+                            <input type="radio" value="2" name="tpoSalida" hre="#cntOtros">Otros</label>
+                    </div>
+                </div>
+                <div>
+                    <div id="cntProveedor">
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">Proveedor</label>
+                            <div class="col-md-8 form-inline">
+                                <input id="hdnProvId" type="hidden" name="">
+                                <input type="text" id="txtBuscarProveedor" name="" class="form-control" placeholder="">
+                                <button id="btnBuscarPro" type="button" class="btn btn-sm btn-default" data-toggle="modal">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">Nombre</label>
+                            <div class="col-md-7">
+                                <input type="text" id="txtNombreProv" name="" class="form-control" readonly="">
+                            </div>
+                        </div>
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">RUC</label>
+                            <div class="col-md-7">
+                                <input type="text" id="txtRucProv" name="" class="form-control" readonly="">
+                            </div>
+                        </div>
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">N° Comprobante</label>
+                            <div class="col-md-7">
+                                <input type="text" id="txtNroComp" name="" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">Tipo Comprobante</label>
+                            <div class="col-md-7">
+                                <select name="status" id="cmbTipoComp" class="form-control">
+                                    <option value="1" selected="">Factura</option>
+                                    <option value="2">Ticket</option>
+                                    <option value="3">Boleta</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <label class="col-md-4 control-label">Fecha de Emisión</label>
+                            <div class="col-md-7">
+                                <input type="text" id="txtFechaEmi" name="" class="form-control" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="cntOtros" style="display: none;">
+                        <div class="form-group">
+                            <label class="col-md-4 control-label">Motivo o Razón</label>
+                            <div class="col-md-7">
+                                <input type="text" id="txtMotOtro" name="" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <button id="btnSalAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button>
+                        <button id="btnSalCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    jQuery(function ($) {
+        $('#txtFechaEmi').datetimepicker({
+            locale: 'es', format: 'DD/MM/YYYY'
+        });
+
+        $('input.target').click(function () {
+            vista($(this).attr('href'));
+        });
+    });
+
+    var vista = function ($target) {
+        var $target = $($target),
+            $other = $('.active');
+
+        if (!$target.hasClass('active')) {
+            $other.each(function (index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 500).hide();
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 500);
+        }
+    };
+
+
+    $("#tpoSalida input:radio").click(function () {
+        var $target = $($(this).attr('hre')),
+            $other = $target.siblings();
+
+        $target.show();
+        $other.hide();
+    });
+
+
+    $("#btnBuscarPro").bind("click", function () {
+        BuscarProv($("#txtBuscarProveedor").val());
+    });
+
+    $("#txtBuscarProveedor").bind("keyup", function (e) {
+        if (e.which == 13) { BuscarProv($(this).val()); };
+    });
+
+    var provSelec = {}
+
+    function BuscarProv(valor) {
+        var aceptar = function (d) {
+            provSelec = d;
+            $("#hdnProvId").val(d.id);
+            $("#txtNombreProv").val(d.nom);
+            $("#txtRucProv").val(d.doi);
+            $('#vntBuscaProveedor').modal('hide');
+        };
+
+        var cancelar = function () {
+            //$("#btnCancelar").click();
+        }
+        $.fn.BuscarProveedor({
+            funcionAceptar: aceptar,
+            funcionCancelar: cancelar,
+            valor: valor
+        });
+    }
+
+    $("#btnSalAceptar").bind("click", function () {
+
+        if ($("#tpoSalida input:checked").val() == 1) {
+            GrabarPagoProveedor();
+        } else {
+            GrabarSalidaEfec();
+        }
+        
+    });
+
+    $("#btnEntAceptar").bind("click", function () {
+            GrabarEntradaEfec();
+    });
+
+    function GrabarPagoProveedor() {
+
+        var nPersId = $("#hdnProvId").val();
+        var cComprobante= $("#txtNroComp").val();
+        var nMontoSalida = $("#txtMonSalida").val();
+        var nTipoComp = $("#cmbTipoComp").val();
+        var dFechaEmi = $("#txtFechaEmi").val();
+
+        $.fn.Conexion({
+            direccion: "/MovCaja/RegistrarSalidaEfePagoProv",
+            datos: { "nPersId": nPersId, "cComprobante": cComprobante, "nMontoSalida": nMontoSalida, "nTipoComp": nTipoComp, "dFechaEmi": dFechaEmi },
+            terminado: function (data, textStatus, jqXHR) {
+                Resultado(data);
+            },
+            bloqueo: true
+        });
+    }
+
+    function GrabarSalidaEfec() {
+
+        var nMontoSalida = $("#txtMonSalida").val();
+        var cMotOtro = $("#txtMotOtro").val();
+
+        $.fn.Conexion({
+            direccion: "/MovCaja/RegistrarSalidaEfe",
+            datos: { "nMontoSalida": nMontoSalida, "cMotOtro": cMotOtro },
+            terminado: function (data, textStatus, jqXHR) {
+                Resultado(data);
+            },
+            bloqueo: true
+        });
+    }
+
+    function Resultado(dato) {
+        if (dato != -1) {
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró la salida de efectivo", funcionAceptar: vista("#target1") });
+        } else {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+        }
+    }
+
+    function GrabarEntradaEfec() {
+
+        var nMontoEntrada = $("#txtMonEnt").val();
+
+        $.fn.Conexion({
+            direccion: "/MovCaja/RegistrarEntradaEfe",
+            datos: { "nMontoEntrada": nMontoEntrada },
+            terminado: function (data, textStatus, jqXHR) {
+                ResultadoE(data);
+            },
+            bloqueo: true
+        });
+    }
+
+    function ResultadoE(dato) {
+        if (dato != -1) {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el ingreso de efectivo", funcionAceptar: vista("#target1") });
+        } else {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+        }
+    }
+
+    
+
+    ListarMovCaja();
+
+    function ListarMovCaja() {
+
+        var cMovDesc;
+        var cMovDesc = $("#txtValor").val();
+        cMovDesc = cMovDesc == "" ? null : cMovDesc;
+
+        $.fn.Conexion({
+            direccion: '/MovCaja/BuscarMovCaja',
+            datos: { "cMovDesc": cMovDesc},
+            terminado: function (data) {
+
+                $("#cntListaMovCaja").Tabla({
+                    tblId: "tblMovCaja",
+                    cabecera: "Fecha,Descripción,Entrada,Salida, En Caja",
+                    campos: "dMovFec,cOpeDesc,cMonIng,cMonEgr,cMonActl",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,",
+                    alinear: "L,L,L,L,L",
+                    cantRegVertical: 8,
+                    datos: JSON.parse(data)
+                });
+            }
+        });
+    }
+
+
+
+
+    $("#btnBuscarMov").bind("click", function () {
+        ListarMovCaja();
+    });
+
+
+</script>

@@ -38,6 +38,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@dFechaReg", SqlDbType.DateTime).Value = (object)oNotEnt.dFechaReg ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@dFechaEntrega", SqlDbType.DateTime).Value = (object)oNotEnt.dFechaEntrega ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaSubTotal", SqlDbType.Money).Value = (object)oNotEnt.nNotaSubTotal ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nNotaDescuento", SqlDbType.Money).Value = (object)oNotEnt.nNotaDescuento ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaAnticipo", SqlDbType.Money).Value = (object)oNotEnt.nNotaAnticipo ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaEfectivo", SqlDbType.Money).Value = (object)oNotEnt.nNotaEfectivo ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaCambio", SqlDbType.Money).Value = (object)oNotEnt.nNotaCambio ?? DBNull.Value;
@@ -154,6 +155,7 @@ namespace CHUYAChuya.AccesoDatos
                     int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
 
                     int inNotaAnticipo = oIDataReader.GetOrdinal("nNotaAnticipo");
+                    int inNotaDescuento = oIDataReader.GetOrdinal("nNotaDescuento");
                     int inNotaEfectivo = oIDataReader.GetOrdinal("nNotaEfectivo");
                     int inNotaCambio = oIDataReader.GetOrdinal("nNotaCambio");
 
@@ -173,6 +175,7 @@ namespace CHUYAChuya.AccesoDatos
                         oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
 
                         oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                        oNotaEntrega.nNotaDescuento = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaDescuento]);
                         oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaEfectivo]);
                         oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaCambio]);
 

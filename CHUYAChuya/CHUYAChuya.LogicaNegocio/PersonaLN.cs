@@ -34,10 +34,14 @@ namespace CHUYAChuya.LogicaNegocio
             return oPersonaAD.ListaClientes();
         }
 
-
         public List<Persona> BuscarClientes(string cPersDOI, string cNombre)
         {
             return oPersonaAD.BuscarClientes(cPersDOI, cNombre);
+        }
+
+        public List<Persona> BuscarProveedores(string cPersRUC, string cNombre)
+        {
+            return oPersonaAD.BuscarProveedores(cPersRUC, cNombre);
         }
 
 

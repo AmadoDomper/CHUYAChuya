@@ -16,6 +16,7 @@ namespace CHUYAChuya.EntidadesNegocio
         private DateTime? _dFechaReg;
         private DateTime? _dFechaEntrega;
         private decimal _nNotaSubTotal;
+        private decimal _nNotaDescuento;
         private decimal _nNotaAnticipo;
         private decimal _nNotaEfectivo;
         private decimal _nNotaCambio;
@@ -71,6 +72,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _nNotaSubTotal; }
             set { _nNotaSubTotal = value; }
+        }
+
+        [JsonProperty(PropertyName = "nNotaDes")]
+        public decimal nNotaDescuento
+        {
+            get { return _nNotaDescuento; }
+            set { _nNotaDescuento = value; }
         }
 
         [JsonProperty(PropertyName = "nNotaAnt")]

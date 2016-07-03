@@ -115,6 +115,41 @@ namespace CHUYAChuya.AccesoDatos
             return ListaClientes;
         }
 
+        public List<Persona> BuscarProveedores(string cPersDOI, string cNombre)
+        {
+            List<Persona> ListaProveedores = new List<Persona>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarProveedores);
+            oDatabase.AddInParameter(oDbCommand, "@cPersRUC", DbType.String, (object)cPersDOI ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cPersDesc", DbType.String, (object)cNombre ?? DBNull.Value);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int inPersId = oIDataReader.GetOrdinal("nPersId");
+                int icPersNombre = oIDataReader.GetOrdinal("cNombre");
+                int icRUC = oIDataReader.GetOrdinal("cRUC");
+                int icPersTelefono1 = oIDataReader.GetOrdinal("cPersTelefono1");
+                int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
+
+                while (oIDataReader.Read())
+                {
+                    Persona oPersona = new Persona();
+
+                    oPersona.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
+                    oPersona.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNombre]);
+                    oPersona.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icRUC]);
+                    oPersona.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
+                    oPersona.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
+
+                    ListaProveedores.Add(oPersona);
+                }
+            }
+            return ListaProveedores;
+        }
+
+
+        
+
 
 
     }

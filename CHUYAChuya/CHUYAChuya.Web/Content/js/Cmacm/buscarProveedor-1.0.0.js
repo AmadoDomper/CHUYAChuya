@@ -1,7 +1,7 @@
 (function ($)
 {
-    var lstBuscaPers = [];
-    $.fn.BuscarPersona = function (m)
+    var lstBuscaProv = [];
+    $.fn.BuscarProveedor = function (m)
     {
         m = m || {};
         /*
@@ -17,8 +17,8 @@
         //m["terminado"] = m["terminado"] || function () { };
         m.error = m.error || function () { };
 
-        var tablaId = "tblPersonas";
-        var btnAceptar = "#vntBuscaPersona #btnPersAceptar";
+        var tablaId = "tblProveedor";
+        var btnAceptar = "#vntBuscaProveedor #btnProvAceptar";
         var tabla_Id = "#" + tablaId;
         var buscarId = "txtBuscar";
         var buscar_Id = "#" + buscarId;
@@ -28,36 +28,36 @@
         } else {
             BuscarClientes(m.valor);
             
-            if (lstBuscaPers.length == 1) {
+            if (lstBuscaProv.length == 1) {
                 Aceptar(0);
             } else {
-                CrearVentana(m.valor, lstBuscaPers);
+                CrearVentana(m.valor, lstBuscaProv);
             }
         }
 
         function CrearVentana(valor,lista) {
             $.fn.Ventana({
-                id: "vntBuscaPersona",
-                titulo: "Buscar Persona",
+                id: "vntBuscaProveedor",
+                titulo: "Buscar Proveedor",
                 tamano: "lg"
             });
 
-            var html = '<div class="row"><div class="col-xs-12 col-sm-9 col-md-12 col-lg-12"><div class="form-inline ng-pristine ng-valid"><input id="txtBuscar" type="text" onclick="this.select();" class="form-control " placeholder="Buscar cliente..." tabindex="1" style="border-bottom-width: 1px;margin-bottom: 10px;width: 70%;"><button id="btnBuscar" type="button" style="border-bottom-width: 1px;margin-left: 5px;margin-bottom: 10px;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-search"></span></button></div></div><div class="row"><div id="' + 'cntBuscarPersona' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div><div class="row"><div class="col-md-3 col-md-offset-9 text-right"><button id="btnPersAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnPersCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div>';
-            $("#vntBuscaPersona .panel-body").html(html);
+            var html = '<div class="row"><div class="col-xs-12 col-sm-9 col-md-12 col-lg-12"><div class="form-inline ng-pristine ng-valid"><input id="txtBuscar" type="text" onclick="this.select();" class="form-control " placeholder="Buscar cliente..." tabindex="1" style="border-bottom-width: 1px;margin-bottom: 10px;width: 70%;"><button id="btnBuscar" type="button" style="border-bottom-width: 1px;margin-left: 5px;margin-bottom: 10px;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-search"></span></button></div></div><div class="row"><div id="' + 'cntBuscarProveedor' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div><div class="row"><div class="col-md-3 col-md-offset-9 text-right"><button id="btnProvAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnProvCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div>';
+            $("#vntBuscaProveedor .panel-body").html(html);
 
             var focus = function () { $(buscar_Id).focus().select(); };
             setTimeout(focus(), 500);
             CrearTabla(lista);
             $("#txtBuscar").val(valor);
-            $('#vntBuscaPersona').modal('show');
+            $('#vntBuscaProveedor').modal('show');
         }
 
         function Aceptar(index) {
             if (index == -1) {
-                $.fn.Mensaje({ mensaje: "No se ha seleccionado ninguna persona", tamano: "sm" });
+                $.fn.Mensaje({ mensaje: "No se ha seleccionado ninguna proveedor", tamano: "sm" });
                 $(buscar_Id).focus();
             } else {
-                m["funcionAceptar"](lstBuscaPers[index]);
+                m["funcionAceptar"](lstBuscaProv[index]);
             }
         }
 
@@ -67,7 +67,7 @@
             Aceptar(index);
         });
 
-        $("#btnPersCancelar").bind("click", function ()
+        $("#btnProvCancelar").bind("click", function ()
         {
             m["funcionCancelar"]();
         });
@@ -145,7 +145,7 @@
         if ($("#" + tablaId).find("tr.seleccionado").index() == -1) {
             var valor = $("#txtBuscar").val();
             BuscarClientes(valor);
-            CrearTabla(lstBuscaPers);
+            CrearTabla(lstBuscaProv);
         }
         else {
             $(btnAceptar).click();
@@ -153,47 +153,47 @@
     }
 
     function BuscarClientes(valor) {
-        var cPersDOI, cNombre;
-                isNaN(valor) ? cNombre = valor : cPersDOI = valor;
+        var cProvRUC, cNombre;
+        isNaN(valor) ? cNombre = valor : cProvRUC = valor;
                 $.fn.Conexion({
-                    direccion: '/Cliente/BuscarClientes',
-                    datos: { "cPersDOI": cPersDOI, "cNombre": cNombre },
+                    direccion: '/Cliente/BuscarProveedores',
+                    datos: { "cProvRUC": cProvRUC, "cNombre": cNombre },
                     async: false,
                     terminado: function (data) {
-                        lstBuscaPers = JSON.parse(data);
+                        lstBuscaProv = JSON.parse(data);
                     },
                     error: function (v, s) { $.fn.Mensaje({ mensaje: "Realizar la busqueda nuevamente" }); }
                 });
     }
 
     function CrearTabla(lista) {
-        $("#cntBuscarPersona").Tabla({
-            tblId: "tblPersonas",
+        $("#cntBuscarProveedor").Tabla({
+            tblId: "tblProveedor",
             scrollVertical: "Si",
             cantRegVertical: 5,
-            cabecera: "Nombre,Sexo,DOI,Tipo,Tel&eacute;fono,Direcci&oacute;n",
-            campos: "nom,sexo,doi,tipo,tel1,direc",
-            empty: "La persona no se encuentra registrada",
+            cabecera: "Nombre,DOI,Tel&eacute;fono,Direcci&oacute;n",
+            campos: "nom,doi,tel1,direc",
+            empty: "El proveedor no se encuentra registrado",
             datos: lista
         });
         IniciaTabla();
     }
 
     function IniciaTabla() {
-        if (lstBuscaPers.length == 0) {
-            $("#btnPersAceptar").addClass("disabled");
+        if (lstBuscaProv.length == 0) {
+            $("#btnProvAceptar").addClass("disabled");
         } else {
-            $("#btnPersAceptar").removeClass("disabled");
-            $("#tblPersonas").parent().scrollTop(0);
+            $("#btnProvAceptar").removeClass("disabled");
+            $("#tblProveedor").parent().scrollTop(0);
 
-            $("#tblPersonas tbody tr").bind({
+            $("#tblProveedor tbody tr").bind({
                 "dblclick": function () {
-                    $("#btnPersAceptar").click();
+                    $("#btnProvAceptar").click();
                 }
             });
 
             $(".seleccionado").bind("click", function () {
-                $("#btnPersAceptar").click();
+                $("#btnProvAceptar").click();
             });
         }
     }
