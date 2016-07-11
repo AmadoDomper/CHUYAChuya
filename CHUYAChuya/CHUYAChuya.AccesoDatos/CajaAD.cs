@@ -246,5 +246,149 @@ namespace CHUYAChuya.AccesoDatos
             return ListaMovCaja;
         }
 
+        //CORTE DE CAJA
+
+
+
+        public Corte CargaDetalleCorte(string cUsuario, DateTime dFecha)
+        {
+            Corte oDetalleCorte = new Corte();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaDetalleCorte);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int inCajaInicio = oIDataReader.GetOrdinal("nCajaInicio");
+                int inCajaEntradaEfectivo = oIDataReader.GetOrdinal("nCajaEntradaEfectivo");
+                int inEntTotal = oIDataReader.GetOrdinal("nEntTotal");
+                int inCajaNotaAnticipo = oIDataReader.GetOrdinal("nCajaNotaAnticipo");
+                int inCajaNotaPagadas = oIDataReader.GetOrdinal("nCajaNotaPagadas");
+                int inPagoProvl = oIDataReader.GetOrdinal("nPagoProv");
+                int inSalidaOtro = oIDataReader.GetOrdinal("nSalidaOtro");
+                int inCajaTotal = oIDataReader.GetOrdinal("nCajaTotal");
+
+                while (oIDataReader.Read())
+                {
+                    oDetalleCorte.nCajaInicio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaInicio]);
+                    oDetalleCorte.nCajaEntradaEfectivo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaEntradaEfectivo]);
+                    oDetalleCorte.nEntTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inEntTotal]);
+                    oDetalleCorte.nCajaNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaAnticipo]);
+                    oDetalleCorte.nCajaNotaPagadas = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaPagadas]);
+                    oDetalleCorte.nPagoProv = DataUtil.DbValueToDefault<decimal>(oIDataReader[inPagoProvl]);
+                    oDetalleCorte.nSalidaOtro = DataUtil.DbValueToDefault<decimal>(oIDataReader[inSalidaOtro]);
+                    oDetalleCorte.nCajaTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
+                    oDetalleCorte.oListaNotaPag = ListaNotasPagada(cUsuario, dFecha);
+                    oDetalleCorte.oListaNotAnt = ListaNotasAnticipo(cUsuario, dFecha);
+                    oDetalleCorte.oListaPagoProv = ListaPagoProveedores(cUsuario, dFecha);
+                }
+            }
+            return oDetalleCorte;
+        }
+
+
+        public List<NotaEntregaL> ListaNotasPagada(string cUsuario, DateTime dFecha)
+        {
+            List<NotaEntregaL> ListaNotasPagada = new List<NotaEntregaL>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaNotasPagadas);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
+                int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
+                int inNotaDescuento = oIDataReader.GetOrdinal("nNotaDescuento");
+                int inNotaAnticipo = oIDataReader.GetOrdinal("nNotaAnticipo");
+                int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
+
+                while (oIDataReader.Read())
+                {
+                    NotaEntregaL NotaAnticipo = new NotaEntregaL();
+
+                    NotaAnticipo.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
+                    NotaAnticipo.nNotaEntId = DataUtil.DbValueToDefault<int>(oIDataReader[inNotaEntId]);
+                    NotaAnticipo.cPersDesc = DataUtil.DbValueToDefault<string>(oIDataReader[icPersDesc]);
+                    NotaAnticipo.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
+                    NotaAnticipo.nNotaDescuento = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaDescuento]);
+                    NotaAnticipo.nNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                    NotaAnticipo.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
+
+                    ListaNotasPagada.Add(NotaAnticipo);
+                }
+            }
+            return ListaNotasPagada;
+        }
+
+        public List<NotaEntregaL> ListaNotasAnticipo(string cUsuario, DateTime dFecha)
+        {
+            List<NotaEntregaL> ListaNotasAnticipo = new List<NotaEntregaL>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaNotasAnticipo);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
+                int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
+                int inNotaDescuento = oIDataReader.GetOrdinal("nNotaDescuento");
+                int inNotaAnticipo = oIDataReader.GetOrdinal("nNotaAnticipo");
+                int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
+
+                while (oIDataReader.Read())
+                {
+                    NotaEntregaL NotaAnticipo = new NotaEntregaL();
+
+                    NotaAnticipo.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
+                    NotaAnticipo.nNotaEntId = DataUtil.DbValueToDefault<int>(oIDataReader[inNotaEntId]);
+                    NotaAnticipo.cPersDesc = DataUtil.DbValueToDefault<string>(oIDataReader[icPersDesc]);
+                    NotaAnticipo.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
+                    NotaAnticipo.nNotaDescuento = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaDescuento]);
+                    NotaAnticipo.nNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                    NotaAnticipo.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
+
+                    ListaNotasAnticipo.Add(NotaAnticipo);
+                }
+            }
+            return ListaNotasAnticipo;
+        }
+
+        public List<PagoProveedores> ListaPagoProveedores(string cUsuario, DateTime dFecha)
+        {
+            List<PagoProveedores> ListaProveedores = new List<PagoProveedores>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaPagoProveedores);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int idMovFecha = oIDataReader.GetOrdinal("dMovFecha");
+                int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                int inMonto = oIDataReader.GetOrdinal("nMonto");
+
+                while (oIDataReader.Read())
+                {
+                    PagoProveedores Proveedores = new PagoProveedores();
+
+                    Proveedores.dMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]);
+                    Proveedores.cPersDesc = DataUtil.DbValueToDefault<string>(oIDataReader[icPersDesc]);
+                    Proveedores.nMonto = DataUtil.DbValueToDefault<decimal>(oIDataReader[inMonto]);
+
+                    ListaProveedores.Add(Proveedores);
+                }
+            }
+            return ListaProveedores;
+        }
+
+        //END - CORTE DE CAJA
+
     }
 }

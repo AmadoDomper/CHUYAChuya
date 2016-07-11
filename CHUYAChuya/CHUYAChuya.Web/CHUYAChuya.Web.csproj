@@ -111,8 +111,8 @@
   <ItemGroup>
     <Compile Include="Controllers\Base\BaseController.cs" />
     <Compile Include="Controllers\Base\LogInController.cs" />
+    <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
-    <Compile Include="Controllers\CorteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\MovCajaController.cs" />
@@ -315,7 +315,10 @@
     <Content Include="Views\MovCaja\MovCaja.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Corte\Corte.cshtml" />
+    <Content Include="Views\Caja\Caja.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Caja\CorteCaja.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

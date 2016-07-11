@@ -63,5 +63,13 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_BuscarMovCaja = "stp_sel_BuscarMovCaja";
         #endregion
 
+
+        #region CorteDeCaja
+        public const string stp_sel_ListaNotasAnticipo = "stp_sel_ListaNotasAnticipo";
+        public const string stp_sel_ListaNotasPagadas = "stp_sel_ListaNotasPagadas";
+        public const string stp_sel_ListaPagoProveedores = "stp_sel_ListaPagoProveedores";
+        public const string stp_sel_ListaDetalleCorte = "stp_sel_ListaDetalleCorte";
+        #endregion
+
     }
 }

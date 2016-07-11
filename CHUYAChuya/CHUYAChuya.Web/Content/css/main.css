@@ -249,6 +249,14 @@ button, input, optgroup, select, textarea {
     height: 65px;
 }
 
+.hr-line-dashed {
+  border-top: 1px dashed #e7eaec;
+  color: #ffffff;
+  background-color: #ffffff;
+  height: 1px;
+  margin: 10px 0;
+}
+
 @media (max-width: 979px) {
     .logo {
         height: 45px;

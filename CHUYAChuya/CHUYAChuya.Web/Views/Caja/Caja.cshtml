@@ -254,7 +254,7 @@
         var dFechaEmi = $("#txtFechaEmi").val();
 
         $.fn.Conexion({
-            direccion: "/MovCaja/RegistrarSalidaEfePagoProv",
+            direccion: "/Caja/RegistrarSalidaEfePagoProv",
             datos: { "nPersId": nPersId, "cComprobante": cComprobante, "nMontoSalida": nMontoSalida, "nTipoComp": nTipoComp, "dFechaEmi": dFechaEmi },
             terminado: function (data, textStatus, jqXHR) {
                 Resultado(data);
@@ -269,7 +269,7 @@
         var cMotOtro = $("#txtMotOtro").val();
 
         $.fn.Conexion({
-            direccion: "/MovCaja/RegistrarSalidaEfe",
+            direccion: "/Caja/RegistrarSalidaEfe",
             datos: { "nMontoSalida": nMontoSalida, "cMotOtro": cMotOtro },
             terminado: function (data, textStatus, jqXHR) {
                 Resultado(data);
@@ -291,7 +291,7 @@
         var nMontoEntrada = $("#txtMonEnt").val();
 
         $.fn.Conexion({
-            direccion: "/MovCaja/RegistrarEntradaEfe",
+            direccion: "/Caja/RegistrarEntradaEfe",
             datos: { "nMontoEntrada": nMontoEntrada },
             terminado: function (data, textStatus, jqXHR) {
                 ResultadoE(data);
@@ -319,7 +319,7 @@
         cMovDesc = cMovDesc == "" ? null : cMovDesc;
 
         $.fn.Conexion({
-            direccion: '/MovCaja/BuscarMovCaja',
+            direccion: '/Caja/BuscarMovCaja',
             datos: { "cMovDesc": cMovDesc },
             terminado: function (data) {
 
@@ -337,15 +337,12 @@
         });
     }
 
-
-
-
     $("#btnBuscarMov").bind("click", function () {
         ListarMovCaja();
     });
 
     $("#btnCorteCaja").bind("click", function () {
-        $("#contenido").load("/Caja/Caja");
+        $("#contenido").load("/Caja/CorteCaja");
     });
     
 

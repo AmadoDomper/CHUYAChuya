@@ -30,7 +30,7 @@
 
 </head>
 <body class="metro">
-@*                <header>
+    @*                <header>
                 <div class="container">
                     <div class="row">
                         <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
@@ -71,24 +71,23 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div id="contenido" class="row">
+            <div id="contenido">
                 @RenderBody()
-            </div>
-@*            <div class="row">
+                @*            <div class="row">
                 <div class="col-lg-12">
                     <h1 class="page-header">Blank</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->*@
-        </div>  
-        <!-- /#page-wrapper -->
-    </div>
-    <!-- /#wrapper -->
+            </div>
+            <!-- /#page-wrapper -->
+        </div>
+        <!-- /#wrapper -->
 
 
 
-@*            <nav class="navbar navbar-default">
+        @*            <nav class="navbar navbar-default">
                 <div class="navbar-header">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
                         <span class="sr-only">Cambiar Navegacion</span>
@@ -114,41 +113,41 @@
                     </ul>
                 </div>
             </nav>*@
-@*            <div id="contenido">
+        @*            <div id="contenido">
             @RenderBody()
             </div>*@
 
-@*            <footer class="color4">
+        @*            <footer class="color4">
                 <div class="container">
                     <p>CHUYAChuya. - Derechos Reservados © @DateTime.Now.Year</p>
                 </div>
             </footer>*@
 
-    <script src="@Url.Content("~/Content/js/vendor/jquery-1.11.0.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/vendor/modernizr-2.6.2.min.js")"></script>
-    <script src="@Url.Content("~/Content/js/vendor/bootstrap.min-x.js")"></script>
-    <script src="@Url.Content("~/Content/js/main.js")"></script>
-    <script src="@Url.Content("~/Content/js/vendor/metisMenu.js")"></script>
-    <script src="@Url.Content("~/Content/js/vendor/sb-admin-2.js")"></script>    
-    <script type="text/javascript" src="@Url.Content("~/Content/extend/masked/jquery.maskedinput.min.js")" charset="UTF-8"></script>
-    <script type="text/javascript" src="@Url.Content("~/Content/extend/moment/moment-with-locales.js")" charset="UTF-8"></script>
-    <script type="text/javascript" src="@Url.Content("~/Content/extend/datepickerTime/js/bootstrap-datetimepicker.js")" charset="UTF-8"></script>
-    <script type="text/javascript" src="@Url.Content("~/Content/extend/datepicker/js/bootstrap-datepicker.js")" charset="UTF-8"></script>
-    <script type="text/javascript" src="@Url.Content("~/Content/extend/datepicker/locales/bootstrap-datepicker.es.min.js")" charset="UTF-8"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/conexion-1.0.0.js")"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/ventana-1.0.0.js")"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/tabla-1.0.0.js")"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/buscarPersona-1.0.0.js")"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/buscarProducto-1.0.0.js")"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/buscarProveedor-1.0.0.js")"></script>
-    <script src="@Url.Content("~/Content/js/Cmacm/mensaje-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/vendor/jquery-1.11.0.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/vendor/modernizr-2.6.2.min.js")"></script>
+        <script src="@Url.Content("~/Content/js/vendor/bootstrap.min-x.js")"></script>
+        <script src="@Url.Content("~/Content/js/main.js")"></script>
+        <script src="@Url.Content("~/Content/js/vendor/metisMenu.js")"></script>
+        <script src="@Url.Content("~/Content/js/vendor/sb-admin-2.js")"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/extend/masked/jquery.maskedinput.min.js")" charset="UTF-8"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/extend/moment/moment-with-locales.js")" charset="UTF-8"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/extend/datepickerTime/js/bootstrap-datetimepicker.js")" charset="UTF-8"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/extend/datepicker/js/bootstrap-datepicker.js")" charset="UTF-8"></script>
+        <script type="text/javascript" src="@Url.Content("~/Content/extend/datepicker/locales/bootstrap-datepicker.es.min.js")" charset="UTF-8"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/conexion-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/ventana-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/tabla-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/buscarPersona-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/buscarProducto-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/buscarProveedor-1.0.0.js")"></script>
+        <script src="@Url.Content("~/Content/js/Cmacm/mensaje-1.0.0.js")"></script>
 
-    <script type="text/javascript">
-        $("nav a").click(function () {
-            if ($(this).attr("href") != "#") {
-                $("#contenido").load($(this).attr("data-url"));//.substring(1));
-            }
-        });
-    </script>
+        <script type="text/javascript">
+            $("nav a").click(function () {
+                if ($(this).attr("href") != "#") {
+                    $("#contenido").load($(this).attr("data-url"));//.substring(1));
+                }
+            });
+        </script>
 </body>
 </html>

@@ -25,6 +25,8 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
+        //MOVIMIENTO DE CAJA
+
         [RequiresAuthenticationAttribute]
         public JsonResult RegistrarSalidaEfePagoProv(int nPersId, decimal nMontoSalida, string cComprobante, byte nTipoComp, DateTime dFechaEmi)
         {
@@ -69,6 +71,8 @@ namespace CHUYAChuya.Web.Controllers
             ListasMovCaja = oCajaLN.BuscarMovCaja(cMovDesc);
             return Json(JsonConvert.SerializeObject(ListasMovCaja, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
+
+        //END MOVIMIENTO DE CAJA
 
     }
 }

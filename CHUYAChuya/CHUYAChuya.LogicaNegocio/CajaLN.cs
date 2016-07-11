@@ -36,5 +36,15 @@ namespace CHUYAChuya.LogicaNegocio
         {
             return oCajaAD.BuscarMovCaja(cMovDesc);
         }
+
+
+        //CORTE DE CAJA
+
+        public Corte CargaDetalleCorte(string cUsuario, DateTime dFecha)
+        {
+            return oCajaAD.CargaDetalleCorte(cUsuario, dFecha);
+        }
+
+        //END CORTE CAJA
     }
 }

@@ -42,13 +42,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="NotaEntregaL.cs" />
     <Compile Include="Constante.cs" />
+    <Compile Include="Corte.cs" />
     <Compile Include="MovCaja.cs" />
     <Compile Include="NotaEntProd.cs" />
     <Compile Include="Documento.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="NotaEntrega.cs" />
     <Compile Include="NotaEntregaProductoCollection.cs" />
+    <Compile Include="PagoProveedores.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="PersonaJur.cs" />
     <Compile Include="PersonaNat.cs" />
