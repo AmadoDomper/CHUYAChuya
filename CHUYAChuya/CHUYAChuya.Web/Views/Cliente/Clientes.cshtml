@@ -31,7 +31,7 @@
         <div class="panel-body" style="display: block;">
             <div id="btnCliente" class="btn-group btn-group-justified m-b-10 m-t-5" role="group">
                 <a hre="#frmClienteNat" class="btn btn-default" role="button">Cliente Natural</a>
-                <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Juridico</a>
+                <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Jurídico</a>
             </div>
             <div>
                 <form action="/Cliente/RegistrarPersNatural" autocomplete="off" id="frmClienteNat" method="post" class="form-horizontal ng-pristine ng-valid">
@@ -120,39 +120,39 @@
                     <div class="row m-b-10 m-t-10">
                         <div class="text-center">
                             <button id="btnGrabarNat" type="submit" class="btn btn-sm btn-primary m-r-5">Grabar</button>
-                            <button id="btnSalCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                            <button id="btnCanNat" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
                         </div>
                     </div>
                 </form>
                 <form action="/Cliente/RegistrarPersJuridica" autocomplete="off" id="frmClienteJur" style="display: none;" method="post" class="form-horizontal ng-pristine ng-valid">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Empresa</label>
-                        <div class="col-md-9">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Empresa</label>
+                        <div class="col-md-7">
                             <input id="hdnPersJurId" type="hidden" name="PersJur.oPers.nPersId" />
-                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control" placeholder="Default input">
+                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Representante</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Representante</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">RUC</label>
-                        <div class="col-md-6">
-                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">RUC</label>
+                        <div class="col-md-3">
+                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Fecha de Constitución</label>
-                        <div class="col-md-6">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Fecha de Constitución</label>
+                        <div class="col-md-3">
                             <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="dd/mm/yyyy">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Actividad</label>
-                        <div class="col-md-5">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Actividad</label>
+                        <div class="col-md-4">
                             <select id="cmbActividad" name="PersJur.oPersJurActividad.cConstanteID" class="form-control">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -162,34 +162,34 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Email</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtJurEmail" name="PersJur.oPers.cPersEmail" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Email</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtJurEmail" name="PersJur.oPers.cPersEmail" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Teléfono 1</label>
-                        <div class="col-md-5">
-                            <input type="text" id="txtJurTel1" name="PersJur.oPers.cPersTelefono1" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Teléfono 1</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtJurTel1" name="PersJur.oPers.cPersTelefono1" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Teléfono 2</label>
-                        <div class="col-md-5">
-                            <input type="text" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Teléfono 2</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Dirección</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Dirección</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Ciudad</label>
-                        <div class="col-md-5">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Ciudad</label>
+                        <div class="col-md-4">
                             <select id="cmbJurCiudad" class="form-control">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -199,9 +199,9 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Distrito</label>
-                        <div class="col-md-5">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Distrito</label>
+                        <div class="col-md-4">
                             <select id="cmbJurDistrito" name="PersJur.oPers.oPersUbigeo.cConstanteID" class="form-control">
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -211,9 +211,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-9">
-                            <input id="btnGrabarJur" type="button" class="btn btn-sm btn-success" value="Grabar" />
+                    <div class="row m-b-10 m-t-10">
+                        <div class="text-center">
+                            <button id="btnGrabarJur" type="submit" class="btn btn-sm btn-primary m-r-5">Grabar</button>
+                            <button id="btnCanJur" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
                         </div>
                     </div>
                 </form>
