@@ -2,85 +2,88 @@
     Layout = null;
 }
 <div class="col-lg-11 col-lg-offset-0-5">
-  @*  <div id="">*@
-        <h3 class="text-center">PRODUCTOS</h3>
-        <input id="hdnEstado" type="hidden" style="display: block;" />
+    @*  <div id="">*@
+    <h3 class="text-center">PRODUCTOS</h3>
+    <input id="hdnEstado" type="hidden" style="display: block;" />
 
-        <div id="target1" class="panel move panel-inverse active">
-            <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Productos</div>
-            <div class="panel-body">
-
+    <div id="target1" class="panel move panel-inverse active">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Productos</div>
+        <div class="panel-body">
+            <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <input href="#target2" id="btnNuevoProducto" type="button" class="btn btn-sm btn-success target" value="Nuevo Producto" />
                 </div>
-
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div id="cntListaProductos" class="table-responsive">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        @*Formulario Producto*@
-        <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
-            <div class="panel-heading">
-                <h4 class="panel-title">Nuevo Producto</h4>
-            </div>
-            <div class="panel-body" style="display: block;">
-                <div>
-                    <form action="/Producto/RegistrarProducto" id="frmProducto" method="post" class="form-horizontal ng-pristine ng-valid">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Codigo</label>
-                            <div class="col-md-9">
-                                <input id="hdnProd" type="hidden" name="Producto.nProdId" />
-                                <input type="text" id="txtCod" class="form-control" placeholder="Default input" disabled>
+    @*Formulario Producto*@
+    <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
+        <div class="panel-heading">
+            <h4 class="panel-title">Nuevo Producto</h4>
+        </div>
+        <div class="panel-body" style="display: block;">
+            <div>
+                <form action="/Producto/RegistrarProducto" id="frmProducto" method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Codigo</label>
+                        <div class="col-md-9">
+                            <input id="hdnProd" type="hidden" name="Producto.nProdId" />
+                            <input type="text" id="txtCod" class="form-control" placeholder="Default input" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Descripción</label>
+                        <div class="col-md-9">
+                            <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Precio Unitario</label>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">S/.</span>
+                                <input type="text" id="txtPrecioUnit" name="Producto.nProdPrecioUnit" class="form-control" placeholder="0.00">
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Descripción</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control" placeholder="Default input">
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Medida</label>
+                        <div class="col-md-5">
+                            <select id="cmbMedida" name="Producto.oProdMedida.cConstanteID" class="form-control">
+                                <option value="1">Kg</option>
+                                <option value="2">Prenda</option>
+                            </select>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Precio Unitario</label>
-                            <div class="col-md-6">
-                                <div class="input-group">
-                                    <span class="input-group-addon">S/.</span>
-                                    <input type="text" id="txtPrecioUnit" name="Producto.nProdPrecioUnit" class="form-control" placeholder="0.00">
-                                </div>
-                            </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Servicio</label>
+                        <div class="col-md-9">
+                            <label class="checkbox-inline">
+                                <input id="chkLav" type="checkbox" name="Producto.bProdSerLavado" value="true">Lavado</label>
+                            <label class="checkbox-inline">
+                                <input id="chkSec" type="checkbox" name="Producto.bProdSerSecado" value="true">Secado</label>
+                            <label class="checkbox-inline">
+                                <input id="chkPla" type="checkbox" name="Producto.bProdSerPlanchado" value="true">Planchado</label>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Medida</label>
-                            <div class="col-md-5">
-                                <select id="cmbMedida" name="Producto.oProdMedida.cConstanteID" class="form-control">
-                                    <option value="1">Kg</option>
-                                    <option value="2">Prenda</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Servicio</label>
-                            <div class="col-md-9">
-                                <label class="checkbox-inline">
-                                    <input id="chkLav" type="checkbox" name="Producto.bProdSerLavado" value="true">Lavado</label>
-                                <label class="checkbox-inline">
-                                    <input id="chkSec" type="checkbox" name="Producto.bProdSerSecado" value="true">Secado</label>
-                                <label class="checkbox-inline">
-                                    <input id="chkPla" type="checkbox" name="Producto.bProdSerPlanchado" value="true">Planchado</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-group">
 
-                            <div class="col-md-9">
-                                <input id="btnGrabarProducto" type="button" class="btn btn-sm btn-success" value="Grabar" />
-                            </div>
+                        <div class="col-md-9">
+                            <input id="btnGrabarProducto" type="button" class="btn btn-sm btn-success" value="Grabar" />
                         </div>
-                    </form>
-                </div>
+                    </div>
+                </form>
             </div>
         </div>
+    </div>
 
 
 
@@ -126,41 +129,40 @@
             direccion: '/Producto/ListaProductos',
             datos: {},
             terminado: function (data) {
-
                 $("#cntListaProductos").Tabla({
                     tblId: "tblProducto",
                     cabecera: "Codígo,Descripción,Precio Unit,Medida,Lavado,Secado,Planchado,Fecha Reg.",
                     campos: "nPrId,cPrDesc,nPrPrecU,oPrMed.nom,bPrSerLav,bPrSerSec,bPrSerPla,dPrReg",
                     scrollVertical: "Si",
-                    tipoCampo : ",,D,,,,,,",
+                    tipoCampo: ",,D,,,,,,",
+                    alinear: "C,L,C,C,C,C,C,C",
                     cantRegVertical: 15,
+                    edit: true,
+                    dblClick: true,
+                    editEvent: function (fila) {
+                        var nProdId = fila.find("td").eq(0).html();
+                        $("#hdnEstado").val("E");
+                        $('input.target')[0].click();
+
+                        $.fn.Conexion({
+                            direccion: '/Producto/CargoDatosProducto',
+                            datos: { "nProdId": nProdId },
+                            terminado: function (data, textStatus, jqXHR) {
+                                var oPro = JSON.parse(data);
+
+                                $("#hdnProd").val(oPro.nPrId);
+                                $("#txtCod").val(oPro.nPrId);
+                                $("#txtDesc").val(oPro.cPrDesc);
+                                $("#txtPrecioUnit").val(number_format(oPro.nPrPrecU, 2));
+                                $("#cmbMedida").val(oPro.oPrMed.id);
+                                $("#chkLav").prop("checked", oPro.bPrSerLav);
+                                $("#chkPla").prop("checked", oPro.bPrSerPla);
+                                $("#chkSec").prop("checked", oPro.bPrSerSec);
+                            },
+                            bloqueo: false
+                        });
+                    },
                     datos: JSON.parse(data)
-                });
-
-
-                $("#tblProducto tbody tr").bind("dblclick", function () {
-
-                    var nProdId = $(this).find("td").eq(0).html();
-                    $("#hdnEstado").val("E");
-                    $('input.target')[0].click();
-
-                    $.fn.Conexion({
-                        direccion: '/Producto/CargoDatosProducto',
-                        datos: { "nProdId": nProdId },
-                        terminado: function (data, textStatus, jqXHR) {
-                            var oPro = JSON.parse(data);
-
-                            $("#hdnProd").val(oPro.nPrId);
-                            $("#txtCod").val(oPro.nPrId);
-                            $("#txtDesc").val(oPro.cPrDesc);
-                            $("#txtPrecioUnit").val(number_format(oPro.nPrPrecU, 2));
-                            $("#cmbMedida").val(oPro.oPrMed.id);
-                            $("#chkLav").prop("checked", oPro.bPrSerLav);
-                            $("#chkPla").prop("checked", oPro.bPrSerPla);
-                            $("#chkSec").prop("checked", oPro.bPrSerSec);
-                        },
-                        bloqueo: false
-                    });
                 });
             }
         });
