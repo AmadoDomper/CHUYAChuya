@@ -100,7 +100,7 @@
                     }
 
                     if (m.edit) {
-                        html += '<td style="cursor: pointer;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+                        html += '<td style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
                     }
 
                 }
