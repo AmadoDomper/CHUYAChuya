@@ -391,7 +391,6 @@
         direccion: '/Cliente/ListaClientes',
         datos: {},
         terminado: function (data) {
-
             $("#cntListaClientes").Tabla({
                 tblId: "tblClientes",
                 cabecera: "Codígo,Nombre,Sexo,DOI,Tipo,Teléfono,Dirección",
@@ -401,54 +400,47 @@
                 cantRegVertical: 15,
                 edit: true,
                 dblClick: true,
+                editEvent: function (fila) {
+                    var nPersId = fila.find("td").eq(0).html();
+                    var cTipo = fila.find("td").eq(4).html();
+                    $("#hdnEstado").val("E");
+                    $('input.target')[0].click();
+
+                    $.fn.Conexion({
+                        direccion: '/Cliente/CargoDatosCliente',
+                        datos: { "nPersId": nPersId, "cTipo": cTipo },
+                        terminado: function (data, textStatus, jqXHR) {
+                            var oPers = JSON.parse(data);
+
+                            if (cTipo == "N") {
+                                $("#hdnPersNatId").val(oPers.oPers.id);
+                                $("#txtNom").val(oPers.cNom);
+                                $("#txtApe").val(oPers.cApe);
+                                $("#txtDOI").val(oPers.cDOI);
+                                $("#txtFechaNac").val(oPers.dNac);
+                                $("#txtNatEmail").val(oPers.oPers.mail);
+                                $("#txtNatTel1").val(oPers.oPers.tel1);
+                                $("#txtNatTel2").val(oPers.oPers.tel2);
+                                $("#txtNatDir").val(oPers.oPers.direc);
+                            } else if (cTipo == "J") {
+                                $("#hdnPersJurId").val(oPers.oPers.id);
+                                $("#txtEmp").val(oPers.cEmpresa);
+                                $("#txtRep").val(oPers.cRep);
+                                $("#txtRUC").val(oPers.cRUC);
+                                $("#txtFechaConst").val(oPers.dConst);
+                                $("#txtJurEmail").val(oPers.oPers.mail);
+                                $("#txtJurTel1").val(oPers.oPers.tel1);
+                                $("#txtJurTel2").val(oPers.oPers.tel2);
+                                $("#txtJurDir").val(oPers.oPers.direc);
+                            }
+                        },
+                        bloqueo: false
+                    });
+                },
                 datos: JSON.parse(data)
-            });
-
-
-            $("#tblClientes tbody tr").bind("dblclick", function () {
-
-                var nPersId = $(this).find("td").eq(0).html();
-                var cTipo = $(this).find("td").eq(4).html();
-                $("#hdnEstado").val("E");
-                $('input.target')[0].click();
-
-                $.fn.Conexion({
-                    direccion: '/Cliente/CargoDatosCliente',
-                    datos: { "nPersId": nPersId, "cTipo": cTipo },
-                    terminado: function (data, textStatus, jqXHR) {
-                        var oPers = JSON.parse(data);
-
-                        if (cTipo == "N") {
-                            $("#hdnPersNatId").val(oPers.oPers.id);
-                            $("#txtNom").val(oPers.cNom);
-                            $("#txtApe").val(oPers.cApe);
-                            $("#txtDOI").val(oPers.cDOI);
-                            $("#txtFechaNac").val(oPers.dNac);
-                            $("#txtNatEmail").val(oPers.oPers.mail);
-                            $("#txtNatTel1").val(oPers.oPers.tel1);
-                            $("#txtNatTel2").val(oPers.oPers.tel2);
-                            $("#txtNatDir").val(oPers.oPers.direc);
-                        } else if (cTipo == "J") {
-                            $("#hdnPersJurId").val(oPers.oPers.id);
-                            $("#txtEmp").val(oPers.cEmpresa);
-                            $("#txtRep").val(oPers.cRep);
-                            $("#txtRUC").val(oPers.cRUC);
-                            $("#txtFechaConst").val(oPers.dConst);
-                            $("#txtJurEmail").val(oPers.oPers.mail);
-                            $("#txtJurTel1").val(oPers.oPers.tel1);
-                            $("#txtJurTel2").val(oPers.oPers.tel2);
-                            $("#txtJurDir").val(oPers.oPers.direc);
-                        }
-                    },
-                    bloqueo: false
-                });
             });
         }
     });
-
-
-
-
 
     //Registrar Clientes Natural
 
@@ -467,7 +459,6 @@
         });
 
     });
-
 
     //Registrar Cliente Juridico
 
