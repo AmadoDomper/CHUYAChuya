@@ -71,5 +71,9 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ListaDetalleCorte = "stp_sel_ListaDetalleCorte";
         #endregion
 
+        #region AperturaCaja
+        public const string stp_ins_AperturarCaja = "stp_ins_AperturarCaja";
+        #endregion
+
     }
 }

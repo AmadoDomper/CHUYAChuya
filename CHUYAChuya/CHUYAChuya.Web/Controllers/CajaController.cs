@@ -100,6 +100,22 @@ namespace CHUYAChuya.Web.Controllers
         #endregion
         //END CORTE DE CAJA
 
+        //APERTURA DE CAJA
+        #region AperturaCaja
+        public JsonResult RegistrarAperturaCaja(string cUsuOpe, decimal nMontoIni, DateTime dFechaApe)
+        {
+            CajaLN oCajaLN = new CajaLN();
+            string cUsuario = "", cAgencia = "01";
+            int resultado;
+
+            cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            resultado = oCajaLN.RegistrarAperturaCaja(cUsuOpe, nMontoIni, dFechaApe, cUsuario, cAgencia);
+            return Json(resultado);
+        }
+        #endregion
+
+        //END APERTURA DE CAJA
+
 
     }
 }

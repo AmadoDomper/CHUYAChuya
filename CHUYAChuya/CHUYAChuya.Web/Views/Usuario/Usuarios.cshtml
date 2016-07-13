@@ -8,14 +8,16 @@
         <div id="target1" class="panel panel-inverse active">
             <div class="panel-heading">Lista de Usuarios</div>
             <div class="panel-body">
-
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <input href="#target2" id="btnNuevoUsuario" type="button" class="btn btn-sm btn-success target" value="Nuevo Usuario" />
+                <div class="row">
+                    <div class="col-lg-6 ">
+                        <input href="#target2" id="btnNuevoUsuario" type="button" class="btn btn-sm btn-success target" value="Nuevo Usuario" />
+                    </div>
                 </div>
-
-
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div id="cntListaUsuarios" class="table-responsive">
+                <div class="hr-line-dashed"></div>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div id="cntListaUsuarios" class="table-responsive">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,6 +204,7 @@
                 cabecera: "Codígo,Usuario,Nombre,DOI,Teléfono,Dirección",
                 campos: "oPersNat.oPers.id,cUsuNom,oPersNat.oPers.nom,oPersNat.oPers.doi,oPersNat.oPers.tel1,oPersNat.oPers.direc",
                 scrollVertical: "Si",
+                alinear: "C,C,L,C,C,L",
                 cantRegVertical: 8,
                 datos: JSON.parse(data)
             });

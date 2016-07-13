@@ -46,5 +46,13 @@ namespace CHUYAChuya.LogicaNegocio
         }
 
         //END CORTE CAJA
+
+        //APERTURA DE CAJA
+
+        public int RegistrarAperturaCaja(string cUsuarioOpe, decimal nMontoIni, DateTime dFechaApe, string cUsuarioSup, string cAgencia)
+        {
+            return oCajaAD.RegistrarAperturaCaja(cUsuarioOpe,nMontoIni,dFechaApe,cUsuarioSup,cAgencia);
+        }
+        //END APERTURA DE CAJA
     }
 }

@@ -160,10 +160,55 @@
 </div>
 
 
+
+<div class="col-lg-4 col-lg-offset-4">
+    <div id="target4" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
+        <div class="panel-heading">
+            <h4 class="panel-title">Datos de la Sesión de Cobranza</h4>
+        </div>
+        <div class="panel-body" style="display: block;">
+            <div id="frmAperturaCaja" class="form-horizontal ng-pristine ng-valid">
+                <div id="cntApertura">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Fecha</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtFechaApe" name="" class="form-control" readonly="readonly">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Usuario Cajero</label>
+                        <div class="col-md-7">
+                            <select name="status" id="cmbUsuCaj" class="form-control">
+                                <option value="1" selected="">Factura</option>
+                                <option value="2">Ticket</option>
+                                <option value="3">Boleta</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Efectivo Inicio</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtEfeIni" name="" class="form-control" placeholder="0.00">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="text-center">
+                        <button id="btnReApe" type="submit" class="btn btn-sm btn-primary m-r-5">Realizar Apertura</button>
+                        <button id="btnCaApe" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
 
     jQuery(function ($) {
-        $('#txtFechaEmi').datetimepicker({
+        $('#txtFechaEmi,#txtFechaApe').datetimepicker({
             locale: 'es', format: 'DD/MM/YYYY'
         });
 
@@ -344,7 +389,36 @@
     $("#btnCorteCaja").bind("click", function () {
         $("#contenido").load("/Caja/CorteCaja");
     });
-    
+
+
+    //Apertura de Caja
+
+    $("#btnApertura").bind("click", function () {
+        $('#txtFechaApe').val(moment().format("DD/MM/YYYY hh:mm A"));
+    });
+
+
+    $("#btnReApe").bind("click", function () {
+        GrabarAperturaCaja();
+    });
+
+    function GrabarAperturaCaja() {
+
+        var cUsuOpe = $("#cmbUsuCaj").val();
+        var nMontoIni = $("#txtEfeIni").val();
+        var dFechaApe = $("#txtFechaApe").val();
+
+        $.fn.Conexion({
+            direccion: "/Caja/RegistrarAperturaCaja",
+            datos: { "cUsuarioOpe": cUsuOpe, "nMontoIni": nMontoIni, "dFechaApe": dFechaApe },
+            terminado: function (data, textStatus, jqXHR) {
+                Resultado(data);
+            },
+            bloqueo: true
+        });
+    }
+    //End - Apertura de Caja
+
 
 
 </script>

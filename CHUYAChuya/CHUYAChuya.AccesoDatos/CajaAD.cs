@@ -247,9 +247,6 @@ namespace CHUYAChuya.AccesoDatos
         }
 
         //CORTE DE CAJA
-
-
-
         public Corte CargaDetalleCorte(string cUsuario, DateTime dFecha)
         {
             Corte oDetalleCorte = new Corte();
@@ -387,8 +384,49 @@ namespace CHUYAChuya.AccesoDatos
             }
             return ListaProveedores;
         }
-
         //END - CORTE DE CAJA
 
+        //APERTURA DE CAJA
+        public int RegistrarAperturaCaja(string cUsuarioOpe,decimal nMontoIni,DateTime dFechaApe, string cUsuarioSup, string cAgencia)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_AperturarCaja;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@cUsuarioOpe", SqlDbType.VarChar, 4).Value = (object)cUsuarioOpe ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nMontoIni", SqlDbType.Money).Value = (object)nMontoIni ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@dFechaApertura", SqlDbType.DateTime).Value = (object)dFechaApe ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuarioSup", SqlDbType.VarChar, 4).Value = (object)cUsuarioSup ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar, 4).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+
+            }
+            return resultado;
+        }
+
+        //END APERTURA DE CAJA
     }
 }
