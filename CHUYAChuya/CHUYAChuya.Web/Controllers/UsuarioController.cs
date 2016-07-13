@@ -43,7 +43,7 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
-        public JsonResult CargoDatosUsuario(int nPersId, string cDNI)
+        public JsonResult CargarDatosUsuario(int nPersId, string cDNI)
         {
             UsuarioLN oUsuarioLN = new UsuarioLN();
             Usuario oPersNat = new Usuario();

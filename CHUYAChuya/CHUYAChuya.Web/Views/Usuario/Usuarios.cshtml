@@ -2,169 +2,158 @@
     Layout = null;
 }
 <div class="col-lg-11 col-lg-offset-0-5">
-    <div id="">
-        <h3 class="text-center">USUARIOS</h3>
-        <input id="hdnEstado" type="hidden" style="display: block;" />
-        <div id="target1" class="panel panel-inverse active">
-            <div class="panel-heading">Lista de Usuarios</div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-lg-6 ">
-                        <input href="#target2" id="btnNuevoUsuario" type="button" class="btn btn-sm btn-success target" value="Nuevo Usuario" />
-                    </div>
+    <h3 class="text-center">USUARIOS</h3>
+    <input id="hdnEstado" type="hidden" style="display: block;" />
+    <div id="target1" class="panel move panel-inverse active">
+        <div class="panel-heading">Lista de Usuarios</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-6 ">
+                    <input href="#target2" id="btnNuevoUsuario" type="button" class="btn btn-sm btn-success target" value="Nuevo Usuario" />
                 </div>
-                <div class="hr-line-dashed"></div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div id="cntListaUsuarios" class="table-responsive">
-                        </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="cntListaUsuarios" class="table-responsive">
                     </div>
                 </div>
             </div>
         </div>
-
-
-        @*Otro formulario*@
-
-        @*sdafsafasf*@
-        <div id="target2" style="display: none;">
-            <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Datos Personales</h4>
-                </div>
-                <div class="panel-body">
-
-                    <form method="post" class="form-horizontal ng-pristine ng-valid">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">DNI</label>
-                            <div class="col-md-6 form-inline">
-                                <input type="text" id="txtDNI" name="" class="form-control m-r-10" placeholder="Default input">
-                                <input id="btnCargarDni" type="button" class="btn btn-sm btn-primary m-r-5" value="Cargar" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Nombre</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtNom" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Apellido</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtApe" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fecha de Nacimiento</label>
-                            <div class="col-md-6">
-                                <input type="text" id="txtFechaNac" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Sexo</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline">
-                                    <input type="radio" name="" value="M" checked="">Masculino</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="" value="F">Femenino</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtNatEmail" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Teléfono 1</label>
-                            <div class="col-md-5">
-                                <input type="text" id="txtNatTel1" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Teléfono 2</label>
-                            <div class="col-md-5">
-                                <input type="text" id="txtNatTel2" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Dirección</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtNatDir" name="" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Ciudad</label>
-                            <div class="col-md-5">
-                                <select id="cmbNatCiudad" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Distrito</label>
-                            <div class="col-md-5">
-                                <select id="cmbNatDistrito" name="" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-
-
-
-            <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Datos de Usuario</h4>
-                </div>
-                <div class="panel-body" style="display: block;">
-                    <form action="/Usuario/RegistrarPersJuridica" id="frmUsuario" method="post" class="form-horizontal ng-pristine ng-valid">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Usuario</label>
-                            <div class="col-md-9">
-                                <input id="hdnPersId" type="hidden" name="PersJur.oPers.nPersId" />
-                                <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Contraseña</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Confirmar Contraseña</label>
-                            <div class="col-md-6">
-                                <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-9">
-                                <input id="btnGrabarJur" type="button" class="btn btn-sm btn-success" value="Grabar" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-
-
     </div>
 </div>
 
+<div class="col-lg-11 col-lg-offset-0-5">
+    <div id="target2" class="move" style="display: none;">
+        <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
+            <div class="panel-heading">
+                <h4 class="panel-title">Datos Personales</h4>
+            </div>
+            <div class="panel-body">
+
+                <form method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">DNI</label>
+                        <div class="col-md-6 form-inline">
+                            <input type="text" id="txtDNI" name="" class="form-control m-r-10" placeholder="Default input">
+                            <input id="btnCargarDni" type="button" class="btn btn-sm btn-primary m-r-5" value="Cargar" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Nombre</label>
+                        <div class="col-md-9">
+                            <input type="text" id="txtNom" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Apellido</label>
+                        <div class="col-md-9">
+                            <input type="text" id="txtApe" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Fecha de Nacimiento</label>
+                        <div class="col-md-6">
+                            <input type="text" id="txtFechaNac" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Sexo</label>
+                        <div class="col-md-9">
+                            <label class="radio-inline">
+                                <input type="radio" name="" value="M" checked="">Masculino</label>
+                            <label class="radio-inline">
+                                <input type="radio" name="" value="F">Femenino</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Email</label>
+                        <div class="col-md-9">
+                            <input type="text" id="txtNatEmail" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Teléfono 1</label>
+                        <div class="col-md-5">
+                            <input type="text" id="txtNatTel1" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Teléfono 2</label>
+                        <div class="col-md-5">
+                            <input type="text" id="txtNatTel2" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Dirección</label>
+                        <div class="col-md-9">
+                            <input type="text" id="txtNatDir" name="" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Ciudad</label>
+                        <div class="col-md-5">
+                            <select id="cmbNatCiudad" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Distrito</label>
+                        <div class="col-md-5">
+                            <select id="cmbNatDistrito" name="" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
+            <div class="panel-heading">
+                <h4 class="panel-title">Datos de Usuario</h4>
+            </div>
+            <div class="panel-body" style="display: block;">
+                <form action="/Usuario/RegistrarPersJuridica" id="frmUsuario" method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Usuario</label>
+                        <div class="col-md-9">
+                            <input id="hdnPersId" type="hidden" name="PersJur.oPers.nPersId" />
+                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Contraseña</label>
+                        <div class="col-md-9">
+                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Confirmar Contraseña</label>
+                        <div class="col-md-6">
+                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control" placeholder="Default input">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-9">
+                            <input id="btnGrabarJur" type="button" class="btn btn-sm btn-success" value="Grabar" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
 
 
@@ -176,7 +165,7 @@
 
     var vista = function ($target) {
         var $target = $($target),
-            $other = $target.siblings('.active');
+            $other = $('.active');
 
         if (!$target.hasClass('active')) {
             $other.each(function (index, self) {
@@ -198,7 +187,6 @@
         direccion: '/Usuario/ListaUsuarios',
         datos: {},
         terminado: function (data) {
-
             $("#cntListaUsuarios").Tabla({
                 tblId: "tblUsuarios",
                 cabecera: "Codígo,Usuario,Nombre,DOI,Teléfono,Dirección",
@@ -206,53 +194,36 @@
                 scrollVertical: "Si",
                 alinear: "C,C,L,C,C,L",
                 cantRegVertical: 8,
+                edit: true,
+                dblClick: true,
+                editEvent: function (fila) {
+                    var nPersId = fila.find("td").eq(0).html();
+                    var cDNI = fila.find("td").eq(3).html();
+                    $("#hdnEstado").val("E");
+                    $('input.target')[0].click();
+
+                    $.fn.Conexion({
+                        direccion: '/Usuario/CargarDatosUsuario',
+                        datos: { "nPersId": nPersId, "cDNI": cDNI },
+                        terminado: function (data, textStatus, jqXHR) {
+                            var oUsu = JSON.parse(data);
+
+                            $("#hdnPersNatId").val(oUsu.oPersNat.oPers.id);
+                            $("#txtNom").val(oUsu.oPersNat.cNom);
+                            $("#txtApe").val(oUsu.oPersNat.cApe);
+                            $("#txtFechaNac").val(oUsu.oPersNat.dNac);
+                            $("#txtNatEmail").val(oUsu.oPersNat.oPers.mail);
+                            $("#txtNatTel1").val(oUsu.oPersNat.oPers.tel1);
+                            $("#txtNatTel2").val(oUsu.oPersNat.oPers.tel2);
+                            $("#txtNatDir").val(oUsu.oPersNat.oPers.direc);
+                        },
+                        bloqueo: true
+                    });
+                },
                 datos: JSON.parse(data)
-            });
-
-
-            $("#tblClientes tbody tr").bind("dblclick", function () {
-
-                var nPersId = $(this).find("td").eq(0).html();
-                var cTipo = $(this).find("td").eq(3).html();
-                $("#hdnEstado").val("E");
-
-                $.fn.Conexion({
-                    direccion: '/Cliente/CargoDatosCliente',
-                    datos: { "nPersId": nPersId, "cTipo": cTipo },
-                    terminado: function (data, textStatus, jqXHR) {
-                        var oPers = JSON.parse(data);
-
-                        if (cTipo == "N") {
-                            $("#hdnPersNatId").val(oPers.oPers.id);
-                            $("#txtNom").val(oPers.cNom);
-                            $("#txtApe").val(oPers.cApe);
-                            $("#txtDOI").val(oPers.cDOI);
-                            $("#txtFechaNac").val(oPers.dNac);
-                            $("#txtNatEmail").val(oPers.oPers.mail);
-                            $("#txtNatTel1").val(oPers.oPers.tel1);
-                            $("#txtNatTel2").val(oPers.oPers.tel2);
-                            $("#txtNatDir").val(oPers.oPers.direc);
-                        } else if (cTipo == "J") {
-                            $("#hdnPersJurId").val(oPers.oPers.id);
-                            $("#txtEmp").val(oPers.cEmpresa);
-                            $("#txtRep").val(oPers.cRep);
-                            $("#txtRUC").val(oPers.cRUC);
-                            $("#txtFechaConst").val(oPers.dConst);
-                            $("#txtJurEmail").val(oPers.oPers.mail);
-                            $("#txtJurTel1").val(oPers.oPers.tel1);
-                            $("#txtJurTel2").val(oPers.oPers.tel2);
-                            $("#txtJurDir").val(oPers.oPers.direc);
-                        }
-                    },
-                    bloqueo: true
-                });
             });
         }
     });
-
-
-
-
 
     //Obtener Datos por DNI
 
@@ -261,7 +232,7 @@
         var cDNI = $("#txtDNI").val();
 
         $.fn.Conexion({
-            direccion: '/Usuario/CargoDatosUsuario',
+            direccion: '/Usuario/CargarDatosUsuario',
             datos: { "nPersId": 0, "cDNI": cDNI },
             terminado: function (data, textStatus, jqXHR) {
                 var oUsu = JSON.parse(data);
