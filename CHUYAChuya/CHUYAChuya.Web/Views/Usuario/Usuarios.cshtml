@@ -23,100 +23,82 @@
     </div>
 </div>
 
-<div class="col-lg-11 col-lg-offset-0-5">
+<div class="col-lg-5 col-lg-offset-4">
     <div id="target2" class="move" style="display: none;">
         <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
             <div class="panel-heading">
                 <h4 class="panel-title">Datos Personales</h4>
             </div>
             <div class="panel-body">
-
-                <form method="post" class="form-horizontal ng-pristine ng-valid">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">DNI</label>
-                        <div class="col-md-6 form-inline">
-                            <input type="text" id="txtDNI" name="" class="form-control m-r-10" placeholder="Default input">
+                <div class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">DNI</label>
+                        <div class="col-md-8 form-inline">
+                            <input type="text" id="txtDNI" name="" class="form-control m-r-10">
                             <input id="btnCargarDni" type="button" class="btn btn-sm btn-primary m-r-5" value="Cargar" />
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Nombre</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtNom" name="" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Nombre</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtNom" name="" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Apellido</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtApe" name="" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Apellido</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtApe" name="" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Fecha de Nacimiento</label>
-                        <div class="col-md-6">
-                            <input type="text" id="txtFechaNac" name="" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Fecha de Nacimiento</label>
+                        <div class="col-md-3">
+                            <input type="text" id="txtFechaNac" name="" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Sexo</label>
-                        <div class="col-md-9">
+                    <div class="form-group m-b-8">
+                        <label class="col-md-4 control-label">Sexo</label>
+                        <div class="col-md-7">
                             <label class="radio-inline">
-                                <input type="radio" name="" value="M" checked="">Masculino</label>
+                                <input type="radio" name="" value="M" disabled>Masculino</label>
                             <label class="radio-inline">
-                                <input type="radio" name="" value="F">Femenino</label>
+                                <input type="radio" name="" value="F" disabled>Femenino</label>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Teléfono 1</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtNatTel1" name="" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Teléfono 2</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtNatTel2" name="" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Dirección</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtNatDir" name="" class="form-control" disabled>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Email</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtNatEmail" name="" class="form-control" placeholder="Default input">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Teléfono 1</label>
-                        <div class="col-md-5">
-                            <input type="text" id="txtNatTel1" name="" class="form-control" placeholder="Default input">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Teléfono 2</label>
-                        <div class="col-md-5">
-                            <input type="text" id="txtNatTel2" name="" class="form-control" placeholder="Default input">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Dirección</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtNatDir" name="" class="form-control" placeholder="Default input">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Ciudad</label>
-                        <div class="col-md-5">
-                            <select id="cmbNatCiudad" class="form-control">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Ciudad</label>
+                        <div class="col-md-4">
+                            <select id="cmbNatCiudad" class="form-control" disabled>
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Distrito</label>
-                        <div class="col-md-5">
-                            <select id="cmbNatDistrito" name="" class="form-control">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Distrito</label>
+                        <div class="col-md-4">
+                            <select id="cmbNatDistrito" name="" class="form-control" disabled>
                             </select>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
@@ -124,29 +106,30 @@
                 <h4 class="panel-title">Datos de Usuario</h4>
             </div>
             <div class="panel-body" style="display: block;">
-                <form action="/Usuario/RegistrarPersJuridica" id="frmUsuario" method="post" class="form-horizontal ng-pristine ng-valid">
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Usuario</label>
-                        <div class="col-md-9">
+                <form action="/Usuario/RegistrarUsuario" id="frmUsuario" autocomplete="off" method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Usuario</label>
+                        <div class="col-md-3">
                             <input id="hdnPersId" type="hidden" name="PersJur.oPers.nPersId" />
-                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control" placeholder="Default input">
+                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Contraseña</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Contraseña</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Confirmar Contraseña</label>
-                        <div class="col-md-6">
-                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control" placeholder="Default input">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Confirmar Contraseña</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-9">
-                            <input id="btnGrabarJur" type="button" class="btn btn-sm btn-success" value="Grabar" />
+                    <div class="row m-b-10 m-t-10">
+                        <div class="text-center">
+                            <button id="btnGrabarUsu" type="submit" class="btn btn-sm btn-primary m-r-5">Grabar</button>
+                            <button id="btnCanUsu" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
                         </div>
                     </div>
                 </form>
@@ -252,10 +235,10 @@
     });
 
 
-    //Registrar Cliente Juridico
+    //Registrar Usuario
 
-    $("#btnGrabarJur").bind("click", function () {
-        var form = $("#frmClienteJur");
+    $("#btnGrabarUsu").bind("click", function () {
+        var form = $("#frmUsuario");
 
         valores = form.serializeArray();
 
