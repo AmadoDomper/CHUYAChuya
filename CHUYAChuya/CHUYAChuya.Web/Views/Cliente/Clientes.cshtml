@@ -2,251 +2,129 @@
     Layout = null;
 }
 <div class="col-lg-11 col-lg-offset-0-5">
-    @*<div>
-    <a href="#target1" class="panel">Target 1</a><br/>
-    <a href="#target2" class="panel">Target 2</a><br/>
-</div>*@
-
-
-    <div id="">
-        @*<div class="row color19">*@
-        <h3 class="text-center">CLIENTES</h3>
-        <input id="hdnEstado" type="hidden" name="PersNat.oPers.nPersId" />
-        <div id="target1" class="panel move panel-inverse active" style="display: block;">
-            <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Clientes</div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <input href="#target2" id="btnNuevoCliente" type="button" class="btn btn-sm btn-success target" value="Nuevo Cliente" />
-                    </div>
+    <h3 class="text-center">CLIENTES</h3>
+    <input id="hdnEstado" type="hidden" name="PersNat.oPers.nPersId" />
+    <div id="target1" class="panel move panel-inverse active" style="display: block;">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Clientes</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <input href="#target2" id="btnNuevoCliente" type="button" class="btn btn-sm btn-success target" value="Nuevo Cliente" />
                 </div>
-                <div class="hr-line-dashed"></div>
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div id="cntListaClientes" class="table-responsive">
-                        </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="cntListaClientes" class="table-responsive">
                     </div>
                 </div>
             </div>
         </div>
-        <div id="cntHidden"></div>
+    </div>
+</div>
 
-
-        @*Otro formulario*@
-
-        @*sdafsafasf*@
-        <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
-            <div class="panel-heading">
-                <h4 class="panel-title">Nuevo Cliente</h4>
-            </div>
-            <div class="panel-body" style="display: block;">
-                <div id="btnCliente" class="btn-group btn-group-justified" role="group" aria-label="Justified button group">
-                    <a hre="#frmClienteNat" class="btn btn-default" role="button">Cliente Natural</a>
-                    <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Juridico</a>
-                </div>
-                <div>
-                    <form action="/Cliente/RegistrarPersNatural" id="frmClienteNat" method="post" class="form-horizontal ng-pristine ng-valid">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Nombre</label>
-                            <div class="col-md-9">
-                                <input id="hdnPersNatId" type="hidden" name="PersNat.oPers.nPersId" />
-                                <input type="text" id="txtNom" name="PersNat.cPersNatNombre" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Apellido</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtApe" name="PersNat.cPersNatApellido" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">DOI</label>
-                            <div class="col-md-6">
-                                <input type="text" id="txtDOI" name="PersNat.cPersNatDOI" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fecha de Nacimiento</label>
-                            <div class="col-md-6">
-                                <input type="text" id="txtFechaNac" name="PersNat.dPersNatNac" class="form-control" placeholder="dd/mm/yyyy">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Sexo</label>
-                            <div class="col-md-9">
-                                <label class="radio-inline">
-                                    <input type="radio" name="PersNat.oPersNatSexo.cConstanteID" value="M" checked="">Masculino</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="PersNat.oPersNatSexo.cConstanteID" value="F">Femenino</label>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtNatEmail" name="PersNat.oPers.cPersEmail" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Teléfono 1</label>
-                            <div class="col-md-5">
-                                <input type="text" id="txtNatTel1" name="PersNat.oPers.cPersTelefono1" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Teléfono 2</label>
-                            <div class="col-md-5">
-                                <input type="text" id="txtNatTel2" name="PersNat.oPers.cPersTelefono2" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Dirección</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtNatDir" name="PersNat.oPers.cPersDireccion" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Ciudad</label>
-                            <div class="col-md-5">
-                                <select id="cmbNatCiudad" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Distrito</label>
-                            <div class="col-md-5">
-                                <select id="cmbNatDistrito" name="PersNat.oPers.oPersUbigeo.cConstanteID" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <div class="col-md-9">
-                                <input id="btnGrabarNat" type="button" class="btn btn-sm btn-success" value="Grabar" />
-                            </div>
-                        </div>
-                    </form>
-                    <form action="/Cliente/RegistrarPersJuridica" id="frmClienteJur" style="display: none;" method="post" class="form-horizontal ng-pristine ng-valid">
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Empresa</label>
-                            <div class="col-md-9">
-                                <input id="hdnPersJurId" type="hidden" name="PersJur.oPers.nPersId" />
-                                <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Representante</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">RUC</label>
-                            <div class="col-md-6">
-                                <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Fecha de Constitución</label>
-                            <div class="col-md-6">
-                                <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="dd/mm/yyyy">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Actividad</label>
-                            <div class="col-md-5">
-                                <select id="cmbActividad" name="PersJur.oPersJurActividad.cConstanteID" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Email</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtJurEmail" name="PersJur.oPers.cPersEmail" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Teléfono 1</label>
-                            <div class="col-md-5">
-                                <input type="text" id="txtJurTel1" name="PersJur.oPers.cPersTelefono1" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Teléfono 2</label>
-                            <div class="col-md-5">
-                                <input type="text" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Dirección</label>
-                            <div class="col-md-9">
-                                <input type="text" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control" placeholder="Default input">
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Ciudad</label>
-                            <div class="col-md-5">
-                                <select id="cmbJurCiudad" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label">Distrito</label>
-                            <div class="col-md-5">
-                                <select id="cmbJurDistrito" name="PersJur.oPers.oPersUbigeo.cConstanteID" class="form-control">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                </select>
-                            </div>
-                        </div>
-
-
-                        <div class="form-group">
-
-                            <div class="col-md-9">
-                                <input id="btnGrabarJur" type="button" class="btn btn-sm btn-success" value="Grabar" />
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
+<div class="col-lg-5 col-lg-offset-4">
+    <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
+        <div class="panel-heading">
+            <h4 class="panel-title">Nuevo Cliente</h4>
         </div>
-
-        @*        Registro Clientes Juridicos*@
-
-        @*        <div id="target3" class="panel panel-inverse" data-sortable-id="form-stuff-1">
-            <div class="panel-heading">
-                <h4 class="panel-title">Registrar Clientes</h4>
+        <div class="panel-body" style="display: block;">
+            <div id="btnCliente" class="btn-group btn-group-justified m-b-10 m-t-5" role="group">
+                <a hre="#frmClienteNat" class="btn btn-default" role="button">Cliente Natural</a>
+                <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Juridico</a>
             </div>
-            <div class="panel-body" style="display: block;">
-                <form action="/Cliente/RegistrarPersJuridica" id="frmClienteJur" style="display: none;" method="post" class="form-horizontal ng-pristine ng-valid">
+            <div>
+                <form action="/Cliente/RegistrarPersNatural" autocomplete="off" id="frmClienteNat" method="post" class="form-horizontal ng-pristine ng-valid">
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Nombre</label>
+                        <div class="col-md-7">
+                            <input id="hdnPersNatId" type="hidden" name="PersNat.oPers.nPersId" />
+                            <input type="text" id="txtNom" name="PersNat.cPersNatNombre" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Apellido</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtApe" name="PersNat.cPersNatApellido" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">DOI</label>
+                        <div class="col-md-3">
+                            <input type="text" id="txtDOI" name="PersNat.cPersNatDOI" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Fecha de Nacimiento</label>
+                        <div class="col-md-3">
+                            <input type="text" id="txtFechaNac" name="PersNat.dPersNatNac" class="form-control" placeholder="dd/mm/yyyy">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-8">
+                        <label class="col-md-4 control-label">Sexo</label>
+                        <div class="col-md-7">
+                            <label class="radio-inline">
+                                <input type="radio" name="PersNat.oPersNatSexo.cConstanteID" value="M" checked="">Masculino</label>
+                            <label class="radio-inline">
+                                <input type="radio" name="PersNat.oPersNatSexo.cConstanteID" value="F">Femenino</label>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Email</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtNatEmail" name="PersNat.oPers.cPersEmail" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Teléfono 1</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtNatTel1" name="PersNat.oPers.cPersTelefono1" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Teléfono 2</label>
+                        <div class="col-md-4">
+                            <input type="text" id="txtNatTel2" name="PersNat.oPers.cPersTelefono2" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Dirección</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtNatDir" name="PersNat.oPers.cPersDireccion" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Ciudad</label>
+                        <div class="col-md-4">
+                            <select id="cmbNatCiudad" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Distrito</label>
+                        <div class="col-md-4">
+                            <select id="cmbNatDistrito" name="PersNat.oPers.oPersUbigeo.cConstanteID" class="form-control">
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row m-b-10 m-t-10">
+                        <div class="text-center">
+                            <button id="btnGrabarNat" type="submit" class="btn btn-sm btn-primary m-r-5">Grabar</button>
+                            <button id="btnSalCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+                <form action="/Cliente/RegistrarPersJuridica" autocomplete="off" id="frmClienteJur" style="display: none;" method="post" class="form-horizontal ng-pristine ng-valid">
                     <div class="form-group">
                         <label class="col-md-3 control-label">Empresa</label>
                         <div class="col-md-9">
@@ -269,7 +147,7 @@
                     <div class="form-group">
                         <label class="col-md-3 control-label">Fecha de Constitución</label>
                         <div class="col-md-6">
-                            <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="Default input">
+                            <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="dd/mm/yyyy">
                         </div>
                     </div>
                     <div class="form-group">
@@ -333,21 +211,14 @@
                             </select>
                         </div>
                     </div>
-
-
                     <div class="form-group">
-
                         <div class="col-md-9">
                             <input id="btnGrabarJur" type="button" class="btn btn-sm btn-success" value="Grabar" />
                         </div>
                     </div>
                 </form>
             </div>
-        </div>*@
-
-
-
-
+        </div>
     </div>
 </div>
 
@@ -357,23 +228,7 @@
         $("#txtFechaNac,#txtFechaConst").mask("99/99/9999", { placeholder: "dd/mm/yyyy" });
 
         $('input.target').click(function () {
-            var $target = $($(this).attr('href')),
-                $other = $target.siblings('.active');
-
-            if (!$target.hasClass('active')) {
-                $other.each(function (index, self) {
-                    var $this = $(this);
-                    $this.removeClass('active').animate({
-                        left: $this.width()
-                    }, 500).hide();
-                });
-
-                $target.addClass('active').show().css({
-                    left: -($target.width())
-                }).animate({
-                    left: 0
-                }, 500);
-            }
+            vista($(this).attr('href'));
         });
 
         $("#btnCliente a").click(function () {
@@ -385,6 +240,28 @@
         });
 
     });
+
+    var vista = function ($target) {
+        var $target = $($target),
+            $other = $('.active');
+
+        if (!$target.hasClass('active')) {
+            $other.each(function (index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 500).hide();
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 500);
+        }
+    };
+
+
 
 
     $.fn.Conexion({
