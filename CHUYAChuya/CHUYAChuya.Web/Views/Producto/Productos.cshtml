@@ -2,7 +2,6 @@
     Layout = null;
 }
 <div class="col-lg-11 col-lg-offset-0-5">
-    @*  <div id="">*@
     <h3 class="text-center">PRODUCTOS</h3>
     <input id="hdnEstado" type="hidden" style="display: block;" />
 
@@ -23,31 +22,31 @@
             </div>
         </div>
     </div>
+</div>
 
-    @*Formulario Producto*@
+<div class="col-lg-5 col-lg-offset-4">
     <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
         <div class="panel-heading">
             <h4 class="panel-title">Nuevo Producto</h4>
         </div>
         <div class="panel-body" style="display: block;">
-            <div>
-                <form action="/Producto/RegistrarProducto" id="frmProducto" method="post" class="form-horizontal ng-pristine ng-valid">
+                <form action="/Producto/RegistrarProducto" autocomplete="off" id="frmProducto" class="form-horizontal ng-pristine ng-valid" method="post">
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Codigo</label>
-                        <div class="col-md-9">
+                        <label class="col-md-4 control-label">Codigo</label>
+                        <div class="col-md-3">
                             <input id="hdnProd" type="hidden" name="Producto.nProdId" />
-                            <input type="text" id="txtCod" class="form-control" placeholder="Default input" disabled>
+                            <input type="text" id="txtCod" class="form-control" disabled>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Descripción</label>
-                        <div class="col-md-9">
-                            <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control" placeholder="Default input">
+                        <label class="col-md-4 control-label">Descripción</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Precio Unitario</label>
-                        <div class="col-md-6">
+                        <label class="col-md-4 control-label">Precio Unitario</label>
+                        <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-addon">S/.</span>
                                 <input type="text" id="txtPrecioUnit" name="Producto.nProdPrecioUnit" class="form-control" placeholder="0.00">
@@ -55,8 +54,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Medida</label>
-                        <div class="col-md-5">
+                        <label class="col-md-4 control-label">Medida</label>
+                        <div class="col-md-3">
                             <select id="cmbMedida" name="Producto.oProdMedida.cConstanteID" class="form-control">
                                 <option value="1">Kg</option>
                                 <option value="2">Prenda</option>
@@ -64,8 +63,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label">Servicio</label>
-                        <div class="col-md-9">
+                        <label class="col-md-4 control-label">Servicio</label>
+                        <div class="col-md-8">
                             <label class="checkbox-inline">
                                 <input id="chkLav" type="checkbox" name="Producto.bProdSerLavado" value="true">Lavado</label>
                             <label class="checkbox-inline">
@@ -74,21 +73,15 @@
                                 <input id="chkPla" type="checkbox" name="Producto.bProdSerPlanchado" value="true">Planchado</label>
                         </div>
                     </div>
-                    <div class="form-group">
-
-                        <div class="col-md-9">
-                            <input id="btnGrabarProducto" type="button" class="btn btn-sm btn-success" value="Grabar" />
+                    <div class="row m-b-10 m-t-10">
+                        <div class="text-center">
+                            <input type="button" id="btnGrabarProducto" class="btn btn-sm btn-primary m-r-5" value="Grabar"/>
+                            <input type="button" id="btnCanPro" class="btn btn-sm btn-default m-r-5" value="Cancelar"/>
                         </div>
                     </div>
                 </form>
-            </div>
         </div>
     </div>
-
-
-
-
-    @*</div>*@
 </div>
 
 <script type="text/javascript">
@@ -104,7 +97,7 @@
 
     var vista = function ($target) {
         var $target = $($target),
-            $other = $target.siblings('.active');
+            $other = $('.active');
 
         if (!$target.hasClass('active')) {
             $other.each(function (index, self) {
