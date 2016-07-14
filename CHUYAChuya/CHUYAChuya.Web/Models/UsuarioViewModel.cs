@@ -19,7 +19,7 @@ namespace CHUYAChuya.Web.Models
 
         public bool Persistir { get; set; }
 
-        public Usuario Usuario { get; set; }
+        public Usuario oUsu { get; set; }
     }
     
     public interface IFormsAuthenticationService

@@ -44,6 +44,7 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult CargoDatosNotaEntrega(int nNotaId)
         {
             NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();

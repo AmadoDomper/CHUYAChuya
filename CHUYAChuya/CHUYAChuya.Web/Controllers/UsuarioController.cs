@@ -39,7 +39,7 @@ namespace CHUYAChuya.Web.Controllers
         {
             UsuarioLN oUsuarioLN = new UsuarioLN();
             int resultado;
-            resultado = oUsuarioLN.RegistrarActualizarUsuario(oUsuarioViewModel.Usuario);
+            resultado = oUsuarioLN.RegistrarActualizarUsuario(oUsuarioViewModel.oUsu);
             return Json(resultado);
         }
 

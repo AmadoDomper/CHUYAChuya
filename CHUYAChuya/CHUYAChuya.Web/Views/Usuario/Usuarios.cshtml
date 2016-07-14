@@ -32,33 +32,48 @@
             <div class="panel-body">
                 <div class="form-horizontal ng-pristine ng-valid">
                     <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Persona</label>
+                        <div class="col-md-8 form-inline">
+                            <input type="text" class="form-control " id="txtBuscarPers" placeholder="Buscar persona">
+                            <button id="btnBuscarPers" type="button" class="btn btn-sm btn-default" data-toggle="modal">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">DNI</label>
+                        <div class="col-md-3">
+                            <input type="text" id="txtDNI" name="" class="form-control" disabled="">
+                        </div>
+                    </div>
+@*                    <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">DNI</label>
                         <div class="col-md-8 form-inline">
                             <input type="text" id="txtDNI" name="" class="form-control m-r-10">
                             <input id="btnCargarDni" type="button" class="btn btn-sm btn-primary m-r-5" value="Cargar" />
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Nombre</label>
                         <div class="col-md-7">
                             <input type="text" id="txtNom" name="" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="form-group m-b-5">
+@*                    <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Apellido</label>
                         <div class="col-md-7">
                             <input type="text" id="txtApe" name="" class="form-control" disabled>
                         </div>
-                    </div>
-                    <div class="form-group m-b-5">
+                    </div>*@
+                    @*<div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Fecha de Nacimiento</label>
                         <div class="col-md-3">
                             <input type="text" id="txtFechaNac" name="" class="form-control" disabled>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group m-b-8">
                         <label class="col-md-4 control-label">Sexo</label>
-                        <div class="col-md-7">
+                        <div id="cmbSex" class="col-md-7">
                             <label class="radio-inline">
                                 <input type="radio" name="" value="M" disabled>Masculino</label>
                             <label class="radio-inline">
@@ -71,12 +86,12 @@
                             <input type="text" id="txtNatTel1" name="" class="form-control" disabled>
                         </div>
                     </div>
-                    <div class="form-group m-b-5">
+@*                    <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 2</label>
                         <div class="col-md-4">
                             <input type="text" id="txtNatTel2" name="" class="form-control" disabled>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Dirección</label>
                         <div class="col-md-7">
@@ -84,7 +99,7 @@
                         </div>
                     </div>
 
-                    <div class="form-group m-b-5">
+                    @*<div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Ciudad</label>
                         <div class="col-md-4">
                             <select id="cmbNatCiudad" class="form-control" disabled>
@@ -97,7 +112,7 @@
                             <select id="cmbNatDistrito" name="" class="form-control" disabled>
                             </select>
                         </div>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         </div>
@@ -110,20 +125,20 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Usuario</label>
                         <div class="col-md-3">
-                            <input id="hdnPersId" type="hidden" name="PersJur.oPers.nPersId" />
-                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control">
+                            <input id="hdnPersId" type="hidden" name="oUsu.oPersNat.oPers.nPersId" />
+                            <input type="text" id="txtUsu" name="oUsu.cUsuNombre" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Contraseña</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control">
+                            <input type="text" id="txtCont1" name="oUsu.cUsuContrasena" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Confirmar Contraseña</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control">
+                            <input type="text" id="txtCont2" class="form-control">
                         </div>
                     </div>
                     <div class="row m-b-10 m-t-10">
@@ -208,31 +223,66 @@
         }
     });
 
+    //Buscar datos persona
+
+    var persSelec = {}
+
+    function BuscarCliente(valor) {
+        var aceptar = function (d) {
+            persSelec = d;
+            $("#hdnPersId").val(d.id);
+            $("#txtDNI").val(d.doi);
+            $("#txtNom").val(d.nom);
+            $("#cmbSex input:radio").val([d.sexo]);
+            $("#txtNatTel1").val(d.tel1);
+            $("#txtNatDir").val(d.direc);
+            $('#vntBuscaPersona').modal('hide');
+        };
+
+        var cancelar = function () {
+            //$("#btnCancelar").click();
+        }
+        $.fn.BuscarPersona({
+            funcionAceptar: aceptar,
+            funcionCancelar: cancelar,
+            valor: valor
+        });
+    }
+
+    $("#btnBuscarPers").bind("click", function () {
+        BuscarCliente($("#txtBuscarPers").val());
+    });
+
+    $("#txtBuscarPers").bind("keyup", function (e) {
+        if (e.which == 13) { BuscarCliente($(this).val()); };
+    });
+
+
     //Obtener Datos por DNI
 
-    $("#btnCargarDni").bind("click", function () {
-        var nPersId = $("#hdnPersId").val();
-        var cDNI = $("#txtDNI").val();
+    //$("#btnCargarDni").bind("click", function () {
+    //    var nPersId = $("#hdnPersId").val();
+    //    var cDNI = $("#txtDNI").val();
 
-        $.fn.Conexion({
-            direccion: '/Usuario/CargarDatosUsuario',
-            datos: { "nPersId": 0, "cDNI": cDNI },
-            terminado: function (data, textStatus, jqXHR) {
-                var oUsu = JSON.parse(data);
+    //    $.fn.Conexion({
+    //        direccion: '/Usuario/CargarDatosUsuario',
+    //        datos: { "nPersId": 0, "cDNI": cDNI },
+    //        terminado: function (data, textStatus, jqXHR) {
+    //            var oUsu = JSON.parse(data);
 
-                $("#hdnPersNatId").val(oUsu.oPersNat.oPers.id);
-                $("#txtNom").val(oUsu.oPersNat.cNom);
-                $("#txtApe").val(oUsu.oPersNat.cApe);
-                $("#txtFechaNac").val(oUsu.oPersNat.dNac);
-                $("#txtNatEmail").val(oUsu.oPersNat.oPers.mail);
-                $("#txtNatTel1").val(oUsu.oPersNat.oPers.tel1);
-                $("#txtNatTel2").val(oUsu.oPersNat.oPers.tel2);
-                $("#txtNatDir").val(oUsu.oPersNat.oPers.direc);
-            },
-            bloqueo: true
-        });
+    //            $("#hdnPersNatId").val(oUsu.oPersNat.oPers.id);
+    //            $("#txtNom").val(oUsu.oPersNat.cNom);
+    //            $("#txtApe").val(oUsu.oPersNat.cApe);
+    //            $("#txtFechaNac").val(oUsu.oPersNat.dNac);
+    //            $("#txtNatEmail").val(oUsu.oPersNat.oPers.mail);
+    //            $("#txtNatTel1").val(oUsu.oPersNat.oPers.tel1);
+    //            $("#txtNatTel2").val(oUsu.oPersNat.oPers.tel2);
+    //            $("#txtNatDir").val(oUsu.oPersNat.oPers.direc);
+    //        },
+    //        bloqueo: true
+    //    });
 
-    });
+    //});
 
 
     //Registrar Usuario

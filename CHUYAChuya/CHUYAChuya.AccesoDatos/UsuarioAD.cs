@@ -123,9 +123,9 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Connection = oSqlConnection;
 
                     oSqlCommand.Parameters.Add("@nPersId", SqlDbType.Int).Value = (object)oUsuario.oPersNat.oPers.nPersId ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@nUsuId", SqlDbType.VarChar, 20).Value = (object)oUsuario.nUsuId ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@cUsuNombre", SqlDbType.VarChar, 20).Value = (object)oUsuario.cUsuNombre ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@cUsuContrasena", SqlDbType.VarChar, 100).Value = (object)oUsuario.cUsuContrasena ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nUsuId", SqlDbType.Int).Value = (object)oUsuario.nUsuId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuNombre", SqlDbType.VarChar, 4).Value = (object)oUsuario.cUsuNombre ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuContrasena", SqlDbType.VarChar, 15).Value = (object)oUsuario.cUsuContrasena ?? DBNull.Value;
 
                     oSqlConnection.Open();
 
