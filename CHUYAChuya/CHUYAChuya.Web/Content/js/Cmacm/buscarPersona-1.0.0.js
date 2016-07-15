@@ -173,6 +173,7 @@
             cantRegVertical: 5,
             cabecera: "Nombre,Sexo,DOI,Tipo,Tel&eacute;fono,Direcci&oacute;n",
             campos: "nom,sexo,doi,tipo,tel1,direc",
+            alinear: "L,C,C,C,C,L",
             empty: "La persona no se encuentra registrada",
             datos: lista
         });
