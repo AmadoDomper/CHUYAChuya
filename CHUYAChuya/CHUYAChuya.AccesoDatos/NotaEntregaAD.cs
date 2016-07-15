@@ -45,6 +45,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@nNotaMontoTotal", SqlDbType.Money).Value = (object)oNotEnt.nNotaMontoTotal ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nNotaEstado", SqlDbType.TinyInt).Value = (object)Convert.ToByte(oNotEnt.oNotaEstado.cConstanteID) ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaUsuReg", SqlDbType.VarChar, 4).Value = (object)oNotEnt.cNotaUsuReg ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cNotaUsuAge", SqlDbType.VarChar, 2).Value = (object)oNotEnt.cNotaUsuAge ?? DBNull.Value;
 
                     oSqlCommand.Parameters.Add("@T_NotaEntregaProducto", SqlDbType.Structured).Value = NotaEntregaProductoCollection.TSqlDataRecord(oNotEnt.ListaNotaEntProd.ToList());
                     oSqlConnection.Open();

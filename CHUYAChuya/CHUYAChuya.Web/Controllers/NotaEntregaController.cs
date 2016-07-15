@@ -40,6 +40,7 @@ namespace CHUYAChuya.Web.Controllers
 
             int resultado;
             oNotaEntregaViewModel.oNotEnt.cNotaUsuReg = ((Usuario)Session["Datos"]).cUsuNombre;
+            oNotaEntregaViewModel.oNotEnt.cNotaUsuAge = "01";
             resultado = oNotaEntLN.RegistrarNotaEntrega(oNotaEntregaViewModel.oNotEnt);
             return Json(resultado);
         }

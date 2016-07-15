@@ -23,6 +23,8 @@ namespace CHUYAChuya.EntidadesNegocio
         private decimal _nNotaMontoTotal;
         private Constante _oNotaEstado = new Constante();
         private string _cNotaUsuReg;
+        private string _cNotaUsuAge;
+
         private List<NotaEntProd> _ListaNotaEntProd;
 
         [JsonProperty(PropertyName = "nNotaEntId")]
@@ -121,6 +123,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _cNotaUsuReg; }
             set { _cNotaUsuReg = value; }
+        }
+
+        [JsonProperty(PropertyName = "cNotaUsuAge")]
+        public string cNotaUsuAge
+        {
+            get { return _cNotaUsuAge; }
+            set { _cNotaUsuAge = value; }
         }
 
         [JsonProperty(PropertyName = "lstNotEntProd")]
