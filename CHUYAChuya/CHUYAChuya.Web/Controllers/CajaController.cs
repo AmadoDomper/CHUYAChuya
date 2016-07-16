@@ -29,6 +29,17 @@ namespace CHUYAChuya.Web.Controllers
         #region Movimiento Caja
 
         [RequiresAuthenticationAttribute]
+        public JsonResult ListaConstantes()
+        {
+            UsuarioLN oUsuarioLN = new UsuarioLN();
+            CajaViewModel oCajaVM = new CajaViewModel();
+
+            oCajaVM.lstUsuarios = oUsuarioLN.Usuarios();
+            return Json(JsonConvert.SerializeObject(oCajaVM));
+        }
+
+
+        [RequiresAuthenticationAttribute]
         public JsonResult RegistrarSalidaEfePagoProv(int nPersId, decimal nMontoSalida, string cComprobante, byte nTipoComp, DateTime dFechaEmi)
         {
             CajaLN oCajaLN = new CajaLN();

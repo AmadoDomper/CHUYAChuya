@@ -53,6 +53,30 @@ namespace CHUYAChuya.AccesoDatos
             return ListaUsuarios;
         }
 
+        public List<Constante> Usuarios()
+        {
+            List<Constante> ListaUsuarios = new List<Constante>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_Usuarios);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int icValor = oIDataReader.GetOrdinal("cValor");
+                int icDesc = oIDataReader.GetOrdinal("cDesc");
+
+                while (oIDataReader.Read())
+                {
+                    Constante oConstante = new Constante();
+
+                    oConstante.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[icValor]);
+                    oConstante.cNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icDesc]);
+
+                    ListaUsuarios.Add(oConstante);
+                }
+            }
+            return ListaUsuarios;
+        }
+
         public Usuario CargarDatosUsuario(int nPersId, string cDNI)
         {
             try

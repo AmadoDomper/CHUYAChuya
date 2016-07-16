@@ -41,7 +41,7 @@ namespace CHUYAChuya.AccesoDatos
                     oProducto.nProdId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inProdId]);
                     oProducto.cProdDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icProdDesc]);
                     oProducto.nProdPrecioUnit = DataUtil.DbValueToDefault<decimal>(oIDataReader[inProdPrecioUnit]);
-                    oProducto.oProdMedida.Nombre = DataUtil.DbValueToDefault<String>(oIDataReader[icMedida]);
+                    oProducto.oProdMedida.cNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icMedida]);
                     oProducto.bProdSerLavado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerLavado]);
                     oProducto.bProdSerSecado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerSecado]);
                     oProducto.bProdSerPlanchado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerPlanchado]);
@@ -171,7 +171,7 @@ namespace CHUYAChuya.AccesoDatos
                     oProducto.nProdId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inProdId]);
                     oProducto.cProdDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icProdDesc]);
                     oProducto.nProdPrecioUnit = DataUtil.DbValueToDefault<decimal>(oIDataReader[inProdPrecioUnit]);
-                    oProducto.oProdMedida.Nombre = DataUtil.DbValueToDefault<String>(oIDataReader[icMedida]);
+                    oProducto.oProdMedida.cNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icMedida]);
                     oProducto.bProdSerLavado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerLavado]);
                     oProducto.bProdSerSecado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerSecado]);
                     oProducto.bProdSerPlanchado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerPlanchado]);

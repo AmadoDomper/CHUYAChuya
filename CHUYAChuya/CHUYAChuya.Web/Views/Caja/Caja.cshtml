@@ -178,10 +178,7 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Usuario Cajero</label>
                         <div class="col-md-7">
-                            <select name="status" id="cmbUsuCaj" class="form-control">
-                                <option value="1" selected="">Factura</option>
-                                <option value="2">Ticket</option>
-                                <option value="3">Boleta</option>
+                            <select name="status" id="cmbUsuCaj" class="form-control manito">
                             </select>
                         </div>
                     </div>
@@ -382,6 +379,26 @@
         });
     }
 
+
+
+    ListaConst();
+
+    function ListaConst() {
+            $.fn.Conexion({
+                direccion: '/Caja/ListaConstantes',
+                terminado: function (data) {
+                    var cons = JSON.parse(data);
+
+                    comboTipoCred = new hCombos();
+                    comboTipoCred.ids = ['cmbUsuCaj'];
+                    comboTipoCred.pre = [''];
+                    comboTipoCred.info = cons.lstUsuarios;
+                    comboTipoCred.init();
+                }
+            });
+        }
+
+
     $("#btnBuscarMov").bind("click", function () {
         ListarMovCaja();
     });
@@ -410,7 +427,7 @@
 
         $.fn.Conexion({
             direccion: "/Caja/RegistrarAperturaCaja",
-            datos: { "cUsuarioOpe": cUsuOpe, "nMontoIni": nMontoIni, "dFechaApe": dFechaApe },
+            datos: { "cUsuOpe": cUsuOpe, "nMontoIni": nMontoIni, "dFechaApe": dFechaApe },
             terminado: function (data, textStatus, jqXHR) {
                 Resultado(data);
             },

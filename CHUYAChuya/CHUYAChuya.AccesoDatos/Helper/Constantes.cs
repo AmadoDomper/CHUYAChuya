@@ -13,6 +13,10 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ObtenerUsuarioContrasena = "stp_sel_ObtenerUsuarioContrasena";
         #endregion
 
+        #region Constante
+        public const string stp_sel_constante = "stp_sel_constante";
+        #endregion
+
         #region Menu
         public const string stp_sel_RS_SeleccionarMenuFull_Web = "stp_sel_RS_SeleccionarMenuFull_Web";
         public const string stp_sel_RS_SeleccionarOperacionMenu_Web = "stp_sel_RS_SeleccionarOperacionMenu_Web";
@@ -40,6 +44,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ListarUsuarios = "stp_sel_ListarUsuarios";
         public const string stp_sel_Usuario = "stp_sel_Usuario";
         public const string stp_ins_upd_Usuario = "stp_ins_upd_Usuario";
+        public const string stp_sel_Usuarios = "stp_sel_Usuarios";
         #endregion
 
         #region Producto

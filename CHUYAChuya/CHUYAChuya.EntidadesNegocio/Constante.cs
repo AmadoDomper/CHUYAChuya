@@ -23,7 +23,7 @@ namespace CHUYAChuya.EntidadesNegocio
         }
 
         [JsonProperty(PropertyName = "nom")]
-        public string Nombre
+        public string cNombre
         {
             get { return _cNombre; }
             set { _cNombre = value; }

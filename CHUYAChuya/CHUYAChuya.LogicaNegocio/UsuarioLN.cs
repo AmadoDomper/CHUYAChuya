@@ -22,6 +22,11 @@ namespace CHUYAChuya.LogicaNegocio
             return oUsuarioAD.ListaUsuarios();
         }
 
+        public List<Constante> Usuarios()
+        {
+            return oUsuarioAD.Usuarios();
+        }
+
         public Usuario CargarDatosUsuario(int nPersId, string cDNI)
         {
             return oUsuarioAD.CargarDatosUsuario(nPersId,cDNI);
