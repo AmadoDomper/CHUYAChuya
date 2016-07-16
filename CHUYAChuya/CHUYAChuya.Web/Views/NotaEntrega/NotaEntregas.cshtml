@@ -4,8 +4,8 @@
 <div class="col-lg-11 col-lg-offset-0-5">
     @*<div class="row color19">*@
     <h3 class="text-center">NOTA DE ENTREGA</h3>
-    <input id="hdnEstado" type="hidden" style="display: block;" />
-
+    <input id="hdnEstado" type="hidden" />
+    <input id="hdnNotaEst" type="hidden" />
     <div id="target1" class="panel move panel-inverse active">
         <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Nota de Entregas</div>
         <div class="panel-body">
@@ -189,7 +189,7 @@
                                     <div class="form-group m-b-5">
                                         <label class="col-md-3 control-label">Comentario</label>
                                         <div class="col-md-7">
-                                            <textarea class="form-control" rows="4"></textarea>
+                                            <textarea id="txtCom" name="oNotEnt.cNotaComentario" class="form-control" rows="4"></textarea>
                                         </div>
                                     </div>
                                 </div>
@@ -404,11 +404,15 @@
                             terminado: function (data, textStatus, jqXHR) {
                                 var oNota = JSON.parse(data);
                                 $("#hdnPersId").val(oNota.oPers.id);
+                                $("#hdnNotaEst").val(oNota.oNotaEst.id);
                                 $("#lblNom").html(oNota.oPers.nom);
                                 $("#lblDOI").html(oNota.oPers.doi);
                                 $("#lblTel").html(oNota.oPers.tel1);
                                 $("#txtCodNota").val(oNota.nNotaEntId);
+                                $("#txtCom").val(oNota.cNotaCom);
                                 $("#txtDescuento").val(oNota.nNotaDes);
+                                $("#txtAnticipo").val(oNota.nNotaAnt);
+                                $('#txtFechaEnt').val(moment(oNota.dFecEnt).format("DD/MM/YYYY hh:mm A"));
 
                                 var lst = oNota.lstNotEntProd;
                                 lstProd = [];
@@ -442,8 +446,7 @@
         });
     }
 
-
-    $("body").on("change", "#cmbTpoBsq", function () {
+    $("#cmbTpoBsq").bind("click", function () {
         var tpoProd = $(this).val();
         $("#txtValor").show();
         $("#dtRango").hide();

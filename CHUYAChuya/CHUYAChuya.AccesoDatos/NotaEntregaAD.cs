@@ -47,6 +47,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@cNotaUsuReg", SqlDbType.VarChar, 4).Value = (object)oNotEnt.cNotaUsuReg ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaUsuAge", SqlDbType.VarChar, 2).Value = (object)oNotEnt.cNotaUsuAge ?? DBNull.Value;
 
+
                     oSqlCommand.Parameters.Add("@T_NotaEntregaProducto", SqlDbType.Structured).Value = NotaEntregaProductoCollection.TSqlDataRecord(oNotEnt.ListaNotaEntProd.ToList());
                     oSqlConnection.Open();
 
@@ -151,6 +152,7 @@ namespace CHUYAChuya.AccesoDatos
                     int icDOI = oIDataReader.GetOrdinal("cDOI");
                     int icPersTelefono1 = oIDataReader.GetOrdinal("cPersTelefono1");
                     int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                    int icNotaComentario = oIDataReader.GetOrdinal("cNotaComentario");
                     int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
                     int idFechaEntrega = oIDataReader.GetOrdinal("dFechaEntrega");
                     int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
@@ -171,15 +173,15 @@ namespace CHUYAChuya.AccesoDatos
                         oNotaEntrega.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
                         oNotaEntrega.oPers.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
                         oNotaEntrega.nNotaEntId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inNotaEntId]);
+                        oNotaEntrega.cNotaComentario = DataUtil.DbValueToDefault<String>(oIDataReader[icNotaComentario]);
                         oNotaEntrega.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
                         oNotaEntrega.dFechaEntrega = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaEntrega]);
                         oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
 
-                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                        oNotaEntrega.nNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
                         oNotaEntrega.nNotaDescuento = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaDescuento]);
-                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaEfectivo]);
-                        oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaCambio]);
-
+                        oNotaEntrega.nNotaEfectivo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaEfectivo]);
+                        oNotaEntrega.nNotaCambio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaCambio]);
 
                         oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
                         oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
@@ -189,7 +191,6 @@ namespace CHUYAChuya.AccesoDatos
                 }
 
                 return oNotaEntrega;
-
             }
             catch (Exception)
             {
