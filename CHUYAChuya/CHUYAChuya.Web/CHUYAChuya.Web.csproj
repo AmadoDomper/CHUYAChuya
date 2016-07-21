@@ -179,7 +179,6 @@
     <Content Include="Content\font-awesome-4.1.0\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\img\cmacloader.gif" />
-    <Content Include="Content\img\cmacm.png" />
     <Content Include="Content\img\icono.png" />
     <Content Include="Content\js\Cmacm\buscarPersona-1.0.0.js" />
     <Content Include="Content\js\Cmacm\conexion-1.0.0.js" />

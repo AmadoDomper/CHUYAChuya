@@ -121,13 +121,13 @@ div.move {
 .body-signin {
     padding-top: 190px;
     padding-bottom: 40px;
-    background-color: #E60000;
+    background-color: #27295d;
 }
 
 .fondo-signin {
     height: 400px;
     /*background:radial-gradient(at 50% 50%, rgb(255, 226, 226) -38%, rgb(255, 150, 150) 11%, rgb(255, 150, 150) 7%, rgb(230, 0, 0) 70%);*/
-    background: radial-gradient(at 50% 57%, rgb(255, 226, 226) -38%, rgb(255, 150, 150) 2%, rgb(255, 150, 150) 9%, rgb(230, 0, 0) 52%);
+    /*background: radial-gradient(at 50% 57%, rgb(255, 226, 226) -38%, rgb(255, 150, 150) 2%, rgb(255, 150, 150) 9%, rgb(230, 0, 0) 52%);*/
 }
 
 .form-signin {
