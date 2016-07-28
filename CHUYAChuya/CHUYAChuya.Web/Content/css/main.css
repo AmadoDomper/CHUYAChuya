@@ -341,6 +341,11 @@ button, input, optgroup, select, textarea {
     overflow-y: auto;
 }
 
+.scrollvertical-45 {
+    height: 215px;
+    overflow-y: auto;
+}
+
 .scrollvertical-5 {
     height: 250px;
     overflow-y: auto;

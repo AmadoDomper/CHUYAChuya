@@ -36,7 +36,7 @@
     </div>
     <div class="row">
         <div class="col-lg-4">
-            <div class="panel">
+            <div class="panel igual">
                 <div class="panel-body float">
                     <div class="ibox-title">
                         <h5>Entrada de Efectivo</h5>
@@ -65,7 +65,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div id="target1" class="panel panel-inverse active">
+            <div class="panel igual">
                 <div class="panel-body float">
                     <div class="ibox-title">
                         <h5>Total en caja</h5>
@@ -106,7 +106,7 @@
             </div>
         </div>
         <div class="col-lg-4">
-            <div class="panel panel-inverse">
+            <div class="panel igual">
                 <div class="panel-body float">
                     <div class="ibox-title">
                         <h5>Lista de Pago a proveedores</h5>
@@ -166,6 +166,15 @@
         //$('input.target').click(function () {
         //    vista($(this).attr('href'));
         //});
+
+        var heights = $(".igual").map(function () {
+            return $(this).height();
+        }).get(),
+
+        maxHeight = Math.max.apply(null, heights);
+
+        $(".igual").height(maxHeight);
+
     });
 
     $("#btnDetalleCorte").bind("click", function () {
@@ -207,7 +216,7 @@
             scrollVertical: "Si",
             tipoCampo: ",,D",
             alinear: "L,L,L",
-            cantRegVertical: 8,
+            cantRegVertical: 45,
             datos: oL1
         });
 
@@ -218,7 +227,7 @@
             scrollVertical: "Si",
             tipoCampo: ",,,D,D,D,D",
             alinear: "C,C,L,R,R,R,R",
-            cantRegVertical: 4,
+            cantRegVertical: 45,
             datos: oL2
         });
 
@@ -229,7 +238,7 @@
             scrollVertical: "Si",
             tipoCampo: ",,,D,D,D,D",
             alinear: "C,C,L,R,R,R,R",
-            cantRegVertical: 4,
+            cantRegVertical: 45,
             datos: oL3
         });
     }
