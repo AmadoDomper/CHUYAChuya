@@ -209,6 +209,8 @@
                             $("#hdnPersNatId").val(oUsu.oPersNat.oPers.id);
                             $("#txtNom").val(oUsu.oPersNat.cNom);
                             $("#txtApe").val(oUsu.oPersNat.cApe);
+                            $("#txtDNI").val(oUsu.oPersNat.cDOI);
+                            $("#cmbSex input:radio").val([oUsu.oPersNat.oSexo.id]);
                             $("#txtFechaNac").val(oUsu.oPersNat.dNac);
                             $("#txtNatEmail").val(oUsu.oPersNat.oPers.mail);
                             $("#txtNatTel1").val(oUsu.oPersNat.oPers.tel1);
@@ -227,7 +229,7 @@
 
     var persSelec = {}
 
-    function BuscarCliente(valor) {
+    function BuscarPersona(valor) {
         var aceptar = function (d) {
             persSelec = d;
             $("#hdnPersId").val(d.id);
@@ -250,11 +252,11 @@
     }
 
     $("#btnBuscarPers").bind("click", function () {
-        BuscarCliente($("#txtBuscarPers").val());
+        BuscarPersona($("#txtBuscarPers").val());
     });
 
     $("#txtBuscarPers").bind("keyup", function (e) {
-        if (e.which == 13) { BuscarCliente($(this).val()); };
+        if (e.which == 13) { BuscarPersona($(this).val()); };
     });
 
 
