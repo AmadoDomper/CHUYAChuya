@@ -236,7 +236,7 @@
             var $target = $($(this).attr('hre')),
                 $other = $target.siblings();
 
-            $("#btnCliente a").removeClass("btn-primary");
+            $("#btnCliente a").removeClass("btn-primary").attr("disabled", false);
             $(this).addClass("btn-primary");
             $target.show();
             $other.hide();
@@ -302,6 +302,7 @@
                                 $("#txtNatDir").val(oPers.oPers.direc);
                                 $("#cmbSex input:radio").val([oPers.oSexo.id]);
                                 $("#btnCliente a")[0].click();
+                                $($("#btnCliente a")[1]).attr("disabled", true);
                             } else if (cTipo == "J") {
                                 $("#hdnPersJurId").val(oPers.oPers.id);
                                 $("#txtEmp").val(oPers.cEmpresa);
@@ -313,6 +314,7 @@
                                 $("#txtJurTel2").val(oPers.oPers.tel2);
                                 $("#txtJurDir").val(oPers.oPers.direc);
                                 $("#btnCliente a")[1].click();
+                                $($("#btnCliente a")[0]).attr("disabled", true);
                             }
                         },
                         bloqueo: false
