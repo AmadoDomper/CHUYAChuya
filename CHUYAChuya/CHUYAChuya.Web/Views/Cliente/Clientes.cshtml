@@ -295,7 +295,7 @@
                                 $("#txtNom").val(oPers.cNom);
                                 $("#txtApe").val(oPers.cApe);
                                 $("#txtDOI").val(oPers.cDOI);
-                                $("#txtFechaNac").val(oPers.dNac);
+                                $("#txtFechaNac").val(moment(oPers.dNac).format("DD/MM/YYYY"));
                                 $("#txtNatEmail").val(oPers.oPers.mail);
                                 $("#txtNatTel1").val(oPers.oPers.tel1);
                                 $("#txtNatTel2").val(oPers.oPers.tel2);
@@ -307,7 +307,7 @@
                                 $("#txtEmp").val(oPers.cEmpresa);
                                 $("#txtRep").val(oPers.cRep);
                                 $("#txtRUC").val(oPers.cRUC);
-                                $("#txtFechaConst").val(oPers.dConst);
+                                $("#txtFechaConst").val(moment(oPers.dConst).format("DD/MM/YYYY"));
                                 $("#txtJurEmail").val(oPers.oPers.mail);
                                 $("#txtJurTel1").val(oPers.oPers.tel1);
                                 $("#txtJurTel2").val(oPers.oPers.tel2);
