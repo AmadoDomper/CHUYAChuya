@@ -30,7 +30,7 @@
         </div>
         <div class="panel-body" style="display: block;">
             <div id="btnCliente" class="btn-group btn-group-justified m-b-10 m-t-5" role="group">
-                <a hre="#frmClienteNat" class="btn btn-default" role="button">Cliente Natural</a>
+                <a hre="#frmClienteNat" class="btn btn-default btn-primary" role="button">Cliente Natural</a>
                 <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Jurídico</a>
             </div>
             <div>
@@ -236,10 +236,11 @@
             var $target = $($(this).attr('hre')),
                 $other = $target.siblings();
 
+            $("#btnCliente a").removeClass("btn-primary");
+            $(this).addClass("btn-primary");
             $target.show();
             $other.hide();
         });
-
     });
 
     var vista = function ($target) {
@@ -300,6 +301,7 @@
                                 $("#txtNatTel2").val(oPers.oPers.tel2);
                                 $("#txtNatDir").val(oPers.oPers.direc);
                                 $("#cmbSex input:radio").val([oPers.oSexo.id]);
+                                $("#btnCliente a")[0].click();
                             } else if (cTipo == "J") {
                                 $("#hdnPersJurId").val(oPers.oPers.id);
                                 $("#txtEmp").val(oPers.cEmpresa);
@@ -310,6 +312,7 @@
                                 $("#txtJurTel1").val(oPers.oPers.tel1);
                                 $("#txtJurTel2").val(oPers.oPers.tel2);
                                 $("#txtJurDir").val(oPers.oPers.direc);
+                                $("#btnCliente a")[1].click();
                             }
                         },
                         bloqueo: false
