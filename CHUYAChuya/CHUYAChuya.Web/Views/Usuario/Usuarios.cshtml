@@ -130,7 +130,7 @@
                         </div>
                     </div>
                     <div class="form-group m-b-5">
-                        <label class="col-md-4 control-label">Contraseña</label>
+                        <label id="lblCont" class="col-md-4 control-label">Contraseña</label>
                         <div class="col-md-4">
                             <input type="text" id="txtCont1" name="oUsu.cUsuContrasena" class="form-control">
                         </div>
@@ -208,6 +208,7 @@
 
                             $("#hdnPersNatId").val(oUsu.oPersNat.oPers.id);
                             $("#txtNom").val(oUsu.oPersNat.cNom);
+                            $("#txtUsu").val(oUsu.cUsuNom)
                             $("#txtApe").val(oUsu.oPersNat.cApe);
                             $("#txtDNI").val(oUsu.oPersNat.cDOI);
                             $("#cmbSex input:radio").val([oUsu.oPersNat.oSexo.id]);
@@ -216,6 +217,8 @@
                             $("#txtNatTel1").val(oUsu.oPersNat.oPers.tel1);
                             $("#txtNatTel2").val(oUsu.oPersNat.oPers.tel2);
                             $("#txtNatDir").val(oUsu.oPersNat.oPers.direc);
+                            $("#lblCont").html("Nueva Contraseña")
+                            
                         },
                         bloqueo: true
                     });
