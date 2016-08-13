@@ -33,31 +33,34 @@
                 <a hre="#frmClienteNat" class="btn btn-default btn-primary" role="button">Cliente Natural</a>
                 <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Jurídico</a>
             </div>
+            <div class="hr-line-dashed"></div>
+            <div id="msg">
+            </div>
             <div>
-                <form action="/Cliente/RegistrarPersNatural" autocomplete="off" id="frmClienteNat" method="post" class="form-horizontal ng-pristine ng-valid">
+                <form role="form" data-toggle="validator" action="/Cliente/RegistrarPersNatural" autocomplete="off" id="frmClienteNat" method="post" class="form-horizontal ng-pristine ng-valid">
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Nombre</label>
                         <div class="col-md-7">
                             <input id="hdnPersNatId" type="hidden" name="PersNat.oPers.nPersId" />
-                            <input type="text" id="txtNom" name="PersNat.cPersNatNombre" class="form-control">
+                            <input type="text" id="txtNom" name="PersNat.cPersNatNombre" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Apellido</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtApe" name="PersNat.cPersNatApellido" class="form-control">
+                            <input type="text" id="txtApe" name="PersNat.cPersNatApellido" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">DOI</label>
-                        <div class="col-md-3">
-                            <input type="text" id="txtDOI" name="PersNat.cPersNatDOI" class="form-control">
+                        <div class="col-md-4">
+                            <input type="text" pattern="[0-9]{8}" onkeypress="return val_09(event)" maxlength="8" id="txtDOI" name="PersNat.cPersNatDOI" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Fecha de Nacimiento</label>
-                        <div class="col-md-3">
-                            <input type="text" id="txtFechaNac" name="PersNat.dPersNatNac" class="form-control" placeholder="dd/mm/yyyy">
+                        <div class="col-md-4">
+                            <input type="text" id="txtFechaNac" name="PersNat.dPersNatNac" class="form-control" placeholder="dd/mm/yyyy" required>
                         </div>
                     </div>
                     <div class="form-group m-b-8">
@@ -72,31 +75,32 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Email</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtNatEmail" name="PersNat.oPers.cPersEmail" class="form-control">
+                            <input type="email" id="txtNatEmail" name="PersNat.oPers.cPersEmail" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 1</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtNatTel1" name="PersNat.oPers.cPersTelefono1" class="form-control">
+                            <input type="text" id="txtNatTel1" onkeypress="return val_09(event)" name="PersNat.oPers.cPersTelefono1" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 2</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtNatTel2" name="PersNat.oPers.cPersTelefono2" class="form-control">
+                            <input type="text" id="txtNatTel2" onkeypress="return val_09(event)" name="PersNat.oPers.cPersTelefono2" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Dirección</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtNatDir" name="PersNat.oPers.cPersDireccion" class="form-control">
+                            <input type="text" id="txtNatDir" name="PersNat.oPers.cPersDireccion" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Ciudad</label>
                         <div class="col-md-4">
-                            <select id="cmbNatCiudad" class="form-control">
+                            <select id="cmbNatCiudad" class="form-control" required>
+                                <option value="">-SELECCIONE-</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -108,13 +112,14 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Distrito</label>
                         <div class="col-md-4">
-                            <select id="cmbNatDistrito" name="PersNat.oPers.oPersUbigeo.cConstanteID" class="form-control">
+                            <select id="cmbNatDistrito" name="PersNat.oPers.oPersUbigeo.cConstanteID" class="form-control" required>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
                                 <option value="5">5</option>
                             </select>
+                            <div class="help-block with-errors"></div>
                         </div>
                     </div>
                     <div class="row m-b-10 m-t-10">
@@ -327,21 +332,30 @@
 
     //Registrar Clientes Natural
 
-    $("#btnGrabarNat").bind("click", function () {
+    $("#btnGrabarNat").click(function () {
+
+
         var form = $("#frmClienteNat");
+        form.validator();
+        var validator = form.data("bs.validator");
+        validator.validate();
 
-        valores = form.serializeArray();
+        if (!validator.hasErrors()) {
+            valores = form.serializeArray();
 
-        $.fn.Conexion({
-            direccion: form.attr("action"),
-            datos: valores,
-            terminado: function (data, textStatus, jqXHR) {
-                Resultado(data);
-            },
-            bloqueo: true
-        });
-
+            $.fn.Conexion({
+                direccion: form.attr("action"),
+                datos: valores,
+                terminado: function (data, textStatus, jqXHR) {
+                    Resultado(data);
+                },
+                bloqueo: true
+            });
+        } else {
+            alerta("#msg", "Es necesario completar los campos que están en rojo.");
+        }
     });
+
 
     //Registrar Cliente Juridico
 

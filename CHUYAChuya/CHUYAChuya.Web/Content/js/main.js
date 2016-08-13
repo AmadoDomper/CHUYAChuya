@@ -229,9 +229,13 @@ function sumaFecha(d, fecha) {
 //        if (height < 1) height = 1;
 //        if (height > topOffset) {
 //            $('div#contenido').css("min-height", (height) + "px");
-//        }
+//        }val_09(event)
 //    })
 //})
+
+function alerta($id,$msg) {
+    $($id).html('<div class="alert alert-danger alert-dismissible text-center" role="alert" style="margin-bottom: 10px;"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button><strong>Error! </strong>' + $msg + '</div>');
+}
 
 function hCombos() {
     this.ids = [];
