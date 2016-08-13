@@ -87,7 +87,7 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 2</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtNatTel2" onkeypress="return val_09(event)" name="PersNat.oPers.cPersTelefono2" class="form-control" required>
+                            <input type="text" id="txtNatTel2" onkeypress="return val_09(event)" name="PersNat.oPers.cPersTelefono2" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
@@ -134,31 +134,31 @@
                         <label class="col-md-4 control-label">Empresa</label>
                         <div class="col-md-7">
                             <input id="hdnPersJurId" type="hidden" name="PersJur.oPers.nPersId" />
-                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control">
+                            <input type="text" id="txtEmp" name="PersJur.cPersJurEmpresa" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Representante</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control">
+                            <input type="text" id="txtRep" name="PersJur.cPersJurRep" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">RUC</label>
                         <div class="col-md-3">
-                            <input type="text" id="txtRUC" name="PersJur.cPersJurRUC" class="form-control">
+                            <input type="text" pattern="[0-9]{11}" id="txtRUC" maxlength="11" name="PersJur.cPersJurRUC" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Fecha de Constitución</label>
                         <div class="col-md-3">
-                            <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="dd/mm/yyyy">
+                            <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="dd/mm/yyyy" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Actividad</label>
                         <div class="col-md-4">
-                            <select id="cmbActividad" name="PersJur.oPersJurActividad.cConstanteID" class="form-control">
+                            <select id="cmbActividad" name="PersJur.oPersJurActividad.cConstanteID" class="form-control" required>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -170,32 +170,33 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Email</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtJurEmail" name="PersJur.oPers.cPersEmail" class="form-control">
+                            <input type="text" id="txtJurEmail" name="PersJur.oPers.cPersEmail" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 1</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtJurTel1" name="PersJur.oPers.cPersTelefono1" class="form-control">
+                            <input type="text" id="txtJurTel1" name="PersJur.oPers.cPersTelefono1" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 2</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control">
+                            <input type="text" onkeypress="return val_09(event)" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Dirección</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control">
+                            <input type="text" onkeypress="return val_09(event)" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Ciudad</label>
                         <div class="col-md-4">
-                            <select id="cmbJurCiudad" class="form-control">
+                            <select id="cmbJurCiudad" class="form-control" required>
+                                <option value="">-SELECCIONE-</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -207,7 +208,8 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Distrito</label>
                         <div class="col-md-4">
-                            <select id="cmbJurDistrito" name="PersJur.oPers.oPersUbigeo.cConstanteID" class="form-control">
+                            <select id="cmbJurDistrito" name="PersJur.oPers.oPersUbigeo.cConstanteID" class="form-control" required>
+                                <option value="">-SELECCIONE-</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
@@ -333,10 +335,9 @@
     //Registrar Clientes Natural
 
     $("#btnGrabarNat").click(function () {
-
-
         var form = $("#frmClienteNat");
         form.validator();
+
         var validator = form.data("bs.validator");
         validator.validate();
 
@@ -347,7 +348,13 @@
                 direccion: form.attr("action"),
                 datos: valores,
                 terminado: function (data, textStatus, jqXHR) {
-                    Resultado(data);
+                    if (data == -2) {
+                        alerta("#msg", "Existe un cliente registrado con el mismo DNI.");
+                        $("#txtDOI").parent().parent().addClass("has-error has-danger");
+                        $("#txtDOI").focus();
+                    } else {
+                        Resultado(data);
+                    }
                 },
                 bloqueo: true
             });
@@ -361,18 +368,33 @@
 
     $("#btnGrabarJur").bind("click", function () {
         var form = $("#frmClienteJur");
+        form.validator();
+
+        var validator = form.data("bs.validator");
+        validator.validate();
 
         valores = form.serializeArray();
 
-        $.fn.Conexion({
-            direccion: form.attr("action"),
-            datos: valores,
-            terminado: function (data, textStatus, jqXHR) {
-                Resultado(data);
-            },
-            bloqueo: true
-        });
+        if (!validator.hasErrors()) {
+            valores = form.serializeArray();
 
+            $.fn.Conexion({
+                direccion: form.attr("action"),
+                datos: valores,
+                terminado: function (data, textStatus, jqXHR) {
+                    if (data == -2) {
+                        alerta("#msg", "Existe un cliente registrado con el mismo RUC.");
+                        $("#txtRUC").parent().parent().addClass("has-error has-danger");
+                        $("#txtRUC").focus();
+                    } else {
+                        Resultado(data);
+                    }
+                },
+                bloqueo: true
+            });
+        } else {
+            alerta("#msg", "Es necesario completar los campos que están en rojo.");
+        }
     });
 
 
