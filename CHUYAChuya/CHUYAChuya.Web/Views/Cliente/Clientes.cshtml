@@ -270,67 +270,75 @@
         }
     };
 
+    ListaCliente();
 
+    function ListaCliente(nPage,nSize) {
+        $.fn.Conexion({
+            direccion: '/Cliente/ListaClientesPag',
+            datos: { "nPage": nPage, "nSize": nSize },
+            terminado: function (data) {
+                var d = JSON.parse(data);
 
-    $.fn.Conexion({
-        direccion: '/Cliente/ListaClientes',
-        datos: {},
-        terminado: function (data) {
-            $("#cntListaClientes").Tabla({
-                tblId: "tblClientes",
-                cabecera: "Codígo,Nombre,Sexo,DOI,Tipo,Teléfono,Dirección",
-                campos: "id,nom,sexo,doi,tipo,tel1,direc",
-                scrollVertical: "Si",
-                alinear: "C,L,C,C,C,C,L",
-                cantRegVertical: 15,
-                edit: true,
-                dblClick: true,
-                editEvent: function (fila) {
-                    var nPersId = fila.find("td").eq(0).html();
-                    var cTipo = fila.find("td").eq(4).html();
-                    $("#hdnEstado").val("E");
-                    $('input.target')[0].click();
+                $("#cntListaClientes").Tabla({
+                    tblId: "tblClientes",
+                    cabecera: "Codígo,Nombre,Sexo,DOI,Tipo,Teléfono,Dirección",
+                    campos: "id,nom,sexo,doi,tipo,tel1,direc",
+                    scrollVertical: "Si",
+                    alinear: "C,L,C,C,C,C,L",
+                    cantRegVertical: 15,
+                    pag: true,
+                    pagDato: { "nPage": d.nPage, "nPageTot": d.nPageTot },
+                    pagEvent: ListaCliente,
+                    edit: true,
+                    dblClick: true,
+                    editEvent: function (fila) {
+                        var nPersId = fila.find("td").eq(0).html();
+                        var cTipo = fila.find("td").eq(4).html();
+                        $("#hdnEstado").val("E");
+                        $('input.target')[0].click();
 
-                    $.fn.Conexion({
-                        direccion: '/Cliente/CargoDatosCliente',
-                        datos: { "nPersId": nPersId, "cTipo": cTipo },
-                        terminado: function (data, textStatus, jqXHR) {
-                            var oPers = JSON.parse(data);
+                        $.fn.Conexion({
+                            direccion: '/Cliente/CargoDatosCliente',
+                            datos: { "nPersId": nPersId, "cTipo": cTipo },
+                            terminado: function (data, textStatus, jqXHR) {
+                                var oPers = JSON.parse(data);
 
-                            if (cTipo == "N") {
-                                $("#hdnPersNatId").val(oPers.oPers.id);
-                                $("#txtNom").val(oPers.cNom);
-                                $("#txtApe").val(oPers.cApe);
-                                $("#txtDOI").val(oPers.cDOI);
-                                $("#txtFechaNac").val(moment(oPers.dNac).format("DD/MM/YYYY"));
-                                $("#txtNatEmail").val(oPers.oPers.mail);
-                                $("#txtNatTel1").val(oPers.oPers.tel1);
-                                $("#txtNatTel2").val(oPers.oPers.tel2);
-                                $("#txtNatDir").val(oPers.oPers.direc);
-                                $("#cmbSex input:radio").val([oPers.oSexo.id]);
-                                $("#btnCliente a")[0].click();
-                                $($("#btnCliente a")[1]).attr("disabled", true);
-                            } else if (cTipo == "J") {
-                                $("#hdnPersJurId").val(oPers.oPers.id);
-                                $("#txtEmp").val(oPers.cEmpresa);
-                                $("#txtRep").val(oPers.cRep);
-                                $("#txtRUC").val(oPers.cRUC);
-                                $("#txtFechaConst").val(moment(oPers.dConst).format("DD/MM/YYYY"));
-                                $("#txtJurEmail").val(oPers.oPers.mail);
-                                $("#txtJurTel1").val(oPers.oPers.tel1);
-                                $("#txtJurTel2").val(oPers.oPers.tel2);
-                                $("#txtJurDir").val(oPers.oPers.direc);
-                                $("#btnCliente a")[1].click();
-                                $($("#btnCliente a")[0]).attr("disabled", true);
-                            }
-                        },
-                        bloqueo: false
-                    });
-                },
-                datos: JSON.parse(data)
-            });
-        }
-    });
+                                if (cTipo == "N") {
+                                    $("#hdnPersNatId").val(oPers.oPers.id);
+                                    $("#txtNom").val(oPers.cNom);
+                                    $("#txtApe").val(oPers.cApe);
+                                    $("#txtDOI").val(oPers.cDOI);
+                                    $("#txtFechaNac").val(moment(oPers.dNac).format("DD/MM/YYYY"));
+                                    $("#txtNatEmail").val(oPers.oPers.mail);
+                                    $("#txtNatTel1").val(oPers.oPers.tel1);
+                                    $("#txtNatTel2").val(oPers.oPers.tel2);
+                                    $("#txtNatDir").val(oPers.oPers.direc);
+                                    $("#cmbSex input:radio").val([oPers.oSexo.id]);
+                                    $("#btnCliente a")[0].click();
+                                    $($("#btnCliente a")[1]).attr("disabled", true);
+                                } else if (cTipo == "J") {
+                                    $("#hdnPersJurId").val(oPers.oPers.id);
+                                    $("#txtEmp").val(oPers.cEmpresa);
+                                    $("#txtRep").val(oPers.cRep);
+                                    $("#txtRUC").val(oPers.cRUC);
+                                    $("#txtFechaConst").val(moment(oPers.dConst).format("DD/MM/YYYY"));
+                                    $("#txtJurEmail").val(oPers.oPers.mail);
+                                    $("#txtJurTel1").val(oPers.oPers.tel1);
+                                    $("#txtJurTel2").val(oPers.oPers.tel2);
+                                    $("#txtJurDir").val(oPers.oPers.direc);
+                                    $("#btnCliente a")[1].click();
+                                    $($("#btnCliente a")[0]).attr("disabled", true);
+                                }
+                            },
+                            bloqueo: false
+                        });
+                    },
+                    datos: d.oLista
+                });
+            }
+        });
+    }
+
 
     //Registrar Clientes Natural
 

@@ -30,7 +30,9 @@
         m.contenedor = m.contenedor || this;
         m.cabecera = m.cabecera || "";
         m.funcion_click = m.funcion_click || function () { };
-        m.paginacion = m.paginacion || "No";
+        m.pag = m.pag || false;
+        m.pagDato = m.pagDato || {};
+        m.pagEvent = m.pagEvent || function () { };
         m.claseSobre = m.claseSobre || "Si";
         m.scrollVertical = m.scrollVertical || "No";
         m.cantRegVertical = m.cantRegVertical || 4;
@@ -77,62 +79,76 @@
         //Cuerpo
         html += '<tbody>';
         var i = 0;
-            for (i in m.datos)
+        for (i in m.datos)
+        {
+            html += '<tr>';
+            if (m.numerado == "Si")
+                html += '<td>' + i + 1 + '</td>';
+
+            if (camp.length > 0)
             {
-                html += '<tr>';
-                if (m.numerado == "Si")
-                    html += '<td>' + i + 1 + '</td>';
-
-                if (camp.length > 0)
+                var dat;
+                var k = 0;
+                for (k in camp)
                 {
-                    var dat;
-                    var k = 0;
-                    for (k in camp)
-                    {
-                        dat = eval("m.datos[i]." + camp[k]);
+                    dat = eval("m.datos[i]." + camp[k]);
 
-                        if (tipo[k] == "D") {
-                            dat = number_format(dat, 2)
-                        }
-
-                        dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
-                        html += '<td>' + (dat == null ? "" : dat) + '</td>';
+                    if (tipo[k] == "D") {
+                        dat = number_format(dat, 2)
                     }
 
-                    if (m.edit) {
-                        html += '<td style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
-                    }
-
-                }
-                else
-                {
-                    if (m.subLista=="No")
-                    {
-                            html += '<td>' + m.datos[i] + '</td>';
-                    } else
-                    {
-                        var j = 0;
-                        for (j in m.datos[i])
-                        {
-                            html += '<td>' + m.datos[i][j] + '</td>';
-                        }
-                    }
+                    dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
+                    html += '<td>' + (dat == null ? "" : dat) + '</td>';
                 }
 
-                html += '</tr>';
+                if (m.edit) {
+                    html += '<td style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+                }
+
             }
+            else
+            {
+                if (m.subLista=="No")
+                {
+                    html += '<td>' + m.datos[i] + '</td>';
+                } else
+                {
+                    var j = 0;
+                    for (j in m.datos[i])
+                    {
+                        html += '<td>' + m.datos[i][j] + '</td>';
+                    }
+                }
+            }
+
+            html += '</tr>';
+        }
         //}
         
-            if (typeof (m.datos) != 'undefined' && m.datos.length == 0) {
-                html += '<tr><td colspan="' + camp.length + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
+        if (typeof (m.datos) != 'undefined' && m.datos.length == 0) {
+            html += '<tr><td colspan="' + camp.length + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
+        }
+
+
+        html += '</tbody></table>';
+
+        if (m.pag) {
+
+            html += '<div class="text-right" id="cntPaginacion">';
+            html += '<ul class="pagination m-t-10 m-b-10">';
+            html += '<li class="previous" id="example1_previous">';
+            html += '<a href="#" data-dt-idx="0" tabindex="0">Anterior</a></li>';
+            
+            for (var i = 1; i <= m.pagDato.nPageTot; i++) {
+                html += '<li><a href="#" data-dt-idx="' + i + '" tabindex="0">' + i + '</a></li>';
             }
 
-
-        html += '</tbody>';
-
+            html += '<li class="next" id="example1_next">';
+            html += '<a href="#" data-dt-idx="' + (m.pagDato.nPageTot + 1) + '" tabindex="0">Siguiente</a>';
+            html += '</li></ul></div>';
+        }
 
         $(m.contenedor).html(html);
-
 
         $("#" + m.tblId + " tbody tr").bind("click", function ()
         {
@@ -167,6 +183,36 @@
             $("#" + m.tblId + " tbody tr").bind("dblclick", function () {
                 m["editEvent"]($(this));
             });
+        }
+
+        if (m.pag) {
+            $('#cntPaginacion [data-dt-idx=' + m.pagDato.nPage + ']').parent().addClass("active");
+            $('#cntPaginacion [data-dt-idx=' + m.pagDato.nPage + ']').focus();
+
+            if (m.pagDato.nPage == 1) {
+                $("#cntPaginacion .previous").addClass("disabled")
+            } else if (m.pagDato.nPage == m.pagDato.nPageTot) {
+                $("#cntPaginacion .next").addClass("disabled")
+            } else {
+                $("#cntPaginacion .previous,#cntPaginacion .next").removeClass("disabled");
+            }
+
+            $('#cntPaginacion a').click(function () {
+                var nPag = $(this).attr("data-dt-idx");
+                var nAct = $("#cntPaginacion .active a").attr("data-dt-idx")
+
+                if (nPag == 0) {
+                    nPag = nAct - 1;
+                } else if (nPag == (m.pagDato.nPageTot+1)) {
+                    nPag = (nAct*1) + 1;
+                }
+
+                if (nPag != nAct && (nPag != 0 && nPag != m.pagDato.nPageTot +1)) {
+                    m["pagEvent"](nPag, 10);
+                }
+            });
+
+
         }
     }
 })(jQuery);

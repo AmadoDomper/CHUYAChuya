@@ -30,12 +30,12 @@ namespace CHUYAChuya.Web.Controllers
         /// Metodo para listas todos los clientes que se muestran en la pantalla inicial de Clientes
         /// </summary>
         /// <returns>Lista en de Clientes en formato JSON</returns>
-        public JsonResult ListaClientes()
+        public JsonResult ListaClientesPag(int nPage = 1, int nSize = 10)
         {
             PersonaLN oPersonaLN = new PersonaLN();
-            List<Persona> ListaClientes = new List<Persona>();
-            ListaClientes = oPersonaLN.ListaClientes();
-            return Json(JsonConvert.SerializeObject(ListaClientes, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            ListaPaginada ListaClientesPag = new ListaPaginada();
+            ListaClientesPag = oPersonaLN.ListaClientesPag(nPage, nSize);
+            return Json(JsonConvert.SerializeObject(ListaClientesPag, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
         /// <summary>

@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListaPaginada.cs" />
     <Compile Include="NotaEntregaL.cs" />
     <Compile Include="Constante.cs" />
     <Compile Include="Corte.cs" />

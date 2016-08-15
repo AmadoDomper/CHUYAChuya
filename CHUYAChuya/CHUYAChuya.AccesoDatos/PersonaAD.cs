@@ -44,11 +44,16 @@ namespace CHUYAChuya.AccesoDatos
         }
 
 
-        public List<Persona> ListaClientes()
+        public ListaPaginada ListaClientesPag(int nPage, int nSize)
         {
+            ListaPaginada oLisCliPag = new ListaPaginada();
             List<Persona> ListaClientes = new List<Persona>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListarClientes);
+            oDatabase.AddInParameter(oDbCommand, "@nPageN", DbType.Int32, nPage);
+            oDatabase.AddInParameter(oDbCommand, "@nPageSize", DbType.Int32, nSize);
+            oDatabase.AddOutParameter(oDbCommand, "@nRows", DbType.Int32, 10);
+            oDatabase.AddOutParameter(oDbCommand, "@nPageTotal", DbType.Int32, 10);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -63,7 +68,6 @@ namespace CHUYAChuya.AccesoDatos
                 while (oIDataReader.Read())
                 {
                     Persona oPersona = new Persona();
-
                     oPersona.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
                     oPersona.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNombre]);
                     oPersona.cPersSexo = DataUtil.DbValueToDefault<String>(oIDataReader[icSexo]);
@@ -72,10 +76,18 @@ namespace CHUYAChuya.AccesoDatos
                     oPersona.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
                     oPersona.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
 
-                    ListaClientes.Add(oPersona);
+                    //ListaClientes.Add(oPersona);
+                    oLisCliPag.oLista.Add(oPersona);
                 }
             }
-            return ListaClientes;
+
+            //oLisCliPag.oLista.Add(ListaClientes);
+            oLisCliPag.nPage = nPage;
+            oLisCliPag.nPageSize = nSize;
+            oLisCliPag.nRows = Convert.ToInt32(oDatabase.GetParameterValue(oDbCommand, "@nRows"));
+            oLisCliPag.nPageTotal = Convert.ToInt32(oDatabase.GetParameterValue(oDbCommand, "@nPageTotal"));
+
+            return oLisCliPag;
         }
 
 
