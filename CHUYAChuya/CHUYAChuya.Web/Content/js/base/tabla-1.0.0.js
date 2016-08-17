@@ -31,7 +31,7 @@
         m.cabecera = m.cabecera || "";
         m.funcion_click = m.funcion_click || function () { };
         m.pag = m.pag || false;
-        m.pagDato = m.pagDato || {};
+        m.pagDato = m.pagDato || {}; // { "nPage": d.nPage (Indice), "nPageTot": d.nPageTot (Total paginas), "nPageSize": d.nPageSize (Lineas por paginas), "nRows": d.nRows (Total de filas) }
         m.pagEvent = m.pagEvent || function () { };
         m.claseSobre = m.claseSobre || "Si";
         m.scrollVertical = m.scrollVertical || "No";
@@ -65,6 +65,7 @@
             //}
         }
 
+        if (m.pagDato.nRows < m.pagDato.nPageSize) { m.pag = false; }
 
         var html = '';
         html = '<div class="' + cssTbl + '"><table data-edit="false" id="' + m.tblId + '" class="table table-bordered table-hover">';
@@ -208,7 +209,7 @@
                 }
 
                 if (nPag != nAct && (nPag != 0 && nPag != m.pagDato.nPageTot +1)) {
-                    m["pagEvent"](nPag, 10);
+                    m["pagEvent"](nPag, m.pagDato.nPageSize);
                 }
             });
 

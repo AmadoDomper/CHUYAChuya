@@ -47,7 +47,7 @@ namespace CHUYAChuya.AccesoDatos
         public ListaPaginada ListaClientesPag(int nPage, int nSize)
         {
             ListaPaginada oLisCliPag = new ListaPaginada();
-            List<Persona> ListaClientes = new List<Persona>();
+            //List<Persona> ListaClientes = new List<Persona>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListarClientes);
             oDatabase.AddInParameter(oDbCommand, "@nPageN", DbType.Int32, nPage);

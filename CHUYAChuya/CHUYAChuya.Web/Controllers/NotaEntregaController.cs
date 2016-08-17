@@ -25,12 +25,12 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
-        public JsonResult BuscarNotaEntregas(int nNotaEst, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
+        public JsonResult BuscarNotaEntPag(int nNotaEst, int nPage=1, int nSize=10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
             NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
-            List<NotaEntrega> ListaNotaEntregas = new List<NotaEntrega>();
-            ListaNotaEntregas = oNotaEntregaLN.BuscarNotaEntregas(nNotaEst, nNotaEntId, cPersDOI, cPersDesc, dIni, dFin);
-            return Json(JsonConvert.SerializeObject(ListaNotaEntregas, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            ListaPaginada ListaNotaEntPag = new ListaPaginada();
+            ListaNotaEntPag = oNotaEntregaLN.BuscarNotaEntPag(nNotaEst, nPage, nSize, nNotaEntId, cPersDOI, cPersDesc, dIni, dFin);
+            return Json(JsonConvert.SerializeObject(ListaNotaEntPag, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
         [RequiresAuthenticationAttribute]

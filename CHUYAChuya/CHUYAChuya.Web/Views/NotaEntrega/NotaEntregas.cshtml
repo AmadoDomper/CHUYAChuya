@@ -49,7 +49,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row table-main">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div id="cntListaNotaEntrega" class="table-responsive">
                     </div>
@@ -343,7 +343,7 @@
 
     ListarNotaEntrega();
 
-    function ListarNotaEntrega() {
+    function ListarNotaEntrega(nPage, nSize) {
 
         var nNotaEst, cPersDOI, nNotaEntId, cPersDesc, dIni, dFin;
         var tpoBsq = $("#cmbTpoBsq").val();
@@ -379,9 +379,10 @@
 
 
         $.fn.Conexion({
-            direccion: '/NotaEntrega/BuscarNotaEntregas',
-            datos: { "nNotaEst": nNotaEst, "nNotaEntId": nNotaEntId, "cPersDOI": cPersDOI, "cPersDesc": cPersDesc, "dIni": dIni, "dFin": dFin },
+            direccion: '/NotaEntrega/BuscarNotaEntPag',
+            datos: { "nNotaEst": nNotaEst,"nPage": nPage, "nSize": nSize, "nNotaEntId": nNotaEntId, "cPersDOI": cPersDOI, "cPersDesc": cPersDesc, "dIni": dIni, "dFin": dFin },
             terminado: function (data) {
+                var d = JSON.parse(data);
 
                 $("#cntListaNotaEntrega").Tabla({
                     tblId: "tblNotaEntrega",
@@ -391,7 +392,10 @@
                     tipoCampo: ",,,,,D",
                     alinear: "C,C,C,C,C,C",
                     cellLen: "70,364,125,150,150,125,60",
-                    cantRegVertical: 8,
+                    cantRegVertical: 15,
+                    pag: true,
+                    pagDato: { "nPage": d.nPage, "nPageTot": d.nPageTot, "nPageSize": d.nPageSize, "nRows": d.nRows },
+                    pagEvent: ListarNotaEntrega,
                     edit: true,
                     dblClick: true,
                     editEvent: function (fila) {
@@ -443,13 +447,11 @@
                                     $("#target2").find("input,textarea,button").attr("disabled", true);
                                     $("#btnCobrarNota,#btnAnularNota").attr("disabled", false);
                                 }
-
-
                             },
                             bloqueo: false
                         });
                     },
-                    datos: JSON.parse(data)
+                    datos: d.oLista
                 });
             }
         });
@@ -471,6 +473,10 @@
 
     $("#btnBuscarNota").bind("click", function () {
         ListarNotaEntrega();
+    });
+
+    $("#txtValor").keyup(function (e) {
+        if (e.which == 13) { ListarNotaEntrega(); }
     });
 
 

@@ -141,6 +141,12 @@ label {
     font-weight: 500;
 }
 
+.table-main {
+    height: 452px;
+}
+
+
+
 .form-control {
     border: 1px solid #ccd0d4;
     -webkit-box-shadow: none;
@@ -353,6 +359,11 @@ button, input, optgroup, select, textarea {
 
 .scrollvertical-8 {
     height: 300px;
+    overflow-y: auto;
+}
+
+.scrollvertical-10 {
+    height: 397px;
     overflow-y: auto;
 }
 

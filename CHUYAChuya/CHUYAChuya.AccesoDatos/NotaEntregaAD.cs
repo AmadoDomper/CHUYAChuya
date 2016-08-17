@@ -95,9 +95,9 @@ namespace CHUYAChuya.AccesoDatos
             return resultado;
         }
 
-        public List<NotaEntrega> BuscarNotaEntregas(int nNotaEst, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
+        public ListaPaginada BuscarNotaEntPag(int nNotaEst, int nPage = 1, int nSize= 10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
-            List<NotaEntrega> ListaNotasEntrega = new List<NotaEntrega>();
+            ListaPaginada oLisNotas = new ListaPaginada();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarNotaEntregas);
             oDatabase.AddInParameter(oDbCommand, "@nNotaEstado", DbType.Int16, (object)nNotaEst ?? DBNull.Value);
@@ -106,6 +106,10 @@ namespace CHUYAChuya.AccesoDatos
             oDatabase.AddInParameter(oDbCommand, "@cPersDesc", DbType.String, (object)cPersDesc ?? DBNull.Value);
             oDatabase.AddInParameter(oDbCommand, "@dFechaEntI", DbType.Date, (object)dIni ?? DBNull.Value);
             oDatabase.AddInParameter(oDbCommand, "@dFechaEntF", DbType.Date, (object)dFin ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@nPageN", DbType.Int32, nPage);
+            oDatabase.AddInParameter(oDbCommand, "@nPageSize", DbType.Int32, nSize);
+            oDatabase.AddOutParameter(oDbCommand, "@nRows", DbType.Int32, 10);
+            oDatabase.AddOutParameter(oDbCommand, "@nPageTotal", DbType.Int32, 10);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -129,12 +133,17 @@ namespace CHUYAChuya.AccesoDatos
                     oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
                     oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
 
-                    ListaNotasEntrega.Add(oNotaEntrega);
+                    oLisNotas.oLista.Add(oNotaEntrega);
                 }
             }
-            return ListaNotasEntrega;
-        }
 
+            oLisNotas.nPage = nPage;
+            oLisNotas.nPageSize = nSize;
+            oLisNotas.nRows = Convert.ToInt32(oDatabase.GetParameterValue(oDbCommand, "@nRows"));
+            oLisNotas.nPageTotal = Convert.ToInt32(oDatabase.GetParameterValue(oDbCommand, "@nPageTotal"));
+
+            return oLisNotas;
+        }
 
         public NotaEntrega CargoDatosNotaEntrega(int nNotaId)
         {
