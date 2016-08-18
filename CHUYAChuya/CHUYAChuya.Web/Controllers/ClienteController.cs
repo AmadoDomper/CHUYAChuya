@@ -26,15 +26,25 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
+        [RequiresAuthenticationAttribute]
+        public JsonResult ListaConstantes()
+        {
+            UsuarioLN oUsuarioLN = new UsuarioLN();
+            CajaViewModel oCajaVM = new CajaViewModel();
+
+            oCajaVM.lstUsuarios = oUsuarioLN.Usuarios();
+            return Json(JsonConvert.SerializeObject(oCajaVM));
+        }
+
         /// <summary>
         /// Metodo para listas todos los clientes que se muestran en la pantalla inicial de Clientes
         /// </summary>
         /// <returns>Lista en de Clientes en formato JSON</returns>
-        public JsonResult ListaClientesPag(int nPage = 1, int nSize = 10)
+        public JsonResult ListaClientesPag(int nPage = 1, int nSize = 10, int nCliId = -1, string cCliDesc = null, string cCliDOI = null)
         {
             PersonaLN oPersonaLN = new PersonaLN();
             ListaPaginada ListaClientesPag = new ListaPaginada();
-            ListaClientesPag = oPersonaLN.ListaClientesPag(nPage, nSize);
+            ListaClientesPag = oPersonaLN.ListaClientesPag(nPage, nSize, nCliId, cCliDesc, cCliDOI);
             return Json(JsonConvert.SerializeObject(ListaClientesPag, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
