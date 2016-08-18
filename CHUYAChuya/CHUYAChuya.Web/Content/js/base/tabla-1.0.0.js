@@ -65,7 +65,7 @@
             //}
         }
 
-        if (m.pagDato.nRows < m.pagDato.nPageSize) { m.pag = false; }
+        if (m.pagDato.nRows <= m.pagDato.nPageSize) { m.pag = false; }
 
         var html = '';
         html = '<div class="' + cssTbl + '"><table data-edit="false" id="' + m.tblId + '" class="table table-bordered table-hover">';

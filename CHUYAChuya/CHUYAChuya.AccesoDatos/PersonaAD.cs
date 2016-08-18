@@ -44,12 +44,15 @@ namespace CHUYAChuya.AccesoDatos
         }
 
 
-        public ListaPaginada ListaClientesPag(int nPage, int nSize)
+        public ListaPaginada ListaClientesPag(int nPage, int nSize, int nCliId = -1, string cCliDesc = null, string cCliDOI = null)
         {
             ListaPaginada oLisCliPag = new ListaPaginada();
             //List<Persona> ListaClientes = new List<Persona>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListarClientes);
+            oDatabase.AddInParameter(oDbCommand, "@nCliId", DbType.Int32, (object)nCliId ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cCliDesc", DbType.String, (object)cCliDesc ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cCliDOI", DbType.String, (object)cCliDOI ?? DBNull.Value);
             oDatabase.AddInParameter(oDbCommand, "@nPageN", DbType.Int32, nPage);
             oDatabase.AddInParameter(oDbCommand, "@nPageSize", DbType.Int32, nSize);
             oDatabase.AddOutParameter(oDbCommand, "@nRows", DbType.Int32, 10);

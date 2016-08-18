@@ -29,9 +29,9 @@ namespace CHUYAChuya.LogicaNegocio
             }
         }
 
-        public ListaPaginada ListaClientesPag(int nPage, int nSize)
+        public ListaPaginada ListaClientesPag(int nPage, int nSize, int nCliId = -1, string cCliDesc = null, string cCliDOI = null)
         {
-            return oPersonaAD.ListaClientesPag(nPage, nSize);
+            return oPersonaAD.ListaClientesPag(nPage, nSize, nCliId, cCliDesc, cCliDOI);
         }
 
         public List<Persona> BuscarClientes(string cPersDOI, string cNombre)
