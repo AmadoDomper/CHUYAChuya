@@ -26,12 +26,12 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
-        public JsonResult ListaUsuarios()
+        public JsonResult ListaUsuariosPag(int nPage = 1, int nSize = 10, int nUsuId = -1, string cUsuDesc = null, string cUsuName = null, string cUsuDOI = null)
         {
             UsuarioLN oUsuarioLN = new UsuarioLN();
-            List<Usuario> ListaUsuarios = new List<Usuario>();
-            ListaUsuarios = oUsuarioLN.ListaUsuarios();
-            return Json(JsonConvert.SerializeObject(ListaUsuarios, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+            ListaPaginada ListaUsuariosPag = new ListaPaginada();
+            ListaUsuariosPag = oUsuarioLN.ListaUsuariosPag(nPage, nSize, nUsuId, cUsuDesc, cUsuName, cUsuDOI);
+            return Json(JsonConvert.SerializeObject(ListaUsuariosPag, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
         [RequiresAuthenticationAttribute]

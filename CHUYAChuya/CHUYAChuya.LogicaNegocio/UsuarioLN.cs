@@ -17,9 +17,9 @@ namespace CHUYAChuya.LogicaNegocio
             oUsuarioAD = new UsuarioAD();
         }
 
-        public List<Usuario> ListaUsuarios()
+        public ListaPaginada ListaUsuariosPag(int nPage = 1, int nSize = 10, int nUsuId = -1, string cUsuDesc = null, string cUsuName = null, string cUsuDOI = null)
         {
-            return oUsuarioAD.ListaUsuarios();
+            return oUsuarioAD.ListaUsuariosPag(nPage, nSize, nUsuId, cUsuDesc, cUsuName, cUsuDOI);
         }
 
         public List<Constante> Usuarios()

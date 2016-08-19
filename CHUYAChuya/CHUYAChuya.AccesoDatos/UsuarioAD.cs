@@ -17,11 +17,19 @@ namespace CHUYAChuya.AccesoDatos
     {
         private Database oDatabase = EnterpriseLibraryContainer.Current.GetInstance<Database>(Conexion.cnsCHUYAChuya);
 
-        public List<Usuario> ListaUsuarios()
+        public ListaPaginada ListaUsuariosPag(int nPage = 1, int nSize = 10, int nUsuId = -1, string cUsuDesc = null, string cUsuName = null, string cUsuDOI = null)
         {
-            List<Usuario> ListaUsuarios = new List<Usuario>();
+            ListaPaginada ListaUsuPag= new ListaPaginada();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListarUsuarios);
+            oDatabase.AddInParameter(oDbCommand, "@nUsuId", DbType.Int32, (object)nUsuId ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuDesc", DbType.String, (object)cUsuDesc ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuName", DbType.String, (object)cUsuName ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuDOI", DbType.String, (object)cUsuDOI ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@nPageN", DbType.Int32, nPage);
+            oDatabase.AddInParameter(oDbCommand, "@nPageSize", DbType.Int32, nSize);
+            oDatabase.AddOutParameter(oDbCommand, "@nRows", DbType.Int32, 10);
+            oDatabase.AddOutParameter(oDbCommand, "@nPageTotal", DbType.Int32, 10);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -47,10 +55,16 @@ namespace CHUYAChuya.AccesoDatos
                     oUsuario.oPersNat.oPers.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
                     oUsuario.oPersNat.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
 
-                    ListaUsuarios.Add(oUsuario);
+                    ListaUsuPag.oLista.Add(oUsuario);
                 }
             }
-            return ListaUsuarios;
+
+            ListaUsuPag.nPage = nPage;
+            ListaUsuPag.nPageSize = nSize;
+            ListaUsuPag.nRows = Convert.ToInt32(oDatabase.GetParameterValue(oDbCommand, "@nRows"));
+            ListaUsuPag.nPageTotal = Convert.ToInt32(oDatabase.GetParameterValue(oDbCommand, "@nPageTotal"));
+
+            return ListaUsuPag;
         }
 
         public List<Constante> Usuarios()
