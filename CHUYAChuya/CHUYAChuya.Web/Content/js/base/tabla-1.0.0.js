@@ -127,7 +127,7 @@
         //}
         
         if (typeof (m.datos) != 'undefined' && m.datos.length == 0) {
-            html += '<tr><td colspan="' + camp.length + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
+            html += '<tr><td colspan="' + camp.length + (m.edit ? 1 : 0) + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
         }
 
 
