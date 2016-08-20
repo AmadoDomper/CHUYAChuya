@@ -80,5 +80,11 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_ins_AperturarCaja = "stp_ins_AperturarCaja";
         #endregion
 
+        #region Ubigeo
+        public const string stp_sel_Departamento = "stp_sel_Departamento";
+        public const string stp_sel_Provincia = "stp_sel_Provincia";
+        public const string stp_sel_Distrito = "stp_sel_Distrito";
+        #endregion
+
     }
 }

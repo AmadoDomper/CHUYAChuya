@@ -26,14 +26,31 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
-        [RequiresAuthenticationAttribute]
-        public JsonResult ListaConstantes()
+        public JsonResult ListaDep()
         {
-            UsuarioLN oUsuarioLN = new UsuarioLN();
-            CajaViewModel oCajaVM = new CajaViewModel();
+            ConstanteLN oConstLN = new ConstanteLN();
+            List<Constante> lstDep = new List<Constante>();
 
-            oCajaVM.lstUsuarios = oUsuarioLN.Usuarios();
-            return Json(JsonConvert.SerializeObject(oCajaVM));
+            lstDep = oConstLN.ListaDepartamento();
+            return Json(JsonConvert.SerializeObject(lstDep));
+        }
+
+        public JsonResult ListaProv(string cId)
+        {
+            ConstanteLN oConstLN = new ConstanteLN();
+            List<Constante> lstProv = new List<Constante>();
+
+            lstProv = oConstLN.ListaProvincia(cId);
+            return Json(JsonConvert.SerializeObject(lstProv));
+        }
+
+        public JsonResult ListaDist(string cId)
+        {
+            ConstanteLN oConstLN = new ConstanteLN();
+            List<Constante> lstDist = new List<Constante>();
+
+            lstDist = oConstLN.ListaDistrito(cId);
+            return Json(JsonConvert.SerializeObject(lstDist));
         }
 
         /// <summary>

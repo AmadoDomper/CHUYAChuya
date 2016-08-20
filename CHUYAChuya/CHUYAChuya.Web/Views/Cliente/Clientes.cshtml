@@ -48,8 +48,8 @@
         </div>
         <div class="panel-body" style="display: block;">
             <div id="btnCliente" class="btn-group btn-group-justified m-b-10 m-t-5" role="group">
-                <a hre="#frmClienteNat" class="btn btn-default btn-primary" role="button">Cliente Natural</a>
-                <a hre="#frmClienteJur" class="btn btn-default" role="button">Cliente Jurídico</a>
+                <a hre="#frmClienteNat" data-val="0" class="btn btn-default btn-primary" role="button">Cliente Natural</a>
+                <a hre="#frmClienteJur" data-val="1" class="btn btn-default" role="button">Cliente Jurídico</a>
             </div>
             <div class="hr-line-dashed"></div>
             <div id="msg">
@@ -115,27 +115,26 @@
                         </div>
                     </div>
                     <div class="form-group m-b-5">
-                        <label class="col-md-4 control-label">Ciudad</label>
+                        <label class="col-md-4 control-label">Departamento</label>
                         <div class="col-md-4">
-                            <select id="cmbNatCiudad" class="form-control" required>
+                            <select id="cmbNatDep" class="form-control" required>
                                 <option value="">-SELECCIONE-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Provincia</label>
+                        <div class="col-md-4">
+                            <select id="cmbNatProv" class="form-control" required>
+                                <option value="">-SELECCIONE-</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Distrito</label>
                         <div class="col-md-4">
-                            <select id="cmbNatDistrito" name="PersNat.oPers.oPersUbigeo.cConstanteID" class="form-control" required>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                            <select id="cmbNatDist" class="form-control" required>
+                                <option value="">-SELECCIONE-</option>
                             </select>
                             <div class="help-block with-errors"></div>
                         </div>
@@ -146,6 +145,7 @@
                             <input type="button" id="btnCanNat" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default m-r-5" value="Cancelar" />
                         </div>
                     </div>
+                    <div id="cntHiddenNat"></div>
                 </form>
                 <form action="/Cliente/RegistrarPersJuridica" autocomplete="off" id="frmClienteJur" style="display: none;" method="post" class="form-horizontal ng-pristine ng-valid">
                     <div class="form-group m-b-5">
@@ -209,30 +209,27 @@
                             <input type="text" onkeypress="return val_09(event)" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control" required>
                         </div>
                     </div>
-
                     <div class="form-group m-b-5">
-                        <label class="col-md-4 control-label">Ciudad</label>
+                        <label class="col-md-4 control-label">Departamento</label>
                         <div class="col-md-4">
-                            <select id="cmbJurCiudad" class="form-control" required>
+                            <select id="cmbJurDep" class="form-control" required>
                                 <option value="">-SELECCIONE-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Provincia</label>
+                        <div class="col-md-4">
+                            <select id="cmbJurProv" class="form-control" required>
+                                <option value="">-SELECCIONE-</option>
                             </select>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Distrito</label>
                         <div class="col-md-4">
-                            <select id="cmbJurDistrito" name="PersJur.oPers.oPersUbigeo.cConstanteID" class="form-control" required>
+                            <select id="cmbJurDist" class="form-control" required>
                                 <option value="">-SELECCIONE-</option>
-                                <option value="1">1</option>
-                                <option value="2">2</option>
-                                <option value="3">3</option>
-                                <option value="4">4</option>
-                                <option value="5">5</option>
                             </select>
                         </div>
                     </div>
@@ -242,6 +239,7 @@
                             <input type="button" id="btnCanJur" class="btn btn-sm btn-default m-r-5" value="Cancelar" />
                         </div>
                     </div>
+                    <div id="cntHiddenJur"></div>
                 </form>
             </div>
         </div>
@@ -359,6 +357,14 @@
                                     $("#cmbSex input:radio").val([oPers.oSexo.id]);
                                     $("#btnCliente a")[0].click();
                                     $($("#btnCliente a")[1]).attr("disabled", true);
+                                    //CargaDep();
+                                    //CargaProv();
+                                    //CargaDist();
+                                    $("#cmbNatDep").val(oPers.oPers.oUbigeo.id.substring(0, 2))
+                                    $("#cmbNatDep").change();
+                                    $("#cmbNatProv").val(oPers.oPers.oUbigeo.id.substring(2, 4))    
+                                    $("#cmbNatProv").change();
+                                    $("#cmbNatDist").val(oPers.oPers.oUbigeo.id.substring(4, 6))
                                 } else if (cTipo == "J") {
                                     $("#hdnPersJurId").val(oPers.oPers.id);
                                     $("#txtEmp").val(oPers.cEmpresa);
@@ -402,7 +408,11 @@
         validator.validate();
 
         if (!validator.hasErrors()) {
+
+            CrearHidden("#cntHiddenNat", "PersNat.oPers.oPersUbigeo.cConstanteID", $("#cmbNatDep").val() + $("#cmbNatProv").val() + $("#cmbNatDist").val());
+
             valores = form.serializeArray();
+            $("#cntHidden input").remove();
 
             $.fn.Conexion({
                 direccion: form.attr("action"),
@@ -423,7 +433,6 @@
         }
     });
 
-
     //Registrar Cliente Juridico
 
     $("#btnGrabarJur").bind("click", function () {
@@ -433,9 +442,9 @@
         var validator = form.data("bs.validator");
         validator.validate();
 
-        valores = form.serializeArray();
-
         if (!validator.hasErrors()) {
+            CrearHidden("#cntHiddenJur", "PersonaJur.oPers.oPersUbigeo.cConstanteID", $("#cmbJurDep").val() + $("#cmbJurProv").val() + $("#cmbJurDist").val());
+
             valores = form.serializeArray();
 
             $.fn.Conexion({
@@ -458,22 +467,49 @@
     });
 
     //Combo Ubigeo
-    //ListaConst();
+    Lista('cmbNatDep', 'cmbJurDep', null, '/Cliente/ListaDep');
 
-    //function ListaConst() {
-    //    $.fn.Conexion({
-    //        direccion: '/Caja/ListaConstantes',
-    //        terminado: function (data) {
-    //            var cons = JSON.parse(data);
+    function Lista(natId,jurId,par,dir) {
+        $.fn.Conexion({
+            direccion: dir,
+            datos: {"cId": par},
+            terminado: function (data) {
+                var cons = JSON.parse(data);
 
-    //            comboTipoCred = new hCombos();
-    //            comboTipoCred.ids = ['cmbUsuCaj'];
-    //            comboTipoCred.pre = [''];
-    //            comboTipoCred.info = cons.lstUsuarios;
-    //            comboTipoCred.init();
-    //        }
-    //    });
-    //}
+                if (natId == "cmbNatDep") {
+                    CrearLista("#" + natId, cons);
+                    CrearLista("#" + jurId, cons);
+                }
+
+                if ($("#btnCliente a.btn-primary").attr("data-val") == "0") {
+                    CrearLista("#" + natId, cons);
+                } else {
+                    CrearLista("#" + jurId, cons);
+                }
+            }
+        });
+    }
+
+    $("body").on("change", "#cmbNatDep,#cmbJurDep", function () {
+        Lista("cmbNatProv","cmbJurProv", this.value, '/Cliente/ListaProv');
+    });
+
+    $("body").on("change", "#cmbNatProv,#cmbJurProv", function () {
+        Lista("cmbNatDist", "cmbJurDist", this.value, '/Cliente/ListaDist');
+    });
+
+    $("body").on("change", "#cmbNatDep,#cmbJurDep,#cmbNatProv,#cmbJurProv", function () {
+        var combos = [];
+
+        switch ($(this).attr("id")) {
+            case "cmbNatDep": { combos = ["cmbNatProv", "cmbNatDist"]; break; }
+            case "cmbNatProv": { combos = ["cmbNatDist"]; break; }
+            case "cmbJurDep": { combos = ["cmbJurProv", "cmbJurDist"]; break; }
+            case "cmbJurProv": { combos = ["cmbJurDist"]; break; }
+        }
+
+        LimpiaOptCombos(combos);
+    });
 
 
     function Resultado(dato) {
