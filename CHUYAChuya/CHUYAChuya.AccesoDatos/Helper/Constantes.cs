@@ -28,6 +28,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ListarClientes = "stp_sel_ListarClientes";
         public const string stp_sel_BuscarClientes = "stp_sel_BuscarClientes";
         public const string stp_sel_BuscarProveedores = "stp_sel_BuscarProveedores";
+        public const string stp_del_Cliente = "stp_del_Cliente";
         #endregion
 
         #region PersonaNat

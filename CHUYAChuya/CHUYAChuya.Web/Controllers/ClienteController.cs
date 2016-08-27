@@ -116,6 +116,15 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
+        [RequiresAuthenticationAttribute]
+        public JsonResult EliminarCliente(int nPersId)
+        {
+            PersonaLN oPers = new PersonaLN();
+            int resultado;
+            resultado = oPers.EliminarCliente(nPersId);
+            return Json(resultado);
+        }
+
         /// <summary>
         /// Metodo para obtener los datos del cliente por tipo
         /// </summary>

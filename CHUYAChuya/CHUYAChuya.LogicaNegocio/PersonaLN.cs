@@ -44,7 +44,10 @@ namespace CHUYAChuya.LogicaNegocio
             return oPersonaAD.BuscarProveedores(cPersRUC, cNombre);
         }
 
-
+        public int EliminarCliente(int nPersId)
+        {
+            return oPersonaAD.EliminarCliente(nPersId);
+        }
 
     }
 }

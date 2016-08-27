@@ -162,6 +162,43 @@ namespace CHUYAChuya.AccesoDatos
             return ListaProveedores;
         }
 
+        public int EliminarCliente(int nPersId)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_del_Cliente;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nPersId", SqlDbType.Int).Value = nPersId;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+            }
+            return resultado;
+        }
+
+
 
         
 
