@@ -46,6 +46,8 @@
         m.empty = m.empty || "No existen datos";
         m.edit = m.edit || false;
         m.editEvent = m.editEvent || function () { };
+        m.elim = m.elim || false;
+        m.elimEvent = m.elimEvent || function () { };
 
         var col = m.cabecera.split(",");
         var tipo = m.tipoCampo.split(",");
@@ -75,6 +77,7 @@
         if (m.numerado === "Si") { html += '<th>N°</th>'; }
         for (i in col) { html += '<th>' + col[i] + '</th>'; }
         if (m.edit) { html += '<th>Edit.</th>'; }
+        if (m.elim) { html += '<th>Elim.</th>'; }
         html += '</tr></thead>';
 
         //Cuerpo
@@ -103,7 +106,10 @@
                 }
 
                 if (m.edit) {
-                    html += '<td style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+                    html += '<td class="edit" style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+                }
+                if (m.elim) {
+                    html += '<td class="elim" style="cursor: pointer;text-align: center;"><span style="color: #C73C3C;font-size:15px;" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>';
                 }
 
             }
@@ -127,7 +133,7 @@
         //}
         
         if (typeof (m.datos) != 'undefined' && m.datos.length == 0) {
-            html += '<tr><td colspan="' + camp.length + (m.edit ? 1 : 0) + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
+            html += '<tr><td colspan="' + camp.length + (m.edit ? 1 : 0) + (m.elim ? 1 : 0) + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
         }
 
 
@@ -175,8 +181,29 @@
 
 
         if (m.edit) {
-            $("#" + m.tblId + " tbody tr").find('td:last').bind("click", function () {
+            $("#" + m.tblId + " tbody tr .edit").bind("click", function () {
                 m["editEvent"]($(this).parent());
+            });
+        }
+
+        if (m.elim) {
+            $("#" + m.tblId + " tbody tr .elim").bind("click", function () {
+                var nPage = $("#cntPaginacion .active a").attr("data-dt-idx");
+                var fila = $(this).parent();
+
+                if ($("#tblClientes tbody tr").length == 1 && nPage >1) {
+                    nPage = nPage - 1;
+                }
+
+                $.fn.Mensaje({
+                    mensaje: "&iquest;Est&aacutes seguro que deseas eliminar el registro?",
+                    focusElement: "btnSiMen",
+                    tamano: "md",
+                    tipo: "SiNo",
+                    funcionSi: function () {
+                        m["elimEvent"](fila, nPage);
+                    }
+                });
             });
         }
 

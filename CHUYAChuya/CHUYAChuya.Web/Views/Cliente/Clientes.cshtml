@@ -324,13 +324,14 @@
                     cabecera: "Codígo,Nombre,Sexo,DOI,Tipo,Teléfono,Dirección",
                     campos: "id,nom,sexo,doi,tipo,tel1,direc",
                     scrollVertical: "Si",
-                    cellLen: "70,364,60,125,60,100,250,60",
+                    cellLen: "70,364,60,125,60,100,250,60,60",
                     alinear: "C,L,C,C,C,C,L",
                     cantRegVertical: 15,
                     pag: true,
                     pagDato: { "nPage": d.nPage, "nPageTot": d.nPageTot, "nPageSize": d.nPageSize, "nRows": d.nRows },
                     pagEvent: ListaCliente,
                     edit: true,
+                    elim: true,
                     dblClick: true,
                     editEvent: function (fila) {
                         var nPersId = fila.find("td").eq(0).html();
@@ -381,6 +382,19 @@
                             },
                             bloqueo: false
                         });
+                    },
+                    elimEvent: function (fila,nPage) {
+                        var nPersId = fila.find("td").eq(0).html();
+
+                        $.fn.Conexion({
+                            direccion: '/Cliente/EliminarCliente',
+                            datos: { "nPersId": nPersId },
+                            terminado: function (data, textStatus, jqXHR) {
+                                ListaCliente(nPage, 10);
+                            },
+                            bloqueo: false
+                        });
+
                     },
                     datos: d.oLista
                 });
