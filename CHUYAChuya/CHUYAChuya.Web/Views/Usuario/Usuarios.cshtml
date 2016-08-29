@@ -204,9 +204,10 @@
                     campos: "oPersNat.oPers.id,cUsuNom,oPersNat.oPers.nom,oPersNat.oPers.doi,oPersNat.oPers.tel1,oPersNat.oPers.direc",
                     scrollVertical: "Si",
                     alinear: "C,C,L,C,C,L",
-                    cellLen: "70,80,364,60,60,250,60",
+                    cellLen: "70,80,364,60,60,250,60,60",
                     cantRegVertical: 15,
                     edit: true,
+                    elim: true,
                     dblClick: true,
                     editEvent: function (fila) {
                         var nPersId = fila.find("td").eq(0).html();
@@ -233,6 +234,19 @@
                             },
                             bloqueo: true
                         });
+                    },
+                    elimEvent: function (fila, nPage) {
+                        var nPersId = fila.find("td").eq(0).html();
+
+                        $.fn.Conexion({
+                            direccion: '/Usuario/EliminarUsuario',
+                            datos: { "nPersId": nPersId },
+                            terminado: function (data, textStatus, jqXHR) {
+                                ListarUsuarios(nPage, 10);
+                            },
+                            bloqueo: false
+                        });
+
                     },
                     datos: d.oLista
                 });

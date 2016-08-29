@@ -37,6 +37,12 @@ namespace CHUYAChuya.LogicaNegocio
             return oUsuarioAD.RegistrarUsuario(oUsuario);
         }
 
+        public int EliminarUsuario(int nPersId)
+        {
+            return oUsuarioAD.EliminarUsuario(nPersId);
+        }
+        
+
 
     }
 }

@@ -11,6 +11,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
 
         #region Usuario
         public const string stp_sel_ObtenerUsuarioContrasena = "stp_sel_ObtenerUsuarioContrasena";
+        public const string stp_del_Usuario = "stp_del_Usuario";
         #endregion
 
         #region Constante

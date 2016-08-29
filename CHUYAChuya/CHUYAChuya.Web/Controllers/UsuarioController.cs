@@ -43,6 +43,15 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
+        [RequiresAuthenticationAttribute]
+        public JsonResult EliminarUsuario(int nPersId)
+        {
+            UsuarioLN oPers = new UsuarioLN();
+            int resultado;
+            resultado = oPers.EliminarUsuario(nPersId);
+            return Json(resultado);
+        }
+
         public JsonResult CargarDatosUsuario(int nPersId, string cDNI)
         {
             UsuarioLN oUsuarioLN = new UsuarioLN();
