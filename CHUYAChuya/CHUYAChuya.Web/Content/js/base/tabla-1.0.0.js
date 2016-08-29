@@ -100,6 +100,10 @@
                     if (tipo[k] == "D") {
                         dat = number_format(dat, 2)
                     }
+                    if (tipo[k] == "F") {
+                        dat = moment(dat).format("DD/MM/YYYY hh:mm:ss");
+                    }
+
 
                     dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
                     html += '<td>' + (dat == null ? "" : dat) + '</td>';
