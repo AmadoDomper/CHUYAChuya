@@ -54,6 +54,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_Producto = "stp_sel_Producto";
         public const string stp_ins_upd_Producto = "stp_ins_upd_Producto";
         public const string stp_sel_BuscarProductos = "stp_sel_BuscarProductos";
+        public const string stp_del_Producto = "stp_del_Producto";
         #endregion
 
         #region NotaEntrega

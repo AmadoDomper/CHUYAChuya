@@ -32,6 +32,12 @@ namespace CHUYAChuya.LogicaNegocio
             return oProductoAD.RegistrarActualizarProducto(oProducto);
         }
 
+        public int EliminarProducto(int nProdId)
+        {
+            return oProductoAD.EliminarProducto(nProdId);
+        }
+
+
         public List<Producto> BuscarProductos(int nProdId, string cProdDesc)
         {
             return oProductoAD.BuscarProductos(nProdId, cProdDesc);

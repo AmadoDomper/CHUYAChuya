@@ -188,11 +188,14 @@
 
         if (m.elim) {
             $("#" + m.tblId + " tbody tr .elim").bind("click", function () {
-                var nPage = $("#cntPaginacion .active a").attr("data-dt-idx");
+                var nPage = 0;
                 var fila = $(this).parent();
 
-                if ($("#tblClientes tbody tr").length == 1 && nPage >1) {
-                    nPage = nPage - 1;
+                if (m.pag) {
+                    nPage = $("#cntPaginacion .active a").attr("data-dt-idx");
+                    if ($("#tblClientes tbody tr").length == 1 && nPage >1) {
+                        nPage = nPage - 1;
+                    }
                 }
 
                 $.fn.Mensaje({

@@ -181,5 +181,43 @@ namespace CHUYAChuya.AccesoDatos
             }
             return ListaProductos;
         }
+
+
+        public int EliminarProducto(int nProdId)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_del_Producto;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nProdId", SqlDbType.Int).Value = nProdId;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+            }
+            return resultado;
+        }
+
     }
 }

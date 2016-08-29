@@ -51,6 +51,15 @@ namespace CHUYAChuya.Web.Controllers
             return Json(resultado);
         }
 
+        [RequiresAuthenticationAttribute]
+        public JsonResult EliminarProducto(int nProdId)
+        {
+            ProductoLN oPers = new ProductoLN();
+            int resultado;
+            resultado = oPers.EliminarProducto(nProdId);
+            return Json(resultado);
+        }
+
         public JsonResult CargoDatosProducto(int nProdId)
         {
             ProductoLN oProductoLN = new ProductoLN();

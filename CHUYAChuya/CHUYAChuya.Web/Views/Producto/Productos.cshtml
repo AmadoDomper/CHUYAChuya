@@ -129,9 +129,10 @@
                     scrollVertical: "Si",
                     tipoCampo: ",,D,,,,,,",
                     alinear: "C,L,C,C,C,C,C,C",
-                    cellLen: "70,364,80,80,70,70,70,150,60",
+                    cellLen: "70,364,80,80,70,70,70,150,60,60",
                     cantRegVertical: 10,
                     edit: true,
+                    elim: true,
                     dblClick: true,
                     editEvent: function (fila) {
                         var nProdId = fila.find("td").eq(0).html();
@@ -155,6 +156,19 @@
                             },
                             bloqueo: false
                         });
+                    },
+                    elimEvent: function (fila) {
+                        var nProdId = fila.find("td").eq(0).html();
+
+                        $.fn.Conexion({
+                            direccion: '/Producto/EliminarProducto',
+                            datos: { "nProdId": nProdId },
+                            terminado: function (data, textStatus, jqXHR) {
+                                ListarProducto();
+                            },
+                            bloqueo: false
+                        });
+
                     },
                     datos: JSON.parse(data)
                 });
