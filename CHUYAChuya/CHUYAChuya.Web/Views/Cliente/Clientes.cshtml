@@ -259,7 +259,7 @@
             var $target = $($(this).attr('hre')),
                 $other = $target.siblings();
 
-            $("#btnCliente a").removeClass("btn-primary").attr("disabled", false);
+            $("#btnCliente a").removeClass("btn-primary");
             $(this).addClass("btn-primary");
             $target.show();
             $other.hide();
@@ -268,7 +268,7 @@
 
     var vista = function ($target) {
         var $target = $($target),
-            $other = $('.active');
+            $other = $('.panel.active');
 
         if (!$target.hasClass('active')) {
             $other.each(function (index, self) {
@@ -480,6 +480,19 @@
         }
     });
 
+
+    $("#btnCanNat,#btnCanJur").bind("click", function () {
+        Limpiar();
+    });
+
+    function Limpiar() {
+        $('#frmClienteNat')[0].reset();
+        $('#frmClienteJur')[0].reset();
+        $("#btnCliente a").attr("disabled", false);
+        $("#btnCliente a")[0].click()
+        vista("#target1");
+    }
+
     //Combo Ubigeo
     Lista('cmbNatDep', 'cmbJurDep', null, '/Cliente/ListaDep');
 
@@ -529,9 +542,9 @@
     function Resultado(dato) {
         if (dato != -1) {
             if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el cliente correctamente" });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el cliente correctamente", funcionAceptar: Limpiar });
             } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el cliente correctamente" });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el cliente correctamente" , funcionAceptar: Limpiar});
             }
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });

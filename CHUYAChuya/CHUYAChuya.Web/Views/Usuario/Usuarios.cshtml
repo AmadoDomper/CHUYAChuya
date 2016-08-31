@@ -49,7 +49,7 @@
                 <h4 class="panel-title">Datos Personales</h4>
             </div>
             <div class="panel-body">
-                <div class="form-horizontal ng-pristine ng-valid">
+                <form id="frmDatPer" class="form-horizontal ng-pristine ng-valid">
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Persona</label>
                         <div class="col-md-8 form-inline">
@@ -92,7 +92,7 @@
                             <input type="text" id="txtNatDir" name="" class="form-control" disabled>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
         <div class="panel panel-inverse" data-sortable-id="form-stuff-1">
@@ -329,13 +329,24 @@
 
     });
 
+    $("#btnCanUsu").bind("click", function () {
+        Limpiar();
+    });
+
+    function Limpiar() {
+        $('#frmUsuario')[0].reset();
+        $('#frmDatPer')[0].reset();
+        $("#hdnPersId").val("")
+        vista("#target1");
+    }
+
 
     function Resultado(dato) {
         if (dato != -1) {
             if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el cliente correctamente" });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó datos del usuario correctamente", funcionAceptar: Limpiar});
             } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el cliente correctamente" });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró datos del usuario correctamente", funcionAceptar: Limpiar });
             }
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });

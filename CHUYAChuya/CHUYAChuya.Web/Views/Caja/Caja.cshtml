@@ -46,7 +46,7 @@
             <h4 class="panel-title">Entrega de Efectivo</h4>
         </div>
         <div class="panel-body" style="display: block;">
-            <div id="frmEntradaEfectivo" class="form-horizontal ng-pristine ng-valid">
+            <form id="frmEntradaEfectivo" class="form-horizontal ng-pristine ng-valid">
                 <div class="form-group">
                     <label class="col-md-7 control-label">Escriba el dinero a ingresar en caja</label>
                     <div class="col-md-5">
@@ -58,11 +58,11 @@
                 </div>
                 <div class="row">
                     <div class="text-center">
-                        <button id="btnEntAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button>
-                        <button id="btnEntCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                        <input type="button" id="btnEntAceptar" class="btn btn-sm btn-primary m-r-5" value="Aceptar" />
+                        <input type="button" id="btnEntCancelar" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar" />
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -73,7 +73,7 @@
             <h4 class="panel-title">Salida de Efectivo</h4>
         </div>
         <div class="panel-body" style="display: block;">
-            <div id="frmSalidaEfectivo" class="form-horizontal ng-pristine ng-valid">
+            <form id="frmSalidaEfectivo" class="form-horizontal ng-pristine ng-valid">
                 <div class="form-group m-b-5">
                     <label class="col-md-7 control-label">Escriba el dinero de salida de caja</label>
                     <div class="col-md-5">
@@ -150,11 +150,11 @@
                 </div>
                 <div class="row">
                     <div class="text-center">
-                        <button id="btnSalAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button>
-                        <button id="btnSalCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                        <input type="button" id="btnSalAceptar" class="btn btn-sm btn-primary m-r-5" value="Aceptar"/>
+                        <input type="button" id="btnSalCancelar" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar"/>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -167,7 +167,7 @@
             <h4 class="panel-title">Datos de la Sesión de Cobranza</h4>
         </div>
         <div class="panel-body" style="display: block;">
-            <div id="frmAperturaCaja" class="form-horizontal ng-pristine ng-valid">
+            <form id="frmAperturaCaja" class="form-horizontal ng-pristine ng-valid">
                 <div id="cntApertura">
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Fecha</label>
@@ -191,11 +191,11 @@
                 </div>
                 <div class="row">
                     <div class="text-center">
-                        <button id="btnReApe" type="submit" class="btn btn-sm btn-primary m-r-5">Realizar Apertura</button>
-                        <button id="btnCaApe" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                        <input type="button" id="btnReApe" class="btn btn-sm btn-primary m-r-5" value="Realizar Apertura"/>
+                        <input type="button" id="btnCaApe" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar" />
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
 </div>
@@ -322,7 +322,7 @@
 
     function Resultado(dato) {
         if (dato != -1) {
-            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró la salida de efectivo", funcionAceptar: vista("#target1") });
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró la salida de efectivo", funcionAceptar: Aceptar });
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
         }
@@ -342,9 +342,27 @@
         });
     }
 
+    function Aceptar() {
+        Limpiar();
+        ListarMovCaja();
+    }
+
+    $("#btnCaApe,#btnSalCancelar,#btnEntCancelar").bind("click", function () {
+        Limpiar();
+    });
+
+    function Limpiar() {
+        $('#frmAperturaCaja')[0].reset();
+        $('#frmSalidaEfectivo')[0].reset();
+        $('#frmEntradaEfectivo')[0].reset();
+        
+        $("#hdnProvId,#hdnEstado").val("");
+        vista("#target1");
+    }
+
     function ResultadoE(dato) {
         if (dato != -1) {
-            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el ingreso de efectivo", funcionAceptar: vista("#target1") });
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el ingreso de efectivo", funcionAceptar: Aceptar });
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
         }

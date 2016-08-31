@@ -177,7 +177,7 @@
     }
 
     function Aceptar() {
-        vista("#target1")
+        Limpiar();
         ListarProducto();
     }
 
@@ -200,12 +200,23 @@
 
     });
 
+    
+    $("#btnCanPro").bind("click", function () {
+        Limpiar();
+    });
+
+    function Limpiar() {
+        $('#frmProducto')[0].reset();
+        $("#hdnProd").val("")
+        vista("#target1");
+    }
+
     function Resultado(dato) {
         if (dato != -1) {
             if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar() });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
             } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar() });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
             }
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });

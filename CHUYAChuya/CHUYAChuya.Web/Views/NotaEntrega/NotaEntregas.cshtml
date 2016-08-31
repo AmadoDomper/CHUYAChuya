@@ -445,7 +445,7 @@
 
                                 if (oNota.oNotaEst.id == 1) {
                                     $("#target2").find("input,textarea,button").attr("disabled", true);
-                                    $("#btnCobrarNota,#btnAnularNota").attr("disabled", false);
+                                    $("#btnCobrarNota,#btnAnularNota,#btnCanEnt").attr("disabled", false);
                                 }
                             },
                             bloqueo: false
@@ -571,7 +571,7 @@
     });
 
     $("#btnCancelar").bind("click", function () {
-        Limpiar();
+        LimpiarPro();
     });
 
     $("#btnEliminar").bind("click", function () {
@@ -614,7 +614,7 @@
 
         CrearTabla(lstProd);
         subTotal(lstProd);
-        Limpiar();
+        LimpiarPro();
 
         $("#btnEliminar,#btnEditar").attr("disabled", false);
 
@@ -657,7 +657,7 @@
     }
 
 
-    function Limpiar() {
+    function LimpiarPro() {
         $("#txtCant,#txtPrec,#txtImp,#txtBuscarProducto").val("");
         $("#lblProducto").html("")
         $("#chkLav,#chkSec,#chkPla").prop("checked", "");
@@ -691,7 +691,7 @@
             CrearTabla(lstProd);
             subTotal(lstProd);
         }
-        Limpiar();
+        LimpiarPro();
     }
 
     function LlenarDatos(d) {
@@ -746,12 +746,31 @@
         });
     }
 
+    function Aceptar() {
+        Limpiar();
+        ListarProducto();
+    }
+
+    $("#btnCanEnt").bind("click", function () {
+        Limpiar();
+    });
+
+    function Limpiar() {
+        $('#frmNotaEntrega')[0].reset();
+        $("input[type=hidden],#txtCodNota").val("");
+        $("#lblNom,#lblDOI,#lblTel,#tblRegProd tbody").html("");
+        $("#target2").find("input,textarea,button").attr("disabled", false);
+        DeshabilitarBotones();
+        $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularBoleta").attr("disabled", true);
+        vista("#target1");
+    }
+
     function Resultado(dato) {
         if (dato != -1) {
             if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: vista("#target1") });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
             } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: vista("#target1") });
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
             }
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
