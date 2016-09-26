@@ -22,6 +22,11 @@ namespace CHUYAChuya.LogicaNegocio
             return oNotaEntregaAD.RegistrarNotaEntrega(oNotEnt);
         }
 
+        public int RealizarCobroServicio(int nNotaEntId, decimal nNotaEfecCo, decimal nNotaCambioCobro, string cNotaUsuCobro, string cNotaUsuAge)
+        {
+            return oNotaEntregaAD.RealizarCobroServicio(nNotaEntId,nNotaEfecCo, nNotaCambioCobro, cNotaUsuCobro, cNotaUsuAge);
+        }
+
         public ListaPaginada BuscarNotaEntPag( int nNotaEst,int nPage=1, int nSize=10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
             return oNotaEntregaAD.BuscarNotaEntPag(nNotaEst, nPage, nSize, nNotaEntId, cPersDOI, cPersDesc, dIni, dFin);
@@ -31,9 +36,6 @@ namespace CHUYAChuya.LogicaNegocio
         {
             return oNotaEntregaAD.CargoDatosNotaEntrega(nNotadId);
         }
-
-        
-
 
     }
 }

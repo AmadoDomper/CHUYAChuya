@@ -95,6 +95,72 @@ namespace CHUYAChuya.AccesoDatos
             return resultado;
         }
 
+
+        public int RealizarCobroServicio(int nNotaEntId, decimal nNotaEfecCobro, decimal nNotaCambioCobro, string cNotaUsuCobro, string cNotaUsuAge)
+        {
+            int resultado = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_RealizarCobroServicio;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nNotaEntId", SqlDbType.Int).Value = (object)nNotaEntId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nNotaEfectivoCobro", SqlDbType.Money).Value = (object)nNotaEfecCobro ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nNotaCambioCobro", SqlDbType.Money).Value = (object)nNotaCambioCobro ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cNotaUsuCobro", SqlDbType.VarChar, 4).Value = (object)cNotaUsuCobro ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cNotaUsuAge", SqlDbType.VarChar, 2).Value = (object)cNotaUsuAge ?? DBNull.Value;
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                    //if (resultado[1].Length != 18 || resultado[1].IndexOf("109", 0, 3) == -1)
+                    //{
+                    //    /*Error de BD*/
+                    //    resultado[0] = "2";
+                    //    resultado[1] = "Ha ocurrido un error: " + "TIPO 2-" + resultado[1];
+                    //}
+                    //else
+                    //{
+                    //    /*Resultado OK*/
+                    //    if (oCred.oColocaciones.oProducto.cCtaCod != null)
+                    //    {
+                    //        resultado[0] = "1";
+                    //        resultado[1] = "Se actualizó correctamente los datos";
+                    //    }
+                    //    else
+                    //    {
+                    //        resultado[0] = "0";
+                    //    }
+                    //}
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+                //oError.cErrDescription = ex.Message.ToString();
+                //oError.cErrSource = ex.StackTrace.ToString();
+                //oError.cProceso = ex.TargetSite.ToString();
+
+                //resultado[0] = "3";
+                //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
+            }
+            return resultado;
+        }        
+
+
         public ListaPaginada BuscarNotaEntPag(int nNotaEst, int nPage = 1, int nSize= 10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
             ListaPaginada oLisNotas = new ListaPaginada();

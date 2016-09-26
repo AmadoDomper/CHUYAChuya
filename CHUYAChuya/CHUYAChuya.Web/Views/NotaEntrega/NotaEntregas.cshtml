@@ -70,19 +70,19 @@
                         <div class="form-group">
                             <label for="exampleInputName2">Código Nota</label>
                             <input type="text" class="form-control" id="txtCodNota" placeholder="" disabled>
+                            <input id="hdnNotaId" type="hidden">
                         </div>
                     </div>
-
                 </div>
                 <div class="col-sm-3 col-lg-3 text-center">
                     <input id="btnCobrarNota" type="button" class="btn btn-sm btn-primary m-r-5" value="S/. Cobrar" disabled>
                     <button id="btnConfirmarEntrega" type="button" class="btn btn-success btn-sm" disabled>
-                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Confirmar Entrega
+                        <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>Confirmar Entrega
                     </button>
                 </div>
                 <div class="col-sm-3 col-lg-6 text-right">
                     <input id="btnAnularNota" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Nota" disabled>
-                    <input id="btnAnularBoleta" type="button" class="btn btn-sm btn-danger" value="Anular Boleta" disabled>
+                    @*<input id="btnAnularBoleta" type="button" class="btn btn-sm btn-danger" value="Anular Boleta" disabled>*@
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -304,6 +304,57 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="vntCobroCancelacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-focus-on="input:first">
+    <div style="width: 250px;" class="modal-dialog">
+        <div class="panel panel-inverse">
+            <div class="panel-heading">
+                Cobro Total
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">×</button>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="form-horizontal">
+
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">Total</label>
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-addon">S/.</span>
+                                    <input type="text" id="txtTotalC" class="form-control" placeholder="0.00" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">Efectivo</label>
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-addon">S/.</span>
+                                    <input type="text" id="txtEfectivoC" class="form-control" autocomplete="off" placeholder="0.00">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-b-10">
+                            <label class="col-md-4 control-label">Cambio</label>
+                            <div class="col-md-7">
+                                <div class="input-group">
+                                    <span class="input-group-addon">S/.</span>
+                                    <input type="text" id="txtCambioC" class="form-control" placeholder="0.00" readonly="readonly">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-right">
+                        <button id="btnAceptarC" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button>
+                        <button id="btnCancelarC" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <script type="text/javascript">
     jQuery(function ($) {
@@ -380,7 +431,7 @@
 
         $.fn.Conexion({
             direccion: '/NotaEntrega/BuscarNotaEntPag',
-            datos: { "nNotaEst": nNotaEst,"nPage": nPage, "nSize": nSize, "nNotaEntId": nNotaEntId, "cPersDOI": cPersDOI, "cPersDesc": cPersDesc, "dIni": dIni, "dFin": dFin },
+            datos: { "nNotaEst": nNotaEst, "nPage": nPage, "nSize": nSize, "nNotaEntId": nNotaEntId, "cPersDOI": cPersDOI, "cPersDesc": cPersDesc, "dIni": dIni, "dFin": dFin },
             terminado: function (data) {
                 var d = JSON.parse(data);
 
@@ -414,6 +465,7 @@
                                 $("#lblDOI").html(oNota.oPers.doi);
                                 $("#lblTel").html(oNota.oPers.tel1);
                                 $("#txtCodNota").val(oNota.nNotaEntId);
+                                $("#hdnNotaId").val(oNota.nNotaEntId);
                                 $("#txtCom").val(oNota.cNotaCom);
                                 $("#txtDescuento").val(oNota.nNotaDes);
                                 $("#txtAnticipo").val(oNota.nNotaAnt);
@@ -444,8 +496,7 @@
 
 
                                 if (oNota.oNotaEst.id == 1) {
-                                    $("#target2").find("input,textarea,button").attr("disabled", true);
-                                    $("#btnCobrarNota,#btnAnularNota,#btnCanEnt").attr("disabled", false);
+                                    SetEstadoPendiente();
                                 }
                             },
                             bloqueo: false
@@ -455,6 +506,11 @@
                 });
             }
         });
+    }
+
+    function SetEstadoPendiente() {
+        $("#target2").find("input,textarea,button").attr("disabled", true);
+        $("#btnCobrarNota,#btnAnularNota,#btnCanEnt").attr("disabled", false);
     }
 
     $("#cmbTpoBsq").bind("click", function () {
@@ -739,43 +795,112 @@
             direccion: form.attr("action"),
             datos: valores,
             terminado: function (data, textStatus, jqXHR) {
-                $("#txtCodNota").val(data);
-                Resultado(data);
+                if (dato != -1) {
+                    $("#txtCodNota").val(data);
+                    $("#hdnNotaId").val(data);
+
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
+                    //ImprimirNotaEntrega();
+                } else {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                }
+                SetEstadoPendiente();
+                ListarProducto();
             },
             bloqueo: true
         });
     }
 
+    //Cobrar Nota de Entrega
+
+    $("#btnCobrarNota").bind("click", function () {
+        $("#txtTotalC").val($("#txtTotal").val());
+        $('#vntCobroCancelacion').modal('show');
+    });
+
+    $("#btnAceptarC").bind("click", function () {
+        $("#txtTotalC").val($("#txtTotal").val());
+        $('#vntCobroCancelacion').modal('show');
+
+        CobroTotal();
+    });
+
+    function CobroTotal() {
+        var nNotaId = $("#hdnNotaId").val();
+        var nEfeCo = $("#txtEfectivoC").val();
+        var nCambCo = $("#txtCambioC").val();
+
+        $.fn.Conexion({
+            direccion: '/NotaEntrega/RealizarCobroServicio',
+            datos: { "nNotaEntId": nNotaId, "nNotaEfecCo": nEfeCo, "nNotaCambioCo": nCambCo },
+            terminado: function (data, textStatus, jqXHR) {
+                if (dato != -1) {
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente."});
+                    } else {
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                    }
+                ListarProducto();
+            },
+            bloqueo: true
+        });
+    }
+
+    $("#txtEfectivoC").keyup(function () { $("#txtCambioC").val(number_format(Math.round10($("#txtTotalC").val() - $("#txtEfectivoC").val(), -1), 2)) });
+
+    //END - Cobrar Nota de Entrega
+
+    //Anular Nota
+
+    $("#btnAnularNota").bind("click", function () {
+        $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "¿Está seguro de que desea Anular esta Nota de Entrega?", funcionAceptar: AnularNota });
+    });
+
+    function AnularNota() {
+        $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "Se realizó el proceso de Anulación con exito. ¿Desea mantener los datos actuales?", funcionAceptar: ConservarDatos, funcionCancelar: Limpiar });
+    }
+
+    function ConservarDatos() {
+        $("input[type=hidden],#txtCodNota").val("");
+        RestablecerElem();
+    }
+
+    //END - Anular Nota
+
     function Aceptar() {
         Limpiar();
+        vista("#target1");
         ListarProducto();
     }
 
     $("#btnCanEnt").bind("click", function () {
         Limpiar();
+        vista("#target1");
     });
 
     function Limpiar() {
         $('#frmNotaEntrega')[0].reset();
         $("input[type=hidden],#txtCodNota").val("");
         $("#lblNom,#lblDOI,#lblTel,#tblRegProd tbody").html("");
-        $("#target2").find("input,textarea,button").attr("disabled", false);
+        RestablecerElem();
         DeshabilitarBotones();
-        $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularBoleta").attr("disabled", true);
-        vista("#target1");
     }
 
-    function Resultado(dato) {
-        if (dato != -1) {
-            if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
-            } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
-            }
-        } else {
-            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-        }
+    function RestablecerElem() {
+        $("#target2").find("input,textarea,button").attr("disabled", false);
+        $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularBoleta").attr("disabled", true);
     }
+
+    //function Resultado(dato) {
+    //    if (dato != -1) {
+    //        if ($("#hdnEstado").val() == "E") {
+    //            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
+    //        } else {
+    //            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
+    //        }
+    //    } else {
+    //        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+    //    }
+    //}
 
 
 

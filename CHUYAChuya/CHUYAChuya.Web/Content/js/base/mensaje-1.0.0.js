@@ -16,12 +16,13 @@
         var btnId;
         switch (m.tipo) {
             case "Aceptar":
-                btnId = "btnAceptarMen";
-                html = html + '<div class="row"> <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"></div> <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4"> <button type="button" id="' + btnId + '" class="btn btn-sm btn-primary btn-block">Aceptar</button> </div> <div class="col-xs-3  col-sm-4 col-md-4 col-lg-4"></div> </div>';
+                html = html + '<div class="row"> <div class="col-xs-3 col-sm-4 col-md-4 col-lg-4"></div> <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4"> <button type="button" id="btnAceptarMen" class="btn btn-sm btn-primary btn-block">Aceptar</button> </div> <div class="col-xs-3  col-sm-4 col-md-4 col-lg-4"></div> </div>';
                 break;
             case "SiNo":
-                btnId = "btnSiMen"
-                html = html + '<div class="row"> <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div> <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"> <button type="button" id="' + btnId + '" class="btn btn-sm btn-primary btn-block">Si</button> </div> <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"> <button type="button" id="btnNoMen" class="btn btn-sm btn-default btn-block">No</button> </div> <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div> </div>';
+                html = html + '<div class="row"> <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div> <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"> <button type="button" id="btnAceptarMen" class="btn btn-sm btn-primary btn-block">Si</button> </div> <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"> <button type="button" id="btnCancMen" class="btn btn-sm btn-default btn-block">No</button> </div> <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div> </div>';
+                break;
+            case "AcepCanc":
+                html = html + '<div class="row"> <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div> <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"> <button type="button" id="btnAceptarMen" class="btn btn-sm btn-primary btn-block">Aceptar</button> </div> <div class="col-xs-6 col-sm-3 col-md-3 col-lg-3"> <button type="button" id="btnNoMen" class="btn btn-sm btn-default btn-block">Cancelar</button> </div> <div class="hidden-xs col-sm-3 col-md-3 col-lg-3"></div> </div>';
                 break;
         }
 
@@ -30,7 +31,7 @@
             titulo: m.titulo,
             tamano: m.tamano,
             cuerpo: html,
-            focusElement: m.focusElement || btnId,
+            focusElement: m.focusElement || "btnAceptarMen",
             funcionCerrar: m.funcionCerrar
         });
 
@@ -41,17 +42,19 @@
             });
         });
 
-        $("#btnSiMen").bind("click", function () {
-            $("#vntMensaje").modal('hide');
-            $('#vntMensaje').on('hidden.bs.modal', function (e) {
-                m.funcionSi(m.indice);
-            });
-        });
-
-        $("#btnNoMen").bind("click", function () {
+        $("#btnCancMen").bind("click", function () {
             m.funcionNo();
             $("#vntMensaje").modal('hide');
         });
+
+        //$("#btnSiMen").bind("click", function () {
+        //    $("#vntMensaje").modal('hide');
+        //    $('#vntMensaje').on('hidden.bs.modal', function (e) {
+        //        m.funcionSi(m.indice);
+        //    });
+        //});
+
+
 
         //$('#vntMensaje').on('shown.bs.modal', function () {
         //    $('#btnSiMen').focus();

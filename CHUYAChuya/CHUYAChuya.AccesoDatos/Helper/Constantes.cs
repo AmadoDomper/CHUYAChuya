@@ -62,6 +62,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_BuscarNotaEntregas = "stp_sel_BuscarNotaEntregas";
         public const string stp_sel_CargarNotaEntrega = "stp_sel_CargarNotaEntrega";
         public const string stp_sel_ListaNotaEntProductos = "stp_sel_ListaNotaEntProductos";
+        public const string stp_ins_RealizarCobroServicio = "stp_ins_RealizarCobroServicio";
         #endregion
 
         #region Caja

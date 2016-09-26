@@ -204,7 +204,6 @@
 
                 $.fn.Mensaje({
                     mensaje: "&iquest;Est&aacutes seguro que deseas eliminar el registro?",
-                    focusElement: "btnSiMen",
                     tamano: "md",
                     tipo: "SiNo",
                     funcionSi: function () {

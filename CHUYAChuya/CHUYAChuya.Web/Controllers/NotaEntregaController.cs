@@ -44,6 +44,19 @@ namespace CHUYAChuya.Web.Controllers
             resultado = oNotaEntLN.RegistrarNotaEntrega(oNotaEntregaViewModel.oNotEnt);
             return Json(resultado);
         }
+        
+        [RequiresAuthenticationAttribute]
+        public JsonResult RealizarCobroServicio(int nNotaEntId, decimal nNotaEfecCo, decimal nNotaCambioCo)
+        {
+            NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
+
+            int resultado;
+            string cNotaUsuCo = ((Usuario)Session["Datos"]).cUsuNombre;
+            string cNotaUsuAge = "01";
+
+            resultado = oNotaEntLN.RealizarCobroServicio(nNotaEntId, nNotaEfecCo, nNotaCambioCo, cNotaUsuCo, cNotaUsuAge);
+            return Json(resultado);
+        }
 
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult CargoDatosNotaEntrega(int nNotaId)
@@ -54,10 +67,5 @@ namespace CHUYAChuya.Web.Controllers
 
             return Json(JsonConvert.SerializeObject(oNotaEntrega));
         }
-
-
-
-
-
     }
 }
