@@ -19,7 +19,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         #endregion
 
         #region Menu
-        public const string stp_sel_RS_SeleccionarMenuFull_Web = "stp_sel_RS_SeleccionarMenuFull_Web";
+        public const string stp_sel_SeleccionarMenuFull = "stp_sel_SeleccionarMenuFull";
         public const string stp_sel_RS_SeleccionarOperacionMenu_Web = "stp_sel_RS_SeleccionarOperacionMenu_Web";
         public const string stp_sel_RS_ListarOperaciones_Web = "stp_sel_RS_ListarOperaciones_Web";
         #endregion
@@ -90,5 +90,16 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_Distrito = "stp_sel_Distrito";
         #endregion
 
+        #region Roles
+        public const string stp_sel_Roles = "stp_sel_Roles";
+        #endregion
+
+        #region Configuracion
+        public const string stp_sel_MenuRol = "stp_sel_MenuRol";
+        public const string stp_sel_ModuloRol = "stp_sel_ModuloRol";
+        public const string stp_sel_PermisoRol = "stp_sel_PermisoRol";
+        
+        #endregion
     }
 }
+
