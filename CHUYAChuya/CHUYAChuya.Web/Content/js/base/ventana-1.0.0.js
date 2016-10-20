@@ -14,6 +14,7 @@
 
         switch (m.tamano) {
             case "sm": cssModal += " modal-sm"; break
+            case "md": cssModal += " modal-md"; break
             case "lg": cssModal += " modal-lg"; break
         }
 
