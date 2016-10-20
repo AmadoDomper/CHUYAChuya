@@ -29,7 +29,7 @@
         m.numerado = m.numerado || "No";
         m.contenedor = m.contenedor || this;
         m.cabecera = m.cabecera || "";
-        m.funcion_click = m.funcion_click || function () { };
+        m.clickEvent = m.clickEvent || function () { };
         m.pag = m.pag || false;
         m.pagDato = m.pagDato || {}; // { "nPage": d.nPage (Indice), "nPageTot": d.nPageTot (Total paginas), "nPageSize": d.nPageSize (Lineas por paginas), "nRows": d.nRows (Total de filas) }
         m.pagEvent = m.pagEvent || function () { };
@@ -38,6 +38,7 @@
         m.cantRegVertical = m.cantRegVertical || 4;
         m.campos = m.campos || "";
         m.tipoCampo = m.tipoCampo || "";
+        m.tblStyle = m.tblStyle || "table-bordered"
         m.visible = m.visible || "";
         m.subLista = m.subLista || "Si";
         m.cargando = m.cargando || false;
@@ -45,12 +46,15 @@
         m.alinear = m.alinear || false;
         m.empty = m.empty || "No existen datos";
         m.edit = m.edit || false;
+        m.check = m.check || false;
         m.editEvent = m.editEvent || function () { };
+        m.checkEvent = m.checkEvent || function () { };
+        m.click = m.click || false;
         m.elim = m.elim || false;
         m.elimEvent = m.elimEvent || function () { };
 
         var col = m.cabecera.split(",");
-        var tipo = m.tipoCampo.split(",");
+        var tipo = m.tipoCampo.split(","); //D:double, F: Fecha, C: CheckBox
         var camp;
         if (m.campos!="") {
             camp = m.campos.split(",");
@@ -70,7 +74,7 @@
         if (m.pagDato.nRows <= m.pagDato.nPageSize) { m.pag = false; }
 
         var html = '';
-        html = '<div class="' + cssTbl + '"><table data-edit="false" id="' + m.tblId + '" class="table table-bordered table-hover">';
+        html = '<div class="' + cssTbl + '"><table data-edit="false" id="' + m.tblId + '" class="table ' + m.tblStyle + ' table-hover">';
 
         //Cabecera
         html += '<thead><tr>';
@@ -104,8 +108,12 @@
                         dat = moment(dat).format("DD/MM/YYYY hh:mm:ss");
                     }
 
+                    if (tipo[k] == "C") {
+                        dat = '<input type="checkbox"' + (dat ? "checked" : "")+ '>'
+                    } else {
+                        dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
+                    }
 
-                    dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
                     html += '<td>' + (dat == null ? "" : dat) + '</td>';
                 }
 
@@ -173,7 +181,15 @@
         if (m.cellLen) {
             m.cellLen = m.cellLen.split(",");
             var i=0;
-            for (i in m.cellLen) { $("#" + m.tblId).find('th:eq(' + i + ')').css("width", m.cellLen[i] + "px"); }
+            for (i in m.cellLen) {
+
+                if (m.cellLen == 0) {
+                    $('#' +m.tblId + ' th:nth-child(' + (i + 1) + ')').hide();
+                    $('#' +m.tblId + ' td:nth-child(' + (i + 1) + ')').hide();
+                } else {
+                    $("#" + m.tblId).find('th:eq(' + i + ')').css("width", m.cellLen[i] + "px");
+                }
+            }
         }
 
         if (m.alinear) {
@@ -218,6 +234,24 @@
                 m["editEvent"]($(this));
             });
         }
+
+        if (m.click) {
+            $("#" + m.tblId + " tbody tr").bind("click", function () {
+                m["clickEvent"]($(this));
+            });
+        }
+
+        if (m.check) {
+            $("#" + m.tblId + " tbody tr input").bind("click", function (e) {
+                var fila = $(this).parent().parent()
+                m["checkEvent"](fila);
+
+                if (fila.attr("class") != "seleccionado") {
+                    e.stopPropagation();
+                }
+            });
+        }
+
 
         if (m.pag) {
             $('#cntPaginacion [data-dt-idx=' + m.pagDato.nPage + ']').parent().addClass("active");
