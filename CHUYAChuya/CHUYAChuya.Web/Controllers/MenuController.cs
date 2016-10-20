@@ -33,8 +33,8 @@ namespace CHUYAChuya.Web.Controllers
             l_oo = oMenuLN.ObtenerOperaciones(Constantes.Operacion).ToList<Menu>();
 
             l_po = (from Menu m in l_oo
-                    where m.id_menu == m.id_padre
-                    orderby m.posicion
+                    where m.nMenuId == m.nMenuPadre
+                    orderby m.nMenuposicion
                     select m).ToList<Menu>();
 
             AgregarItem(ref l_po, l_oo);
@@ -42,8 +42,8 @@ namespace CHUYAChuya.Web.Controllers
             l_om = oMenuLN.ObtenerOperaciones(Constantes.Menu).ToList<Menu>();
 
             l_pm = (from Menu m in l_om
-                    where m.id_menu == m.id_padre
-                    orderby m.posicion
+                    where m.nMenuId == m.nMenuPadre
+                    orderby m.nMenuposicion
                     select m).ToList<Menu>();
 
             AgregarItem(ref l_pm, l_om);
@@ -148,23 +148,23 @@ namespace CHUYAChuya.Web.Controllers
 
             foreach (Menu m1 in listaMenu)
             {
-                if (m1.seleccionado == sel || opc) lista.Add(m1.id_menu);
+                if (m1.seleccionado == sel || opc) lista.Add(m1.nMenuId);
                 if (m1.listaMenu == null) continue;
                 foreach (Menu m2 in m1.listaMenu)
                 {
-                    if (m2.seleccionado == sel || opc) lista.Add(m2.id_menu);
+                    if (m2.seleccionado == sel || opc) lista.Add(m2.nMenuId);
                     if (m2.listaMenu == null) continue;
                     foreach (Menu m3 in m2.listaMenu)
                     {
-                        if (m3.seleccionado == sel || opc) lista.Add(m3.id_menu);
+                        if (m3.seleccionado == sel || opc) lista.Add(m3.nMenuId);
                         if (m3.listaMenu == null) continue;
                         foreach (Menu m4 in m3.listaMenu)
                         {
-                            if (m4.seleccionado == sel || opc) lista.Add(m4.id_menu);
+                            if (m4.seleccionado == sel || opc) lista.Add(m4.nMenuId);
                             if (m4.listaMenu == null) continue;
                             foreach (Menu m5 in m4.listaMenu)
                             {
-                                if (m5.seleccionado == sel || opc) lista.Add(m5.id_menu);
+                                if (m5.seleccionado == sel || opc) lista.Add(m5.nMenuId);
                             }
                         }
                     }
@@ -177,12 +177,13 @@ namespace CHUYAChuya.Web.Controllers
         [HttpGet]
         public ActionResult ObtenerMenu()
         {
-            string NombreUsuario = User.Identity.Name;
+            //string NombreUsuario = User.Identity.Name;
             string[] g = {""}; //= Roles.GetRolesForUser(NombreUsuario);
             string Grupos = String.Join(",", g);
 
-            List<Menu> l_o = oMenuLN.ObtenerMenusFull(NombreUsuario, Grupos).ToList<Menu>();
-            List<Menu> l_p = (from Menu m in l_o where m.id_menu == m.id_padre select m).ToList<Menu>();
+            int nRolId = ((Usuario)Session["Datos"]).nRolId;
+            List<Menu> l_o = oMenuLN.ObtenerMenusFull(nRolId).ToList<Menu>();
+            List<Menu> l_p = (from Menu m in l_o where m.nMenuId == m.nMenuPadre select m).ToList<Menu>();
 
             AgregarItem(ref l_p, l_o);
 
@@ -197,7 +198,7 @@ namespace CHUYAChuya.Web.Controllers
         {
             foreach (Menu menu in Lista)
             {
-                List<Menu> sl = (from Menu sm in l_o where menu.id_menu == sm.id_padre && menu.id_menu != sm.id_menu select sm).ToList<Menu>();
+                List<Menu> sl = (from Menu sm in l_o where menu.nMenuId == sm.nMenuPadre && menu.nMenuId != sm.nMenuId select sm).ToList<Menu>();
 
                 if (sl != null && sl.Count() > 0)
                 {
