@@ -41,8 +41,5 @@ namespace CHUYAChuya.LogicaNegocio
         {
             return oUsuarioAD.EliminarUsuario(nPersId);
         }
-        
-
-
     }
 }
