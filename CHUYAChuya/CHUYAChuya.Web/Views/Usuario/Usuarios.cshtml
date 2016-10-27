@@ -121,6 +121,16 @@
                             <input type="password" id="txtCont2" data-match="#txtCont1" data-match-error="Whoops, these don't match" class="form-control" required>
                         </div>
                     </div>
+                    <div class="form-group m-b-5">
+                        <label class="col-md-4 control-label">Rol</label>
+                        <div class="col-md-6 form-inline">
+                            <input id="hdnPersRolId" type="hidden" name="oUsu.nRolId" />
+                            <input type="text" class="form-control " id="txtRol" disabled="disabled" required>
+                            <button id="btnBuscarRol" type="button" class="btn btn-sm btn-default" data-toggle="modal">
+                                <span class="glyphicon glyphicon-search"></span>
+                            </button>
+                        </div>
+                    </div>
                     <div class="row m-b-10 m-t-10">
                         <div class="text-center">
                             <input type="button" id="btnGrabarUsu" class="btn btn-sm btn-primary m-r-5" value="Grabar" />
@@ -231,6 +241,8 @@
                                 $("#txtNatTel1").val(oUsu.oPersNat.oPers.tel1);
                                 $("#txtNatDir").val(oUsu.oPersNat.oPers.direc);
                                 $("#lblCont").html("Nueva Contraseña");
+                                $("#hdnPersRolId").val(oUsu.nRolId);
+                                $("#txtRol").val(oUsu.cRolDes);
                             },
                             bloqueo: true
                         });
@@ -296,6 +308,71 @@
         if (e.which == 13) { BuscarPersona($(this).val()); };
     });
 
+    $("#btnBuscarRol").bind("click", function () {
+        $.fn.Ventana({
+            id: "vntBuscaRol",
+            titulo: "Seleccionar Rol",
+            tamano: "sm"
+        });
+        
+        var html = '<div class="row"><div class="row"><div id="cntListaRol" class="table-responsive"></div></div><div class="hr-line-dashed"></div><div class="row"><div class="col-sm-8 col-md-offset-4 text-right"><button id="btnRolAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnRolCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div></div>';
+
+        $("#vntBuscaRol .panel-body").html(html);
+        $('#vntBuscaRol').modal('show');
+
+        ListarRoles();
+
+        $("#btnRolAceptar").bind("click", function () {
+            if ($("#tblRol").find("tr.seleccionado").index() != -1) {
+                var nRolId = $("#tblRol").find("tr.seleccionado").find("td").eq(0).html();
+                var cRolDesc = $("#tblRol").find("tr.seleccionado").find("td").eq(1).html();
+
+                $("#hdnPersRolId").val(nRolId);
+                $("#txtRol").val(cRolDesc);
+                $('#vntBuscaRol').modal('hide');
+            } else {
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Es necesario seleccionar un Rol" });
+            }
+        });
+
+    });
+
+    function ListarRoles() {
+        $.fn.Conexion({
+            direccion: '/Config/ListaRoles',
+            terminado: function (data) {
+                var d = JSON.parse(data);
+                listaRoles = d;
+
+                CrearTablaRoles(d);
+            }
+        });
+    }
+
+    function CrearTablaRoles(listaR) {
+        $("#cntListaRol").Tabla({
+            tblId: "tblRol",
+            cabecera: "ID,ROLES",
+            campos: "nRolId,cRolDesc",
+            tblStyle: "table-inbox",
+            scrollVertical: "Si",
+            cellLen: "0",
+            dblClick: true,
+            alinear: "L,L",
+            cantRegVertical: 15,
+            editEvent: function (fila) {
+                var nRolId = fila.find("td").eq(0).html();
+                var cRolDesc = fila.find("td").eq(1).html();
+
+                $("#hdnPersRolId").val(nRolId);
+                $("#txtRol").val(cRolDesc);
+                $('#vntBuscaRol').modal('hide');
+
+            },
+            datos: listaR
+        });
+    }
+
     //Registrar Usuario
 
     $("#btnGrabarUsu").bind("click", function () {
@@ -336,7 +413,8 @@
     function Limpiar() {
         $('#frmUsuario')[0].reset();
         $('#frmDatPer')[0].reset();
-        $("#hdnPersId").val("")
+        $("#hdnPersId").val("");
+        $("#hdnPersRolId").val("");
         vista("#target1");
     }
 
@@ -344,7 +422,7 @@
     function Resultado(dato) {
         if (dato != -1) {
             if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó datos del usuario correctamente", funcionAceptar: Limpiar});
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó datos del usuario correctamente", funcionAceptar: Limpiar });
             } else {
                 $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró datos del usuario correctamente", funcionAceptar: Limpiar });
             }
