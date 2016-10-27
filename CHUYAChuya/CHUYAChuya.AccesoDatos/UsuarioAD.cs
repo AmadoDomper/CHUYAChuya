@@ -117,6 +117,8 @@ namespace CHUYAChuya.AccesoDatos
                     int icPersNatSexo = oIDataReader.GetOrdinal("cPersNatSexo");
                     int icUsuNombre = oIDataReader.GetOrdinal("cUsuNombre");
                     int icUsuContrasena = oIDataReader.GetOrdinal("cUsuContrasena");
+                    int inUsuRolId = oIDataReader.GetOrdinal("nUsuRolId");
+                    int icUsuRolDesc = oIDataReader.GetOrdinal("cUsuRolDesc");
 
                     while (oIDataReader.Read())
                     {
@@ -134,6 +136,8 @@ namespace CHUYAChuya.AccesoDatos
                         oUsuario.oPersNat.oPersNatSexo.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatSexo]);
                         oUsuario.cUsuNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuNombre]);
                         oUsuario.cUsuContrasena = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuContrasena]);
+                        oUsuario.nRolId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inUsuRolId]);
+                        oUsuario.cRolDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuRolDesc]);
                     }
                 }
 
@@ -164,6 +168,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@nUsuId", SqlDbType.Int).Value = (object)oUsuario.nUsuId ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cUsuNombre", SqlDbType.VarChar, 4).Value = (object)oUsuario.cUsuNombre ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cUsuContrasena", SqlDbType.VarChar, 15).Value = (object)oUsuario.cUsuContrasena ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nRolId", SqlDbType.Int).Value = (object)oUsuario.nRolId ?? DBNull.Value;
 
                     oSqlConnection.Open();
 
