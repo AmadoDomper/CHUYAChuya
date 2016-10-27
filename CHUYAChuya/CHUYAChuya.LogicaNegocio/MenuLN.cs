@@ -17,11 +17,11 @@ namespace CHUYAChuya.LogicaNegocio
             oMenuAD = new MenuAD();
         }
 
-        public List<Menu> ObtenerMenusFull(string NombreUsuario, string Grupos)
+        public List<Menu> ObtenerMenusFull(int nRolId)
         {
             try
             {
-                return oMenuAD.ObtenerMenuFull(NombreUsuario, Grupos);
+                return oMenuAD.ObtenerMenuFull(nRolId);
             }
             catch (Exception ex)
             {

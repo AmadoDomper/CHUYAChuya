@@ -98,6 +98,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_MenuRol = "stp_sel_MenuRol";
         public const string stp_sel_ModuloRol = "stp_sel_ModuloRol";
         public const string stp_sel_PermisoRol = "stp_sel_PermisoRol";
+        public const string stp_ins_upd_RolPermisos = "stp_ins_upd_RolPermisos";
         
         #endregion
     }

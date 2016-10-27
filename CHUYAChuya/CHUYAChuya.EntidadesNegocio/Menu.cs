@@ -9,14 +9,17 @@ namespace CHUYAChuya.EntidadesNegocio
 {
     public class Menu
     {
-        private int _id_menu;
-        private int _id_padre;
-        private string _descripcion;
-        private string _icono;
-        private int _posicion;
-        private string _url;
-        private string _estado;
-        private int _id_pmenu;
+        private int _nMenuId;
+        private int _nMenuPadre;
+        private string _cMenuDesc;
+        private string _cMenuIcono;
+        private int _nMenuposicion;
+        private string _cMenuUrl;
+        private string _cMenuEstado;
+        private int _cMenuPadreId;
+
+        private Boolean _bEstado;
+        private List<Modulo> _ListaModulos = new List<Modulo>();
 
         //**********************
         private int _tipoPermiso;
@@ -24,70 +27,93 @@ namespace CHUYAChuya.EntidadesNegocio
         //**********************
         private bool _seleccionado;
 
-        public int id_menu
+        public int nMenuId
         {
-            get { return _id_menu; }
-            set { _id_menu = value; }
+            get { return _nMenuId; }
+            set { _nMenuId = value; }
         }
 
-        public int id_padre
+        [JsonIgnore]
+        public int nMenuPadre
         {
-            get { return _id_padre; }
-            set { _id_padre = value; }
+            get { return _nMenuPadre; }
+            set { _nMenuPadre = value; }
         }
 
-        public string descripcion
+        public string cMenuDesc
         {
-            get { return _descripcion; }
-            set { _descripcion = value; }
+            get { return _cMenuDesc; }
+            set { _cMenuDesc = value; }
         }
 
-        public string icono
+        [JsonIgnore]
+        public string cMenuIcono
         {
-            get { return _icono; }
-            set { _icono = value; }
+            get { return _cMenuIcono; }
+            set { _cMenuIcono = value; }
         }
 
-        public int posicion
+        [JsonIgnore]
+        public int nMenuposicion
         {
-            get { return _posicion; }
-            set { _posicion = value; }
+            get { return _nMenuposicion; }
+            set { _nMenuposicion = value; }
         }
 
-        public string url
+        [JsonIgnore]
+        public string cMenuUrl
         {
-            get { return _url; }
-            set { _url = value; }
+            get { return _cMenuUrl; }
+            set { _cMenuUrl = value; }
         }
 
-        public string estado
+        [JsonIgnore]
+        public string cMenuEstado
         {
-            get { return _estado; }
-            set { _estado = value; }
+            get { return _cMenuEstado; }
+            set { _cMenuEstado = value; }
         }
 
-        public int id_pmenu
+        [JsonIgnore]
+        public int cMenuPadreId
         {
-            get { return _id_pmenu; }
-            set { _id_pmenu = value; }
+            get { return _cMenuPadreId; }
+            set { _cMenuPadreId = value; }
         }
 
+        [JsonIgnore]
         public int tipoPermiso
         {
             get { return _tipoPermiso; }
             set { _tipoPermiso = value; }
         }
 
+        [JsonIgnore]
         public List<Menu> listaMenu
         {
             get { return _listaMenu; }
             set { _listaMenu = value; }
         }
 
+        [JsonIgnore]
         public bool seleccionado
         {
             get { return _seleccionado; }
             set { _seleccionado = value; }
+        }
+
+        [JsonProperty(PropertyName = "lstMods")]
+        public List<Modulo> ListaModulos
+        {
+            get { return _ListaModulos; }
+            set { _ListaModulos = value; }
+        }
+
+        [JsonProperty(PropertyName = "bEst")]
+        public Boolean bEstado
+        {
+            get { return _bEstado; }
+            set { _bEstado = value; }
         }
     }
 }

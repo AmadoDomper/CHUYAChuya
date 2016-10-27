@@ -13,6 +13,7 @@ namespace CHUYAChuya.EntidadesNegocio
         private int _nUsuId;
         private string _cUsuNombre;
         private string _cUsuContrasena;
+        private int _nRolId;
         //private string _cCargo;
         //private string _cCodAge;
 
@@ -42,6 +43,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _cUsuContrasena; }
             set { _cUsuContrasena = value; }
+        }
+
+        [JsonProperty(PropertyName = "nRolId")]
+        public int nRolId
+        {
+            get { return _nRolId; }
+            set { _nRolId = value; }
         }
 
         //public string cCargo

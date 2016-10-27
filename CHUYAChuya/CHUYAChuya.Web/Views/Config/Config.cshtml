@@ -209,6 +209,7 @@
 <script type="text/javascript">
     var lista = {};
     var listaRoles = {};
+    var estado = "";
 
     $("#btnAgregar").bind("click", function () {
         $.fn.Ventana({
@@ -233,22 +234,27 @@
             $('#vntNuevoRol').modal('hide');
             $("#tblRol tbody tr").last().click();
             $("#tblRol").attr("data-edit", true);
-            $("#btnAgregar,#btnEditar,#btnEliminar,#btnGrabar").attr("disabled", true);
             $("#btnCancelar,#btnGrabar").attr("disabled", false);
+            $("#btnAgregar,#btnEditar,#btnEliminar").attr("disabled", true);
         });
 
         $("#txtBuscar").bind("keyup", function (e) {
             if (e.which == 13) { $("#btnPersAceptar").click(); };
         });
-
+        estado = "N";
     });
 
     $("#btnCancelar").bind("click", function () {
         var index = $("#tblRol tbody tr.seleccionado").index();
-        listaRoles.splice(index, 1);
-        CrearTablaRoles(listaRoles);
+        if (lista.nRolId == 0) {
+            listaRoles.splice(index, 1);
+            CrearTablaRoles(listaRoles);
+        }
         $("#tblRol tbody tr").first().click();
+        $("#tblRol").attr("data-edit", false);
         Inicio();
+        Bloqueo();
+        $("#btnEditar,#btnEliminar").attr("disabled", false);
     });
 
 
@@ -276,7 +282,7 @@
             cellLen: "0",
             click: true,
             alinear: "L,L",
-            //cantRegVertical: 15,
+            cantRegVertical: 15,
             clickEvent: function (fila) {
                 var nRolId = fila.find("td").eq(0).html();
 
@@ -286,11 +292,14 @@
                         datos: { "nRolId": nRolId },
                         terminado: function (data, textStatus, jqXHR) {
                             lista = JSON.parse(data);
+
+                            $("#btnEditar,#btnEliminar").attr("disabled", estado == "N" ? true : false );
                             ListarMenus();
                         },
                         bloqueo: false
                     });
                 }
+                Bloqueo();
             },
             datos: listaR
         });
@@ -315,6 +324,7 @@
                 var bCheck = $(fila).find("input").is(':checked');
                 ListarModulos(lista.ListaMenus[index].lstMods);
                 $("#tblModulo tbody tr input").attr("disabled", !bCheck);
+                Bloqueo();
             },
             checkEvent: function (fila) {
                 var index = $(fila).index();
@@ -352,6 +362,14 @@
         }
     }
 
+    function Bloqueo() {
+        var valor = (estado == "E" ? false: true); 
+
+        $("#tblMenu tbody tr input").attr("disabled", valor);
+        $("#tblModulo tbody tr input").attr("disabled", valor);
+        $("#tblPermiso tbody tr input").attr("disabled", valor);
+    }
+
 
     function ListarModulos(lista) {
 
@@ -372,6 +390,8 @@
                 var bCheck = $(fila).find("input").is(':checked');
                 ListarPermisos(lista[index].lstPerms);
                 $("#tblPermiso tbody tr input").attr("disabled", !bCheck);
+                Bloqueo();
+
             },
             checkEvent: function (fila) {
                 var index = $(fila).index();
@@ -411,42 +431,39 @@
     function Inicio() {
         $("#btnEditar,#btnEliminar,#btnCancelar,#btnGrabar").attr("disabled", true);
         $("#btnAgregar").attr("disabled", false);
+        estado = "";
     }
 
+    
+    $("#btnEditar").bind("click", function () {
+        $("#tblRol").attr("data-edit", true);
+        $("#btnAgregar,#btnEditar,#btnEliminar").attr("disabled", true);
+        $("#btnCancelar,#btnGrabar").attr("disabled", false);
+        estado = "E";
+        Bloqueo();
+    });
 
     $("#btnGrabar").bind("click", function () {
         Grabar();
     });
 
     function Grabar() {
-        Reducir(lista);
+        var lista2 = JSON.parse(JSON.stringify(lista));
+        Reducir(lista2);
         var index = $("#tblRol tbody tr.seleccionado").index();
-        lista.cRolDesc = listaRoles[index].cRolDesc;
+        lista2.cRolDesc = listaRoles[index].cRolDesc;
 
         $.fn.Conexion({
             direccion: '/Config/RegistrarRolPermisos',
-            datos: { "oJsonRol": JSON.stringify(lista) },
+            datos: { "oJsonRol": JSON.stringify(lista2) },
             terminado: function (data, textStatus, jqXHR) {
-
-            },
-            bloqueo: false
-        });
-    }
-
-
-
-    //IMPRIMIR PRUEBA
-
-    $("#btnImprimir").bind("click", function () {
-        Imprimir();
-    });
-
-    function Imprimir() {
-
-        $.fn.Conexion({
-            direccion: '/Config/Imprimir',
-            terminado: function (data, textStatus, jqXHR) {
-                alert("Terminado");
+                if (data != 0) {
+                    lista.nRolId = data;
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
+                    $("#btnCancelar").click();
+                } else {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                }
             },
             bloqueo: false
         });

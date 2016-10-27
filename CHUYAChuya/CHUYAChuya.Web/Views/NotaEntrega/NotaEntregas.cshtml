@@ -795,7 +795,7 @@
             direccion: form.attr("action"),
             datos: valores,
             terminado: function (data, textStatus, jqXHR) {
-                if (dato != -1) {
+                if (data != -1) {
                     $("#txtCodNota").val(data);
                     $("#hdnNotaId").val(data);
 
@@ -805,7 +805,7 @@
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
                 }
                 SetEstadoPendiente();
-                ListarProducto();
+                //ListarProducto();
             },
             bloqueo: true
         });
@@ -834,12 +834,12 @@
             direccion: '/NotaEntrega/RealizarCobroServicio',
             datos: { "nNotaEntId": nNotaId, "nNotaEfecCo": nEfeCo, "nNotaCambioCo": nCambCo },
             terminado: function (data, textStatus, jqXHR) {
-                if (dato != -1) {
+                if (data != -1) {
                         $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente."});
                     } else {
                         $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
                     }
-                ListarProducto();
+                //ListarProducto();
             },
             bloqueo: true
         });
@@ -888,6 +888,24 @@
     function RestablecerElem() {
         $("#target2").find("input,textarea,button").attr("disabled", false);
         $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularBoleta").attr("disabled", true);
+    }
+
+
+    //IMPRIMIR PRUEBA
+
+    //$("#btnImprimir").bind("click", function () {
+    //    Imprimir();
+    //});
+
+    function Imprimir() {
+
+        $.fn.Conexion({
+            direccion: '/NotaEntrega/Imprimir',
+            terminado: function (data, textStatus, jqXHR) {
+                alert("Terminado");
+            },
+            bloqueo: false
+        });
     }
 
     //function Resultado(dato) {

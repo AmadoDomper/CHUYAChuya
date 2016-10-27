@@ -31,6 +31,7 @@ namespace CHUYAChuya.AccesoDatos
                 int inUsuNombre = oIDataReader.GetOrdinal("cUsuNombre");
                 int icUsuContrasena = oIDataReader.GetOrdinal("cUsuContrasena");
                 int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                int inRolId = oIDataReader.GetOrdinal("nRolId");
 
                 while (oIDataReader.Read())
                 {
@@ -40,6 +41,7 @@ namespace CHUYAChuya.AccesoDatos
                     oUsuario.cUsuNombre = DataUtil.DbValueToDefault<String>(oIDataReader[inUsuNombre]);
                     oUsuario.cUsuContrasena = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuContrasena]);
                     oUsuario.oPersNat.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                    oUsuario.nRolId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inRolId]);
                 }
             }
 

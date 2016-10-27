@@ -49,63 +49,15 @@ namespace CHUYAChuya.Web.Controllers
             return Json(JsonConvert.SerializeObject(lstRol));
         }
 
-        public JsonResult Imprimir()
-        {
-            Process p;
-
-            using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
-            {
-                writer.WriteLine("       No se aceptan devoluciones    ");
-                writer.WriteLine("Los cambios de producto solo a traves de");
-                writer.WriteLine("Nota de Credito hasta 7 dias calendario desde la fecha de compra y unicamente");
-                writer.WriteLine("      con el comprobante de pago     ");
-                writer.WriteLine("       Hola mi nombre es Goku    ");
-                writer.WriteLine("Los cambios de producto solo a traves de");
-                writer.WriteLine("Nota de Credito hasta 7 dias calendario desde la fecha de compra y unicamente");
-                writer.WriteLine("      pagá el comprobante de pago     ");
-                writer.WriteLine("");
-                writer.WriteLine("");
-                writer.WriteLine("");
-                writer.WriteLine("");
-                writer.WriteLine("");
-                writer.WriteLine("");
-                writer.WriteLine("");
-                writer.WriteLine("");
-
-                writer.WriteLine(char.ConvertFromUtf32(27) + "i");
-                writer.Close();
-
-                using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
-                {
-                    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
-
-                    writerBat.Close();
-                }
-
-                p = new Process();
-                p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
-
-                p.Start();
-                p.Close();
-                p.Dispose();
-
-
-            }
-
-            return Json(1);
-        }
-
-
-
         public JsonResult RegistrarRolPermisos(string oJsonRol)
         {
+            int nReg = 0;
+            ConfiguracionLN ConfLN = new ConfiguracionLN();
             //ConfiguracionLN oConfigLN = new ConfiguracionLN();
             Rol lstRol = JsonConvert.DeserializeObject<Rol>(oJsonRol);
+            nReg = ConfLN.RegistrarActualizarRolPermisos(lstRol);
 
-
-            //lstRol = oConfigLN.CargaRolPermisos(nRolId);
-            //return Json(JsonConvert.SerializeObject(lstRol));
-            return Json(1);
+            return Json(nReg);
         }
 
     }

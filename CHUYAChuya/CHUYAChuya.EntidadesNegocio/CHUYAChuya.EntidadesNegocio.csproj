@@ -42,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ListaMenuCollection.cs" />
+    <Compile Include="ListaModuloCollection.cs" />
     <Compile Include="ListaPaginada.cs" />
+    <Compile Include="ListaPermisoCollection.cs" />
     <Compile Include="Modulo.cs" />
     <Compile Include="NotaEntregaL.cs" />
     <Compile Include="Constante.cs" />
