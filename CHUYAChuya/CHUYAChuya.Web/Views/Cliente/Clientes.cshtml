@@ -9,7 +9,10 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <input href="#target2" id="btnNuevoCliente" type="button" class="btn btn-sm btn-success target" value="Nuevo Cliente" />
+                    @if (FrontUser.TienePermiso(RolesPermisos.Clie_Crear_Nuevo_Cliente))
+                    {
+                        <input href="#target2" id="btnNuevoCliente" type="button" class="btn btn-sm btn-success target" value="Nuevo Cliente" />
+                    }
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -330,9 +333,9 @@
                     pag: true,
                     pagDato: { "nPage": d.nPage, "nPageTot": d.nPageTot, "nPageSize": d.nPageSize, "nRows": d.nRows },
                     pagEvent: ListaCliente,
-                    edit: true,
-                    elim: true,
-                    dblClick: true,
+                    edit: @if (FrontUser.TienePermiso(RolesPermisos.Clie_Editar_Cliente)){<text>(true)</text>}else{ <text>(false)</text> },
+                    elim: @if (FrontUser.TienePermiso(RolesPermisos.Clie_Eliminar_Cliente)){<text>(true)</text>}else{ <text>(false)</text> },
+                    dblClick: @if (FrontUser.TienePermiso(RolesPermisos.Clie_Editar_Cliente)){<text>(true)</text>}else{ <text>(false)</text> },
                     editEvent: function (fila) {
                         var nPersId = fila.find("td").eq(0).html();
                         var cTipo = fila.find("td").eq(4).html();

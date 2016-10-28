@@ -1,5 +1,5 @@
-﻿using CHUYAChuya.AccesoDatos;
-using CHUYAChuya.EntidadesNegocio;
+﻿using CHUYAChuya.EntidadesNegocio;
+using CHUYAChuya.AccesoDatos;
 using System;
 using System.Collections.Generic;
 using System.Linq;

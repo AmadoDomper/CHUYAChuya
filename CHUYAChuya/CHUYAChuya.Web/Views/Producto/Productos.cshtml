@@ -10,7 +10,11 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <input href="#target2" id="btnNuevoProducto" type="button" class="btn btn-sm btn-success target" value="Nuevo Producto" />
+                    @if (FrontUser.TienePermiso(RolesPermisos.Pro_Nuevo_Producto))
+                    {
+                       <input href="#target2" id="btnNuevoProducto" type="button" class="btn btn-sm btn-success target" value="Nuevo Producto" />                 
+                    }
+
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -131,9 +135,9 @@
                     alinear: "C,L,C,C,C,C,C,C",
                     cellLen: "70,364,80,80,70,70,70,150,60,60",
                     cantRegVertical: 10,
-                    edit: true,
-                    elim: true,
-                    dblClick: true,
+                    edit: @if (FrontUser.TienePermiso(RolesPermisos.Pro_Editar_Producto)){<text>(true)</text>}else{ <text>(false)</text> },
+                    elim: @if (FrontUser.TienePermiso(RolesPermisos.Pro_Eliminar_Producto)){<text>(true)</text>}else{ <text>(false)</text> },
+                    dblClick: @if (FrontUser.TienePermiso(RolesPermisos.Pro_Editar_Producto)){<text>(true)</text>}else{ <text>(false)</text> },
                     editEvent: function (fila) {
                         var nProdId = fila.find("td").eq(0).html();
                         $("#hdnEstado").val("E");

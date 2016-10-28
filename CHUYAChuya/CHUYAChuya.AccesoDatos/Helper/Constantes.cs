@@ -92,6 +92,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
 
         #region Roles
         public const string stp_sel_Roles = "stp_sel_Roles";
+        public const string stp_sel_PermisoUsuarioRol = "stp_sel_PermisoUsuarioRol";
         #endregion
 
         #region Configuracion

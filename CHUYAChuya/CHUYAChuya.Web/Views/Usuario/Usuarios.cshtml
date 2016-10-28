@@ -9,7 +9,10 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-6 ">
-                    <input href="#target2" id="btnNuevoUsuario" type="button" class="btn btn-sm btn-success target" value="Nuevo Usuario" />
+                    @if (FrontUser.TienePermiso(RolesPermisos.Usu_Nuevo_Usuario))
+                    {
+                       <input href="#target2" id="btnNuevoUsuario" type="button" class="btn btn-sm btn-success target" value="Nuevo Usuario" />
+                    }
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -216,9 +219,9 @@
                     alinear: "C,C,L,C,C,L",
                     cellLen: "70,80,364,60,60,250,60,60",
                     cantRegVertical: 15,
-                    edit: true,
-                    elim: true,
-                    dblClick: true,
+                    edit: @if (FrontUser.TienePermiso(RolesPermisos.Usu_Editar_Usuario)){<text>(true)</text>}else{ <text>(false)</text> },
+                    elim: @if (FrontUser.TienePermiso(RolesPermisos.Usu_Eliminar_Usuario)){<text>(true)</text>}else{ <text>(false)</text> },
+                    dblClick: @if (FrontUser.TienePermiso(RolesPermisos.Usu_Editar_Usuario)){<text>(true)</text>}else{ <text>(false)</text> },
                     editEvent: function (fila) {
                         var nPersId = fila.find("td").eq(0).html();
                         var cDNI = fila.find("td").eq(3).html();

@@ -12,12 +12,22 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-lg-6 ">
-                    <input href="#target4" id="btnApertura" type="button" class="btn btn-sm btn-success target" value="Apertura de Caja">
-                    <input href="#target5" id="btnCorteCaja" type="button" class="btn btn-sm btn-success target" value="Corte de Caja">
+                    @if (FrontUser.TienePermiso(RolesPermisos.Caja_Apertura_de_Caja))
+                    {
+                        <input href="#target4" id="btnApertura" type="button" class="btn btn-sm btn-success target" value="Apertura de Caja">
+                    }
+                        <input href="#target5" id="btnCorteCaja" type="button" class="btn btn-sm btn-success target" value="Corte de Caja">
                 </div>
                 <div class="col-lg-6 text-right">
-                    <input href="#target3" id="btnSalEfectivo" type="button" class="btn btn-sm btn-danger target" value="Salida Efectivo">
-                    <input href="#target2" id="btnEntEfectivo" type="button" class="btn btn-sm btn-success target" value="Entrada Efectivo">
+
+                    @if (FrontUser.TienePermiso(RolesPermisos.Caja_Entrada_Efectivo))
+                    {
+                        <input href="#target2" id="btnEntEfectivo" type="button" class="btn btn-sm btn-success target" value="Entrada Efectivo">
+                    }
+                    @if (FrontUser.TienePermiso(RolesPermisos.Caja_Salida_Efectivo))
+                    {
+                        <input href="#target3" id="btnSalEfectivo" type="button" class="btn btn-sm btn-danger target" value="Salida Efectivo">
+                    }
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -150,8 +160,8 @@
                 </div>
                 <div class="row">
                     <div class="text-center">
-                        <input type="button" id="btnSalAceptar" class="btn btn-sm btn-primary m-r-5" value="Aceptar"/>
-                        <input type="button" id="btnSalCancelar" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar"/>
+                        <input type="button" id="btnSalAceptar" class="btn btn-sm btn-primary m-r-5" value="Aceptar" />
+                        <input type="button" id="btnSalCancelar" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar" />
                     </div>
                 </div>
             </form>
@@ -191,7 +201,7 @@
                 </div>
                 <div class="row">
                     <div class="text-center">
-                        <input type="button" id="btnReApe" class="btn btn-sm btn-primary m-r-5" value="Realizar Apertura"/>
+                        <input type="button" id="btnReApe" class="btn btn-sm btn-primary m-r-5" value="Realizar Apertura" />
                         <input type="button" id="btnCaApe" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar" />
                     </div>
                 </div>
@@ -355,7 +365,7 @@
         $('#frmAperturaCaja')[0].reset();
         $('#frmSalidaEfectivo')[0].reset();
         $('#frmEntradaEfectivo')[0].reset();
-        
+
         $("#hdnProvId,#hdnEstado").val("");
         vista("#target1");
     }
@@ -403,19 +413,19 @@
     ListaConst();
 
     function ListaConst() {
-            $.fn.Conexion({
-                direccion: '/Caja/ListaConstantes',
-                terminado: function (data) {
-                    var cons = JSON.parse(data);
+        $.fn.Conexion({
+            direccion: '/Caja/ListaConstantes',
+            terminado: function (data) {
+                var cons = JSON.parse(data);
 
-                    comboTipoCred = new hCombos();
-                    comboTipoCred.ids = ['cmbUsuCaj'];
-                    comboTipoCred.pre = [''];
-                    comboTipoCred.info = cons.lstUsuarios;
-                    comboTipoCred.init();
-                }
-            });
-        }
+                comboTipoCred = new hCombos();
+                comboTipoCred.ids = ['cmbUsuCaj'];
+                comboTipoCred.pre = [''];
+                comboTipoCred.info = cons.lstUsuarios;
+                comboTipoCred.init();
+            }
+        });
+    }
 
 
     $("#btnBuscarMov").bind("click", function () {

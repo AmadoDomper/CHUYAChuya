@@ -41,6 +41,17 @@ namespace CHUYAChuya.AccesoDatos
             return ListarRoles;
         }
 
+        public bool ValidaSugAprobacion(string cUsuName, int nPermId)
+        {
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_PermisoUsuarioRol);
+            oDatabase.AddInParameter(oDbCommand, "@cUsu", DbType.String, cUsuName);
+            oDatabase.AddInParameter(oDbCommand, "@nPermId", DbType.Int32, nPermId);
+            oDatabase.AddOutParameter(oDbCommand, "@bEstado", DbType.Boolean,10);
+
+            oDatabase.ExecuteScalar(oDbCommand);
+            return Convert.ToBoolean(oDatabase.GetParameterValue(oDbCommand, "@bEstado")); ;
+        }
+
 
     }
 }

@@ -11,10 +11,22 @@
         <div class="panel-body">
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <input id="btnAgregar" type="button" class="btn btn-sm btn-success" value="Agregar" />
-                    <input id="btnEditar" type="button" class="btn btn-sm btn-success m-l-5" value="Editar" />
-                    <input id="btnCancelar" type="button" class="btn btn-sm btn-success m-l-5" value="Cancelar" />
-                    <input id="btnEliminar" type="button" class="btn btn-sm btn-success m-l-5" value="Eliminar" />
+
+                    @if (FrontUser.TienePermiso(RolesPermisos.Con_Agregar_Rol))
+                    {
+                        <input id="btnAgregar" type="button" class="btn btn-sm btn-success" value="Agregar" />
+                    }
+
+                    @if (FrontUser.TienePermiso(RolesPermisos.Con_Editar_Rol))
+                    {
+                        <input id="btnEditar" type="button" class="btn btn-sm btn-success m-l-5" value="Editar" />
+                    }
+                        <input id="btnCancelar" type="button" class="btn btn-sm btn-success m-l-5" value="Cancelar" />
+                    @if (FrontUser.TienePermiso(RolesPermisos.Con_Eliminar_Rol))
+                    {
+                        <input id="btnEliminar" type="button" class="btn btn-sm btn-success m-l-5" value="Eliminar" />
+                    }
+                    
                     <input id="btnImprimir" type="button" class="btn btn-sm btn-success m-l-5" value="Imprimir" />
                 </div>
             </div>
@@ -293,7 +305,7 @@
                         terminado: function (data, textStatus, jqXHR) {
                             lista = JSON.parse(data);
 
-                            $("#btnEditar,#btnEliminar").attr("disabled", estado == "N" ? true : false );
+                            $("#btnEditar,#btnEliminar").attr("disabled", estado == "N" ? true : false);
                             ListarMenus();
                         },
                         bloqueo: false
@@ -363,7 +375,7 @@
     }
 
     function Bloqueo() {
-        var valor = (estado == "E" ? false: true); 
+        var valor = (estado == "E" ? false : true);
 
         $("#tblMenu tbody tr input").attr("disabled", valor);
         $("#tblModulo tbody tr input").attr("disabled", valor);
@@ -434,7 +446,7 @@
         estado = "";
     }
 
-    
+
     $("#btnEditar").bind("click", function () {
         $("#tblRol").attr("data-edit", true);
         $("#btnAgregar,#btnEditar,#btnEliminar").attr("disabled", true);
