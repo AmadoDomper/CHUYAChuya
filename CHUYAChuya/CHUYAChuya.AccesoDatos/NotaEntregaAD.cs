@@ -18,9 +18,9 @@ namespace CHUYAChuya.AccesoDatos
     {
         private Database oDatabase = EnterpriseLibraryContainer.Current.GetInstance<Database>(Conexion.cnsCHUYAChuya);
 
-        public int RegistrarNotaEntrega(NotaEntrega oNotEnt)
+        public Ticket RegistrarNotaEntrega(NotaEntrega oNotEnt)
         {
-            int resultado = 0;
+            Ticket oTicket = new Ticket();
 
             try
             {
@@ -53,46 +53,22 @@ namespace CHUYAChuya.AccesoDatos
 
                     using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
                     {
-                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+                        int inTicketSerie = oIDataReader.GetOrdinal("nTicketSerie");
+                        int inTicketCorrelativo = oIDataReader.GetOrdinal("nTicketCorrelativo");
 
                         while (oIDataReader.Read())
                         {
-                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                            oTicket.nTicketSerie = DataUtil.DbValueToDefault<int>(oIDataReader[inTicketSerie]);
+                            oTicket.nTicketCorrelativo = DataUtil.DbValueToDefault<int>(oIDataReader[inTicketCorrelativo]);
                         }
                     }
-
-                    //if (resultado[1].Length != 18 || resultado[1].IndexOf("109", 0, 3) == -1)
-                    //{
-                    //    /*Error de BD*/
-                    //    resultado[0] = "2";
-                    //    resultado[1] = "Ha ocurrido un error: " + "TIPO 2-" + resultado[1];
-                    //}
-                    //else
-                    //{
-                    //    /*Resultado OK*/
-                    //    if (oCred.oColocaciones.oProducto.cCtaCod != null)
-                    //    {
-                    //        resultado[0] = "1";
-                    //        resultado[1] = "Se actualizó correctamente los datos";
-                    //    }
-                    //    else
-                    //    {
-                    //        resultado[0] = "0";
-                    //    }
-                    //}
                 }
             }
             catch (Exception ex)
             {
-                resultado = -1;
-                //oError.cErrDescription = ex.Message.ToString();
-                //oError.cErrSource = ex.StackTrace.ToString();
-                //oError.cProceso = ex.TargetSite.ToString();
-
-                //resultado[0] = "3";
-                //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
+                oTicket = null;
             }
-            return resultado;
+            return oTicket;
         }
 
 
@@ -311,6 +287,84 @@ namespace CHUYAChuya.AccesoDatos
             }
             return ListaNotaEntProd;
         }
+
+
+
+        public Ticket ObtenerDatosTicket(int nTicketSerie, int nTicketCorr)
+        {
+            try
+            {
+                Ticket oTicket = new Ticket();
+
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerDatosTicket);
+                oDatabase.AddInParameter(oDbCommand, "@nTicketSerie", DbType.Int32, (object)nTicketSerie ?? DBNull.Value);
+                oDatabase.AddInParameter(oDbCommand, "@nTicketCorr", DbType.Int32, (object)nTicketCorr ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inTicketSerie = oIDataReader.GetOrdinal("nTicketSerie");
+                    int inTicketCorrelativo = oIDataReader.GetOrdinal("nTicketCorrelativo");
+                    int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+                    int idMovFecha = oIDataReader.GetOrdinal("dMovFecha");
+                    int icMovUsuario = oIDataReader.GetOrdinal("cMovUsuario");
+                    int inPersId = oIDataReader.GetOrdinal("nPersId");
+                    int icPersTipo = oIDataReader.GetOrdinal("cPersTipo");
+                    int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                    int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
+                    int icDOI = oIDataReader.GetOrdinal("cDOI");
+
+                    int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                    int idFechaEntrega = oIDataReader.GetOrdinal("dFechaEntrega");
+
+                    int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
+                    int inNotaAnticipo = oIDataReader.GetOrdinal("nNotaAnticipo");
+                    int inNotaDescuento = oIDataReader.GetOrdinal("nNotaDescuento");
+                    int inNotaEfectivo = oIDataReader.GetOrdinal("nNotaEfectivo");
+                    int inNotaCambio = oIDataReader.GetOrdinal("nNotaCambio");
+                    int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
+                    int inNotaEstado = oIDataReader.GetOrdinal("nNotaEstado");
+                    int icImpSerie = oIDataReader.GetOrdinal("cImpSerie");
+
+                    while (oIDataReader.Read())
+                    {
+                        oTicket.nTicketSerie = DataUtil.DbValueToDefault<Int32>(oIDataReader[inTicketSerie]);
+                        oTicket.nTicketCorrelativo = DataUtil.DbValueToDefault<Int32>(oIDataReader[inTicketCorrelativo]);
+                        oTicket.oMov.nMovNro = DataUtil.DbValueToDefault<Int32>(oIDataReader[inMovNro]);
+                        oTicket.oMov.dMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]);
+                        oTicket.oMov.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icMovUsuario]);
+
+                        oTicket.oNotaEntrega.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
+                        oTicket.oNotaEntrega.oPers.cPersTipo = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTipo]);
+                        oTicket.oNotaEntrega.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                        oTicket.oNotaEntrega.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
+                        oTicket.oNotaEntrega.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
+
+                        oTicket.oNotaEntrega.nNotaEntId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inNotaEntId]);
+                        oTicket.oNotaEntrega.dFechaEntrega = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaEntrega]);
+
+                        oTicket.oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
+                        oTicket.oNotaEntrega.nNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                        oTicket.oNotaEntrega.nNotaDescuento = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaDescuento]);
+                        oTicket.oNotaEntrega.nNotaEfectivo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaEfectivo]);
+                        oTicket.oNotaEntrega.nNotaCambio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaCambio]);
+
+                        oTicket.oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
+                        oTicket.oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
+                        oTicket.oImp.nImpSerie = DataUtil.DbValueToDefault<String>(oIDataReader[icImpSerie]);
+
+                        oTicket.oNotaEntrega.ListaNotaEntProd = ListaNotaEntProductos(oTicket.oNotaEntrega.nNotaEntId);
+                    }
+                }
+
+                return oTicket;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
 
 
 

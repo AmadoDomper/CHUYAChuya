@@ -29,12 +29,12 @@ namespace CHUYAChuya.EntidadesNegocio
             set { _cNombre = value; }
         }
 
-        [JsonProperty(PropertyName = "sub")]
-        public List<Constante> oSubConstante
-        {
-            get { return _oSubConstante; }
-            set { _oSubConstante = value; }
-        }
+        //[JsonProperty(PropertyName = "sub")]
+        //public List<Constante> oSubConstante
+        //{
+        //    get { return _oSubConstante; }
+        //    set { _oSubConstante = value; }
+        //}
 
         [JsonIgnore]
         public bool Estado
@@ -43,11 +43,11 @@ namespace CHUYAChuya.EntidadesNegocio
             set { _bEstado = value; }
         }
 
-        [JsonProperty(PropertyName = "min")]
-        public int nMin
-        {
-            get { return _nMin; }
-            set { _nMin = value; }
-        }
+        //[JsonProperty(PropertyName = "min")]
+        //public int nMin
+        //{
+        //    get { return _nMin; }
+        //    set { _nMin = value; }
+        //}
     }
 }

@@ -17,7 +17,7 @@ namespace CHUYAChuya.LogicaNegocio
             oNotaEntregaAD = new NotaEntregaAD();
         }
 
-        public int RegistrarNotaEntrega(NotaEntrega oNotEnt)
+        public Ticket RegistrarNotaEntrega(NotaEntrega oNotEnt)
         {
             return oNotaEntregaAD.RegistrarNotaEntrega(oNotEnt);
         }
@@ -35,6 +35,11 @@ namespace CHUYAChuya.LogicaNegocio
         public NotaEntrega CargoDatosNotaEntrega(int nNotadId)
         {
             return oNotaEntregaAD.CargoDatosNotaEntrega(nNotadId);
+        }
+
+        public Ticket ObtenerDatosTicket(int nTicketSerie, int nTicketCorr)
+        {
+            return oNotaEntregaAD.ObtenerDatosTicket(nTicketSerie, nTicketCorr);
         }
 
     }

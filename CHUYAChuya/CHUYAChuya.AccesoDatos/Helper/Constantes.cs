@@ -102,6 +102,10 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_ins_upd_RolPermisos = "stp_ins_upd_RolPermisos";
         
         #endregion
+
+        #region Impresion
+        public const string stp_sel_ObtenerDatosTicket = "stp_sel_ObtenerDatosTicket";
+        #endregion
     }
 }
 
