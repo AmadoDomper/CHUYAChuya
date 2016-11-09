@@ -119,6 +119,7 @@
     <Compile Include="Controllers\MovCajaController.cs" />
     <Compile Include="Controllers\NotaEntregaController.cs" />
     <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Filters\NoCacheAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -157,6 +158,7 @@
     <Content Include="Content\css\normalize.min.css" />
     <Content Include="Content\css\sb-admin-2.css" />
     <Content Include="Content\css\simple.datagrid.css" />
+    <Content Include="Content\css\style.css" />
     <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker-4.15.35.css" />
     <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker-standalone.css" />
     <Content Include="Content\extend\datepickerTime\css\bootstrap-datetimepicker-4.17.37.css" />
@@ -174,6 +176,7 @@
     <Content Include="Content\extend\datepicker\js\bootstrap-datepicker.js" />
     <Content Include="Content\extend\datepicker\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\extend\datepicker\locales\bootstrap-datepicker.es.min.js" />
+    <Content Include="Content\extend\highcharts\highcharts.js" />
     <Content Include="Content\extend\moment\moment-with-locales.js" />
     <Content Include="Content\extend\validator\validator.js" />
     <Content Include="Content\extend\validator\validator.min.js" />
@@ -327,6 +330,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Config\Config.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Reporte\Reportes.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

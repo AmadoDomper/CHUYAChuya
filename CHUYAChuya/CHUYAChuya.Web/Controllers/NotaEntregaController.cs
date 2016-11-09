@@ -43,28 +43,43 @@ namespace CHUYAChuya.Web.Controllers
         public JsonResult RegistrarNotaEntrega(NotaEntregaViewModel oNotaEntregaViewModel)
         {
             NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
-            Ticket oTicket = new Ticket();
+            int nNotaEntId;
 
             oNotaEntregaViewModel.oNotEnt.cNotaUsuReg = ((Usuario)Session["Datos"]).cUsuNombre;
             oNotaEntregaViewModel.oNotEnt.cNotaUsuAge = "01";
 
-            oTicket = oNotaEntLN.RegistrarNotaEntrega(oNotaEntregaViewModel.oNotEnt);
+            nNotaEntId = oNotaEntLN.RegistrarNotaEntrega(oNotaEntregaViewModel.oNotEnt);
 
-            Imprimir(oTicket.nTicketSerie, oTicket.nTicketCorrelativo);
-            return Json(oTicket.oNotaEntrega.nNotaEntId);
+            ImprimirNotaEntrega(nNotaEntId);
+            return Json(nNotaEntId);
         }
         
         [RequiresAuthenticationAttribute]
-        public JsonResult RealizarCobroServicio(int nNotaEntId, decimal nNotaEfecCo, decimal nNotaCambioCo)
+        public JsonResult RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo)
         {
             NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
 
-            int resultado;
+            int nTicketId;
             string cNotaUsuCo = ((Usuario)Session["Datos"]).cUsuNombre;
             string cNotaUsuAge = "01";
 
-            resultado = oNotaEntLN.RealizarCobroServicio(nNotaEntId, nNotaEfecCo, nNotaCambioCo, cNotaUsuCo, cNotaUsuAge);
-            return Json(resultado);
+            nTicketId = oNotaEntLN.RealizarCobroServicio(nNotaEntId, nPersId, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge);
+            ImprimirBoFa(nTicketId);
+            return Json(nTicketId);
+        }
+
+        [RequiresAuthenticationAttribute]
+        public JsonResult RealizarConfirmacionEntrega(int nNotaEntId)
+        {
+            NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
+
+            int nMovNro;
+            string cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            string cUsuarioAge = "01";
+
+            nMovNro = oNotaEntLN.RealizarConfirmacionEntrega(nNotaEntId, cUsuario, cUsuarioAge);
+
+            return Json(nMovNro);
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
@@ -119,27 +134,47 @@ namespace CHUYAChuya.Web.Controllers
             return serv;
         }
 
+        public string Cantidad(decimal nCant,string cTipo, int n)
+        {
+            string cant = "";
 
-        public void Imprimir(int nSerie, int nCorr)
+            if (cTipo == "Kg")
+            {
+               cant =  nCant.ToString("##0.000").PadLeft(n);
+            }
+            else
+            {
+                cant = "".PadLeft(n).Insert(((n - nCant.ToString("##0").Length) / 2) + 1, nCant.ToString("##0")).Remove(n);
+            }
+
+            return cant;
+        }
+
+
+        public void ImprimirNotaEntrega(int nNotaId)
         {
             Process p;
 
             NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
             Ticket oTicket = new Ticket();
-            oTicket = oNotaEntregaLN.ObtenerDatosTicket(nSerie, nCorr);
+            oTicket = oNotaEntregaLN.ObtenerDatosNotaEntImp(nNotaId);
 
 
             using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
             {
 
-                writer.WriteLine("          LAVANDERIA CHUYACHUYA         ");
-                writer.WriteLine("           RUC: 2056727288057           ");
-                writer.WriteLine("  JR. MORONA Nº 441 - IQUITOS - MAYNAS  ");
-                writer.WriteLine("          Telefono: (065)242847         ");
-                writer.WriteLine("");
+                //writer.WriteLine("          LAVANDERIA CHUYACHUYA         ");
+                //writer.WriteLine("           RUC: 2056727288057           ");
+                //writer.WriteLine("  JR. MORONA Nº 441 - IQUITOS - MAYNAS  ");
+                //writer.WriteLine("          Telefono: (065)242847         ");
+                //writer.WriteLine("");
+                CabeceraTicket(writer);
+
                 writer.WriteLine("Fecha: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("HH:mm:ss"));
-                writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + oTicket.oImp.nImpSerie);
-                writer.WriteLine("Usuario: " + ((Usuario)Session["Datos"]).cUsuNombre.PadRight(12) + "Ticket: " + oTicket.nTicketSerie.ToString().PadLeft(3,'0') + "-" + oTicket.nTicketCorrelativo.ToString().PadLeft(7,'0'));
+                writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + "FFGF252758");
+                writer.WriteLine("Usuario: " + ((Usuario)Session["Datos"]).cUsuNombre.PadRight(15) + "Nota Id: " + oTicket.oNotaEntrega.nNotaEntId.ToString().PadLeft(7));
+                writer.WriteLine("");
+                writer.WriteLine("*********** NOTA DE ENTREGA ************");
                 writer.WriteLine("");
                 writer.WriteLine("Cantidad    Servicio    Precio   Importe");
                 writer.WriteLine("".PadRight(40, '-'));
@@ -147,7 +182,7 @@ namespace CHUYAChuya.Web.Controllers
                 foreach (var prod in oTicket.oNotaEntrega.ListaNotaEntProd)
                 {
                     writer.WriteLine("- " + prod.oProd.cProdDesc);
-                    writer.WriteLine(prod.nDetCantidad.ToString("##0.000").PadLeft(7) + Servicios(prod.oProd.bProdSerLavado, prod.oProd.bProdSerSecado, prod.oProd.bProdSerPlanchado, 17) +
+                    writer.WriteLine(Cantidad(prod.nDetCantidad,prod.oProd.oProdMedida.cNombre,7) + Servicios(prod.oProd.bProdSerLavado, prod.oProd.bProdSerSecado, prod.oProd.bProdSerPlanchado, 17) +
                                      prod.nProdPrecioUnit.ToString("#,##0.00").PadLeft(5) + prod.nDetImporte.ToString("#,##0.00").PadLeft(11));
 
                 }
@@ -194,6 +229,121 @@ namespace CHUYAChuya.Web.Controllers
                 writer.WriteLine("".PadRight(40, '-'));
                 writer.WriteLine("    Muchas gracias por su preferencia   ");
                 writer.WriteLine("         Lo esperamos nuevamente        ");
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+
+                writer.WriteLine(char.ConvertFromUtf32(27) + "i");
+                writer.Close();
+
+                //using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+                //{
+                //    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+
+                //    writerBat.Close();
+                //}
+
+                //p = new Process();
+                //p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+
+                //p.Start();
+                //p.Close();
+                //p.Dispose();
+
+
+            }
+        }
+
+        public void CabeceraTicket(StreamWriter writer)
+        {
+            writer.WriteLine("          LAVANDERIA CHUYACHUYA         ");
+            writer.WriteLine("           RUC: 2056727288057           ");
+            writer.WriteLine("  JR. MORONA Nº 441 - IQUITOS - MAYNAS  ");
+            writer.WriteLine("          Telefono: (065)242847         ");
+            writer.WriteLine("");
+        }
+
+
+        public void ImprimirBoFa(int nTicketId)
+        {
+            Process p;
+
+            NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
+            Ticket oTicket = new Ticket();
+            oTicket = oNotaEntregaLN.ObtenerDatosTicket(nTicketId);
+
+
+            using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
+            {
+
+                CabeceraTicket(writer);
+
+
+
+                writer.WriteLine("Fecha: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("HH:mm:ss"));
+                writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + oTicket.oImp.nImpSerie);
+                writer.WriteLine("Usuario: " + ((Usuario)Session["Datos"]).cUsuNombre.PadRight(12) + "Ticket: " + oTicket.nTicketSerie.ToString().PadLeft(3, '0') + "-" + oTicket.nTicketCorrelativo.ToString().PadLeft(7, '0'));
+                writer.WriteLine("");
+                if (oTicket.oTicketTipo.cConstanteID == "1"){ writer.WriteLine("**************** BOLETA ****************");} else { writer.WriteLine("*************** FACTURA ****************"); }
+                writer.WriteLine("");
+                writer.WriteLine("Cantidad    Servicio    Precio   Importe");
+                writer.WriteLine("".PadRight(40, '-'));
+
+                foreach (var prod in oTicket.oNotaEntrega.ListaNotaEntProd)
+                {
+                    writer.WriteLine("- " + prod.oProd.cProdDesc);
+                    writer.WriteLine(Cantidad(prod.nDetCantidad, prod.oProd.oProdMedida.cNombre, 7) + Servicios(prod.oProd.bProdSerLavado, prod.oProd.bProdSerSecado, prod.oProd.bProdSerPlanchado, 17) +
+                                     prod.nProdPrecioUnit.ToString("#,##0.00").PadLeft(5) + prod.nDetImporte.ToString("#,##0.00").PadLeft(11));
+
+                }
+
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("SUB-TOTAL S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaSubTotal.ToString("#,##0.00").PadLeft(16));
+
+                if (oTicket.oNotaEntrega.nNotaDescuento > 0)
+                {
+                    writer.WriteLine("DESCUENTO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaDescuento.ToString("#,##0.00").PadLeft(16));
+                }
+
+                if (oTicket.oNotaEntrega.nNotaAnticipo > 0)
+                {
+                    writer.WriteLine("ANTICIPO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaAnticipo.ToString("#,##0.00").PadLeft(16));
+                }
+
+                writer.WriteLine("TOTAL VENTA S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaMontoTotal.ToString("#,##0.00").PadLeft(16));
+                writer.WriteLine("".PadRight(40, '-'));
+
+                if (oTicket.oNotaEntrega.nNotaEfectivo > 0)
+                {
+                    writer.WriteLine("EFECTIVO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaEfectivo.ToString("#,##0.00").PadLeft(16));
+                    writer.WriteLine("VUELTO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaCambio.ToString("#,##0.00").PadLeft(16));
+                    writer.WriteLine("".PadRight(40, '-'));
+                }
+
+                writer.WriteLine("Nº Mov.   : " + oTicket.oMov.nMovNro.ToString().PadLeft(7, '0'));
+                writer.WriteLine("");
+                writer.WriteLine("Cliente   : " + oTicket.oNotaEntrega.oPers.cPersDesc.PadRight(18));
+
+                if (oTicket.oNotaEntrega.oPers.cPersTipo == "N")
+                {
+                    writer.WriteLine("DNI       : " + oTicket.oNotaEntrega.oPers.cPersDOI.PadRight(18));
+                }
+                else
+                {
+                    writer.WriteLine("RUC       : " + oTicket.oNotaEntrega.oPers.cPersDOI.PadRight(18));
+                }
+
+                writer.WriteLine("Direccion : " + oTicket.oNotaEntrega.oPers.cPersDireccion.PadRight(18));
+                writer.WriteLine("");
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("    Muchas gracias por su preferencia   ");
+                writer.WriteLine("         Lo esperamos nuevamente        ");
                 writer.WriteLine("----------------------------------------");
                 writer.WriteLine("");
                 writer.WriteLine("");
@@ -223,9 +373,115 @@ namespace CHUYAChuya.Web.Controllers
 
 
             }
-
-
         }
+
+
+
+
+        //public void Imprimir(int nSerie, int nCorr)
+        //{
+        //    Process p;
+
+        //    NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
+        //    Ticket oTicket = new Ticket();
+        //    oTicket = oNotaEntregaLN.ObtenerDatosTicket(nSerie, nCorr);
+
+
+        //    using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
+        //    {
+
+        //        writer.WriteLine("          LAVANDERIA CHUYACHUYA         ");
+        //        writer.WriteLine("           RUC: 2056727288057           ");
+        //        writer.WriteLine("  JR. MORONA Nº 441 - IQUITOS - MAYNAS  ");
+        //        writer.WriteLine("          Telefono: (065)242847         ");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("Fecha: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("HH:mm:ss"));
+        //        writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + oTicket.oImp.nImpSerie);
+        //        writer.WriteLine("Usuario: " + ((Usuario)Session["Datos"]).cUsuNombre.PadRight(12) + "Ticket: " + oTicket.nTicketSerie.ToString().PadLeft(3, '0') + "-" + oTicket.nTicketCorrelativo.ToString().PadLeft(7, '0'));
+        //        writer.WriteLine("");
+        //        writer.WriteLine("Cantidad    Servicio    Precio   Importe");
+        //        writer.WriteLine("".PadRight(40, '-'));
+
+        //        foreach (var prod in oTicket.oNotaEntrega.ListaNotaEntProd)
+        //        {
+        //            writer.WriteLine("- " + prod.oProd.cProdDesc);
+        //            writer.WriteLine(prod.nDetCantidad.ToString("##0.000").PadLeft(7) + Servicios(prod.oProd.bProdSerLavado, prod.oProd.bProdSerSecado, prod.oProd.bProdSerPlanchado, 17) +
+        //                             prod.nProdPrecioUnit.ToString("#,##0.00").PadLeft(5) + prod.nDetImporte.ToString("#,##0.00").PadLeft(11));
+
+        //        }
+
+        //        writer.WriteLine("".PadRight(40, '-'));
+        //        writer.WriteLine("SUB-TOTAL S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaSubTotal.ToString("#,##0.00").PadLeft(16));
+
+        //        if (oTicket.oNotaEntrega.nNotaDescuento > 0)
+        //        {
+        //            writer.WriteLine("DESCUENTO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaDescuento.ToString("#,##0.00").PadLeft(16));
+        //        }
+
+        //        if (oTicket.oNotaEntrega.nNotaAnticipo > 0)
+        //        {
+        //            writer.WriteLine("ANTICIPO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaAnticipo.ToString("#,##0.00").PadLeft(16));
+        //        }
+
+        //        writer.WriteLine("TOTAL VENTA S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaMontoTotal.ToString("#,##0.00").PadLeft(16));
+        //        writer.WriteLine("".PadRight(40, '-'));
+
+        //        if (oTicket.oNotaEntrega.nNotaEfectivo > 0)
+        //        {
+        //            writer.WriteLine("EFECTIVO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaEfectivo.ToString("#,##0.00").PadLeft(16));
+        //            writer.WriteLine("VUELTO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaCambio.ToString("#,##0.00").PadLeft(16));
+        //            writer.WriteLine("".PadRight(40, '-'));
+        //        }
+
+        //        writer.WriteLine("Nº Mov.   : " + oTicket.oMov.nMovNro.ToString().PadLeft(7, '0'));
+        //        writer.WriteLine("");
+        //        writer.WriteLine("Cliente   : " + oTicket.oNotaEntrega.oPers.cPersDesc.PadRight(18));
+
+        //        if (oTicket.oNotaEntrega.oPers.cPersTipo == "N")
+        //        {
+        //            writer.WriteLine("DNI       : " + oTicket.oNotaEntrega.oPers.cPersDOI.PadRight(18));
+        //        }
+        //        else
+        //        {
+        //            writer.WriteLine("RUC       : " + oTicket.oNotaEntrega.oPers.cPersDOI.PadRight(18));
+        //        }
+
+        //        writer.WriteLine("Direccion : " + oTicket.oNotaEntrega.oPers.cPersDireccion.PadRight(18));
+        //        writer.WriteLine("");
+        //        writer.WriteLine("Fecha Entrega: " + Dia((DateTime)oTicket.oNotaEntrega.dFechaEntrega) + " " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy hh:mm"));
+        //        writer.WriteLine("".PadRight(40, '-'));
+        //        writer.WriteLine("    Muchas gracias por su preferencia   ");
+        //        writer.WriteLine("         Lo esperamos nuevamente        ");
+        //        writer.WriteLine("----------------------------------------");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+        //        writer.WriteLine("");
+
+        //        writer.WriteLine(char.ConvertFromUtf32(27) + "i");
+        //        writer.Close();
+
+        //        using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+        //        {
+        //            writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+
+        //            writerBat.Close();
+        //        }
+
+        //        p = new Process();
+        //        p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+
+        //        p.Start();
+        //        p.Close();
+        //        p.Dispose();
+
+
+        //    }
+        //}
 
 
     }

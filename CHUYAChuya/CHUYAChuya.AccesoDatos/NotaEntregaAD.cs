@@ -18,9 +18,9 @@ namespace CHUYAChuya.AccesoDatos
     {
         private Database oDatabase = EnterpriseLibraryContainer.Current.GetInstance<Database>(Conexion.cnsCHUYAChuya);
 
-        public Ticket RegistrarNotaEntrega(NotaEntrega oNotEnt)
+        public int RegistrarNotaEntrega(NotaEntrega oNotEnt)
         {
-            Ticket oTicket = new Ticket();
+            int nNoTaEntId = -1;
 
             try
             {
@@ -47,34 +47,31 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@cNotaUsuReg", SqlDbType.VarChar, 4).Value = (object)oNotEnt.cNotaUsuReg ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaUsuAge", SqlDbType.VarChar, 2).Value = (object)oNotEnt.cNotaUsuAge ?? DBNull.Value;
 
-
                     oSqlCommand.Parameters.Add("@T_NotaEntregaProducto", SqlDbType.Structured).Value = NotaEntregaProductoCollection.TSqlDataRecord(oNotEnt.ListaNotaEntProd.ToList());
                     oSqlConnection.Open();
 
                     using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
                     {
-                        int inTicketSerie = oIDataReader.GetOrdinal("nTicketSerie");
-                        int inTicketCorrelativo = oIDataReader.GetOrdinal("nTicketCorrelativo");
+                        int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
 
                         while (oIDataReader.Read())
                         {
-                            oTicket.nTicketSerie = DataUtil.DbValueToDefault<int>(oIDataReader[inTicketSerie]);
-                            oTicket.nTicketCorrelativo = DataUtil.DbValueToDefault<int>(oIDataReader[inTicketCorrelativo]);
+                            nNoTaEntId = DataUtil.DbValueToDefault<int>(oIDataReader[inNotaEntId]);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                oTicket = null;
+                nNoTaEntId = -2;
             }
-            return oTicket;
+            return nNoTaEntId;
         }
 
 
-        public int RealizarCobroServicio(int nNotaEntId, decimal nNotaEfecCobro, decimal nNotaCambioCobro, string cNotaUsuCobro, string cNotaUsuAge)
+        public int RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo, string cNotaUsuCo, string cNotaUsuAge)
         {
-            int resultado = 0;
+            int nTicketId = 0;
 
             try
             {
@@ -86,19 +83,21 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Connection = oSqlConnection;
 
                     oSqlCommand.Parameters.Add("@nNotaEntId", SqlDbType.Int).Value = (object)nNotaEntId ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@nNotaEfectivoCobro", SqlDbType.Money).Value = (object)nNotaEfecCobro ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@nNotaCambioCobro", SqlDbType.Money).Value = (object)nNotaCambioCobro ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@cNotaUsuCobro", SqlDbType.VarChar, 4).Value = (object)cNotaUsuCobro ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nPersId", SqlDbType.Int).Value = (object)nPersId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nTipoC", SqlDbType.Int).Value = (object)nTipoC ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nEfectivoCobro", SqlDbType.Money).Value = (object)nEfecCo ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nCambioCobro", SqlDbType.Money).Value = (object)nCambioCo ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cNotaUsuCobro", SqlDbType.VarChar, 4).Value = (object)cNotaUsuCo ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cNotaUsuAge", SqlDbType.VarChar, 2).Value = (object)cNotaUsuAge ?? DBNull.Value;
                     oSqlConnection.Open();
 
                     using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
                     {
-                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+                        int inTicketId = oIDataReader.GetOrdinal("nTicketId");
 
                         while (oIDataReader.Read())
                         {
-                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                            nTicketId = DataUtil.DbValueToDefault<int>(oIDataReader[inTicketId]);
                         }
                     }
 
@@ -125,7 +124,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                resultado = -1;
+                nTicketId = -1;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();
@@ -133,9 +132,44 @@ namespace CHUYAChuya.AccesoDatos
                 //resultado[0] = "3";
                 //resultado[1] = "Ha ocurrido un error: " + "TIPO 3-" + oErrorAD.InsertaErrorAplicacion(oError);
             }
-            return resultado;
-        }        
+            return nTicketId;
+        }
 
+        public int RealizarConfirmacionEntrega(int nNotaEntId, string cUsuario, string cUsuarioAge)
+        {
+            int nMovNro = 0;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_ConfirmarEntrega;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nNotaEntId", SqlDbType.Int).Value = (object)nNotaEntId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuarioAge", SqlDbType.VarChar, 2).Value = (object)cUsuarioAge ?? DBNull.Value;
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+
+                        while (oIDataReader.Read())
+                        {
+                            nMovNro = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nMovNro = -1;
+            }
+            return nMovNro;
+        }
 
         public ListaPaginada BuscarNotaEntPag(int nNotaEst, int nPage = 1, int nSize= 10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
@@ -264,6 +298,7 @@ namespace CHUYAChuya.AccesoDatos
                 int ibProdSerLavado = oIDataReader.GetOrdinal("bProdSerLavado");
                 int ibProdSerSecado = oIDataReader.GetOrdinal("bProdSerSecado");
                 int ibProdSerPlanchado = oIDataReader.GetOrdinal("bProdSerPlanchado");
+                int icConsDescripcion = oIDataReader.GetOrdinal("cConsDescripcion");
                 int inDetCantidad = oIDataReader.GetOrdinal("nDetCantidad");
                 int inDetProdPrecioUnit = oIDataReader.GetOrdinal("nDetProdPrecioUnit");
                 int inDetImporte = oIDataReader.GetOrdinal("nDetImporte");
@@ -278,6 +313,7 @@ namespace CHUYAChuya.AccesoDatos
                     oNotaEntPro.oProd.bProdSerSecado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerSecado]);
                     oNotaEntPro.oProd.bProdSerPlanchado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerPlanchado]);
 
+                    oNotaEntPro.oProd.oProdMedida.cNombre = DataUtil.DbValueToDefault<string>(oIDataReader[icConsDescripcion]);
                     oNotaEntPro.nDetCantidad = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDetCantidad]);
                     oNotaEntPro.nProdPrecioUnit = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDetProdPrecioUnit]);
                     oNotaEntPro.nDetImporte = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDetImporte]);
@@ -290,20 +326,90 @@ namespace CHUYAChuya.AccesoDatos
 
 
 
-        public Ticket ObtenerDatosTicket(int nTicketSerie, int nTicketCorr)
+        public Ticket ObtenerDatosNotaEntImp(int nNotaId)
+        {
+            try
+            {
+                Ticket oTicket = new Ticket();
+
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerDatosNotaEntImp);
+                oDatabase.AddInParameter(oDbCommand, "@nNotaId", DbType.Int32, (object)nNotaId ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                    int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+                    int idMovFecha = oIDataReader.GetOrdinal("dMovFecha");
+                    int icMovUsuario = oIDataReader.GetOrdinal("cMovUsuario");
+                    int inPersId = oIDataReader.GetOrdinal("nPersId");
+                    int icPersTipo = oIDataReader.GetOrdinal("cPersTipo");
+                    int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                    int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
+                    int icDOI = oIDataReader.GetOrdinal("cDOI");
+
+                    int idFechaEntrega = oIDataReader.GetOrdinal("dFechaEntrega");
+
+                    int inNotaSubTotal = oIDataReader.GetOrdinal("nNotaSubTotal");
+                    int inNotaAnticipo = oIDataReader.GetOrdinal("nNotaAnticipo");
+                    int inNotaDescuento = oIDataReader.GetOrdinal("nNotaDescuento");
+                    int inNotaEfectivo = oIDataReader.GetOrdinal("nNotaEfectivo");
+                    int inNotaCambio = oIDataReader.GetOrdinal("nNotaCambio");
+                    int inNotaMontoTotal = oIDataReader.GetOrdinal("nNotaMontoTotal");
+                    int inNotaEstado = oIDataReader.GetOrdinal("nNotaEstado");
+
+                    while (oIDataReader.Read())
+                    {
+                        oTicket.oNotaEntrega.nNotaEntId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inNotaEntId]);
+                        oTicket.oMov.nMovNro = DataUtil.DbValueToDefault<Int32>(oIDataReader[inMovNro]);
+                        oTicket.oMov.dMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]);
+                        oTicket.oMov.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icMovUsuario]);
+
+                        oTicket.oNotaEntrega.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
+                        oTicket.oNotaEntrega.oPers.cPersTipo = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTipo]);
+                        oTicket.oNotaEntrega.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                        oTicket.oNotaEntrega.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
+                        oTicket.oNotaEntrega.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
+
+                        oTicket.oNotaEntrega.dFechaEntrega = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaEntrega]);
+
+                        oTicket.oNotaEntrega.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
+                        oTicket.oNotaEntrega.nNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaAnticipo]);
+                        oTicket.oNotaEntrega.nNotaDescuento = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaDescuento]);
+                        oTicket.oNotaEntrega.nNotaEfectivo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaEfectivo]);
+                        oTicket.oNotaEntrega.nNotaCambio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaCambio]);
+
+                        oTicket.oNotaEntrega.nNotaMontoTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaMontoTotal]);
+                        oTicket.oNotaEntrega.oNotaEstado.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inNotaEstado].ToString());
+
+                        oTicket.oNotaEntrega.ListaNotaEntProd = ListaNotaEntProductos(oTicket.oNotaEntrega.nNotaEntId);
+                    }
+                }
+
+                return oTicket;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+        public Ticket ObtenerDatosTicket(int nTicketId)
         {
             try
             {
                 Ticket oTicket = new Ticket();
 
                 DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerDatosTicket);
-                oDatabase.AddInParameter(oDbCommand, "@nTicketSerie", DbType.Int32, (object)nTicketSerie ?? DBNull.Value);
-                oDatabase.AddInParameter(oDbCommand, "@nTicketCorr", DbType.Int32, (object)nTicketCorr ?? DBNull.Value);
+                oDatabase.AddInParameter(oDbCommand, "@nTicketId", DbType.Int32, (object)nTicketId ?? DBNull.Value);
 
                 using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
                 {
                     int inTicketSerie = oIDataReader.GetOrdinal("nTicketSerie");
                     int inTicketCorrelativo = oIDataReader.GetOrdinal("nTicketCorrelativo");
+                    int inTicketTipo = oIDataReader.GetOrdinal("nTicketTipo");
                     int inMovNro = oIDataReader.GetOrdinal("nMovNro");
                     int idMovFecha = oIDataReader.GetOrdinal("dMovFecha");
                     int icMovUsuario = oIDataReader.GetOrdinal("cMovUsuario");
@@ -329,6 +435,7 @@ namespace CHUYAChuya.AccesoDatos
                     {
                         oTicket.nTicketSerie = DataUtil.DbValueToDefault<Int32>(oIDataReader[inTicketSerie]);
                         oTicket.nTicketCorrelativo = DataUtil.DbValueToDefault<Int32>(oIDataReader[inTicketCorrelativo]);
+                        oTicket.oTicketTipo.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inTicketTipo].ToString());
                         oTicket.oMov.nMovNro = DataUtil.DbValueToDefault<Int32>(oIDataReader[inMovNro]);
                         oTicket.oMov.dMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]);
                         oTicket.oMov.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icMovUsuario]);

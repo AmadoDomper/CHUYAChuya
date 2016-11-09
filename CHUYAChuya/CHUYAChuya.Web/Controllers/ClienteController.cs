@@ -79,11 +79,11 @@ namespace CHUYAChuya.Web.Controllers
             return Json(JsonConvert.SerializeObject(ListaClientes, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
-        public JsonResult BuscarProveedores(string cPersRUC = null, string cNombre = null)
+        public JsonResult BuscarProveedores(string cProvRUC = null, string cNombre = null)
         {
             PersonaLN oPersonaLN = new PersonaLN();
             List<Persona> ListaProveedores = new List<Persona>();
-            ListaProveedores = oPersonaLN.BuscarProveedores(cPersRUC, cNombre);
+            ListaProveedores = oPersonaLN.BuscarProveedores(cProvRUC, cNombre);
             return Json(JsonConvert.SerializeObject(ListaProveedores, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 

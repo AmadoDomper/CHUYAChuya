@@ -14,9 +14,9 @@
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                     @if (FrontUser.TienePermiso(RolesPermisos.NotaE_Crear_Nueva_Nota_de_Entrega))
-	                {
-		                 <input href="#target2" id="btnNuevaNota" type="button" class="btn btn-sm btn-success target" value="Nueva Nota de Entrega" />
-	                }
+                    {
+                        <input href="#target2" id="btnNuevaNota" type="button" class="btn btn-sm btn-success target" value="Nueva Nota de Entrega" />
+                    }
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -85,19 +85,19 @@
                     }
 
                     @if (FrontUser.TienePermiso(RolesPermisos.NotaE_Confirmar_Entrega))
-	                {
-		                <button id="btnConfirmarEntrega" type="button" class="btn btn-success btn-sm" disabled>
+                    {
+                        <button id="btnConfirmarEntrega" type="button" class="btn btn-success btn-sm" disabled>
                             <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>Confirmar Entrega
                         </button>
-	                }
-                        
+                    }
+
                 </div>
                 <div class="col-sm-3 col-lg-6 text-right">
                     @if (FrontUser.TienePermiso(RolesPermisos.NotaE_Anular_Nota_de_Entrega))
                     {
                         <input id="btnAnularNota" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Nota" disabled>
                     }
-                    @*<input id="btnAnularBoleta" type="button" class="btn btn-sm btn-danger" value="Anular Boleta" disabled>*@
+@*<input id="btnAnularBoleta" type="button" class="btn btn-sm btn-danger" value="Anular Boleta" disabled>*@
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -135,10 +135,9 @@
                                 </div>
 
                             </div>
-                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-5">
+                            <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9s">
                                 <h3 class="m-t-10" style="margin-top: 7px; font-size: 18px;">
-
-                                    <span id="lblProducto"></span>
+                                    <span id="lblProducto" style="color: rgb(78, 130, 212);"></span>
                                 </h3>
                             </div>
                         </div>
@@ -149,18 +148,18 @@
                                         <label class="col-lg-2  control-label">Servicios</label>
                                         <div class="col-lg-6">
                                             <label class="checkbox-inline">
-                                                <input id="chkLav" type="checkbox" value="true">Lavado</label>
+                                                <input id="chkLav" type="checkbox" value="true" disabled>Lavado</label>
                                             <label class="checkbox-inline">
-                                                <input id="chkSec" type="checkbox" value="true">Secado</label>
+                                                <input id="chkSec" type="checkbox" value="true" disabled>Secado</label>
                                             <label class="checkbox-inline">
-                                                <input id="chkPla" type="checkbox" value="true">Planchado</label>
+                                                <input id="chkPla" type="checkbox" value="true" disabled>Planchado</label>
                                         </div>
                                     </div>
-
                                     <div class="form-group m-b-5">
                                         <label class="col-lg-2  control-label">Cantidad</label>
                                         <div class="col-lg-3">
                                             <input type="text" id="txtCant" class="form-control" placeholder="">
+                                            <input id="hdnMedida" type="hidden">
                                         </div>
                                     </div>
                                     <div class="form-group m-b-5">
@@ -256,7 +255,7 @@
                         <div class="hr-line-dashed"></div>
                         <div class="row">
                             <div class="col-lg-12 text-right">
-                                    <input id="btnGrabarEnt" type="button" value="Guardar" class="btn btn-sm btn-primary target m-r-5">
+                                <input id="btnGrabarEnt" type="button" value="Guardar" class="btn btn-sm btn-primary target m-r-5">
                                 <input id="btnCanEnt" type="button" value="Cancelar" class="btn btn-sm btn-default target">
                             </div>
                         </div>
@@ -320,51 +319,85 @@
     </div>
 </div>
 <div class="modal fade" id="vntCobroCancelacion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-focus-on="input:first">
-    <div style="width: 250px;" class="modal-dialog">
+    <div style="width: 398px;" class="modal-dialog">
         <div class="panel panel-inverse">
             <div class="panel-heading">
                 Cobro Total
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">×</button>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="form-horizontal">
+            <div class="panel-body" style="display: block;">
+                <form id="frmCobroTotal" class="form-horizontal ng-pristine ng-valid" autocomplete="off">
+                    <div>
+                        <div id="cntProveedor" style="display: block;">
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">Tipo Comprobante</label>
+                                <div class="col-md-7">
+                                    <select name="status" id="cmbTipoComp" class="form-control">
+                                        <option value="1" selected="">Boleta</option>
+                                        <option value="2">Factura</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">Cliente</label>
+                                <div class="col-md-8 form-inline">
+                                    <input id="hdnCliBoId" type="hidden" name="">
+                                    <input type="text" id="txtBuscarCliBo" name="" class="form-control" placeholder="">
+                                    <button id="btnBuscarCliBo" type="button" class="btn btn-sm btn-default" data-toggle="modal">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">Nombre</label>
+                                <div class="col-md-7">
+                                    <input type="text" id="txtNombrePe" name="" class="form-control" readonly="">
+                                </div>
+                            </div>
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">DOI</label>
+                                <div class="col-md-7">
+                                    <input type="text" id="txtDOIPe" name="" class="form-control" readonly="">
+                                </div>
+                            </div>
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">Total</label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">S/.</span>
+                                        <input type="text" id="txtTotalC" class="form-control" placeholder="0.00" readonly="readonly">
+                                    </div>
+                                </div>
+                            </div>
 
-                        <div class="form-group m-b-5">
-                            <label class="col-md-4 control-label">Total</label>
-                            <div class="col-md-7">
-                                <div class="input-group">
-                                    <span class="input-group-addon">S/.</span>
-                                    <input type="text" id="txtTotalC" class="form-control" placeholder="0.00" readonly="readonly">
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">Efectivo</label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">S/.</span>
+                                        <input type="text" id="txtEfectivoC" class="form-control" autocomplete="off" placeholder="0.00">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="form-group m-b-5">
-                            <label class="col-md-4 control-label">Efectivo</label>
-                            <div class="col-md-7">
-                                <div class="input-group">
-                                    <span class="input-group-addon">S/.</span>
-                                    <input type="text" id="txtEfectivoC" class="form-control" autocomplete="off" placeholder="0.00">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group m-b-10">
-                            <label class="col-md-4 control-label">Cambio</label>
-                            <div class="col-md-7">
-                                <div class="input-group">
-                                    <span class="input-group-addon">S/.</span>
-                                    <input type="text" id="txtCambioC" class="form-control" placeholder="0.00" readonly="readonly">
+                            <div class="form-group m-b-5">
+                                <label class="col-md-4 control-label">Cambio</label>
+                                <div class="col-md-6">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">S/.</span>
+                                        <input type="text" id="txtCambioC" class="form-control" placeholder="0.00" readonly="readonly">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12 text-right">
-                        <button id="btnAceptarC" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button>
-                        <button id="btnCancelarC" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button>
+                    <div class="hr-line-dashed"></div>
+                    <div class="row">
+                        <div class="text-center">
+                            <input type="button" id="btnAceptarC" class="btn btn-sm btn-primary m-r-5" value="Aceptar">
+                            <input type="button" id="btnCancelarC" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar">
+                        </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </div>
@@ -462,7 +495,10 @@
                     pag: true,
                     pagDato: { "nPage": d.nPage, "nPageTot": d.nPageTot, "nPageSize": d.nPageSize, "nRows": d.nRows },
                     pagEvent: ListarNotaEntrega,
-                    edit: @if (FrontUser.TienePermiso(RolesPermisos.NotaE_Editar_Nota_de_Entrega)){<text>(true)</text>}else{ <text>(false)</text> } ,
+                    edit: @if (FrontUser.TienePermiso(RolesPermisos.NotaE_Editar_Nota_de_Entrega))
+                          {<text>(true)</text>}
+                          else
+                          { <text>(false)</text> },
                     dblClick: true,
                     editEvent: function (fila) {
                         var nNotaId = fila.find("td").eq(0).html();
@@ -482,8 +518,8 @@
                                 $("#txtCodNota").val(oNota.nNotaEntId);
                                 $("#hdnNotaId").val(oNota.nNotaEntId);
                                 $("#txtCom").val(oNota.cNotaCom);
-                                $("#txtDescuento").val(oNota.nNotaDes);
-                                $("#txtAnticipo").val(oNota.nNotaAnt);
+                                $("#txtDescuento").val(number_format(oNota.nNotaDes, 2));
+                                $("#txtAnticipo").val(number_format(oNota.nNotaAnt, 2));
                                 $('#txtFechaEnt').val(moment(oNota.dFecEnt).format("DD/MM/YYYY hh:mm A"));
 
                                 var lst = oNota.lstNotEntProd;
@@ -497,6 +533,7 @@
                                         bPrSerLav: lst[i].oProd.bPrSerLav,
                                         bPrSerPla: lst[i].oProd.bPrSerPla,
                                         bPrSerSec: lst[i].oProd.bPrSerSec,
+                                        oPrMed: { nom: lst[i].oProd.oPrMed.nom },
                                         nCant: lst[i].nDetCant,
                                         nPrPrecU: lst[i].nPrPrecU,
                                         nImp: lst[i].nDetImp
@@ -512,6 +549,10 @@
 
                                 if (oNota.oNotaEst.id == 1) {
                                     SetEstadoPendiente();
+                                } else if (oNota.oNotaEst.id == 2) {
+                                    SetEstadoPagado();
+                                } else if (oNota.oNotaEst.id == 3) {
+                                    SetEstadoEntregado();
                                 }
                             },
                             bloqueo: false
@@ -526,6 +567,23 @@
     function SetEstadoPendiente() {
         $("#target2").find("input,textarea,button").attr("disabled", true);
         $("#btnCobrarNota,#btnAnularNota,#btnCanEnt").attr("disabled", false);
+        $("#hdnEstado").val("");
+        $("#hdnNotaEst").val(1);
+    }
+
+    function SetEstadoPagado() {
+        $("#target2").find("input,textarea,button").attr("disabled", true);
+        $("#btnConfirmarEntrega,#btnAnularNota,#btnCanEnt").attr("disabled", false);
+        $("#btnCobrarNota").attr("disabled", true);
+        $("#hdnEstado").val("");
+        $("#hdnNotaEst").val(2);
+    }
+
+    function SetEstadoEntregado() {
+        $("#target2").find("input,textarea,button").attr("disabled", true);
+        $("#btnAnularNota,#btnCanEnt").attr("disabled", false);
+        $("#hdnEstado").val("");
+        $("#hdnNotaEst").val(3);
     }
 
     $("#cmbTpoBsq").bind("click", function () {
@@ -634,7 +692,7 @@
     });
 
     $("#txtCant").bind("keyup", function (e) {
-        if (e.which == 13 && prodSel != null) { Agregar(); };
+        if (e.which == 13 && (prodSel != null || estado == "E")) { Agregar(); };
     });
 
     $("#btnEditar").bind("click", function () {
@@ -679,7 +737,7 @@
 
         } else {
 
-            var obj = { nPrId: prodSel.nPrId, cPrDesc: prodSel.cPrDesc, bPrSerLav: prodSel.bPrSerLav, bPrSerPla: prodSel.bPrSerPla, bPrSerSec: prodSel.bPrSerSec, nCant: nCant, nPrPrecU: nPrPrecU, nImp: nImp };
+            var obj = { nPrId: prodSel.nPrId, cPrDesc: prodSel.cPrDesc, bPrSerLav: prodSel.bPrSerLav, bPrSerPla: prodSel.bPrSerPla, bPrSerSec: prodSel.bPrSerSec, oPrMed: { nom: prodSel.oPrMed.nom }, nCant: nCant, nPrPrecU: nPrPrecU, nImp: nImp };
             lstProd = lstProd.concat([obj]);
         }
 
@@ -769,6 +827,7 @@
         $("#lblProducto").html(d.cPrDesc);
         $("#txtPrec").val(number_format(d.nPrPrecU, 2));
         $("#txtCant").val(estado == "E" ? d.nCant : 1);
+        $("#txtCant").attr("onkeypress", d.oPrMed.nom != "Kg" ? "return val_09(event)" : "");
         $("#txtImp").val(number_format(Math.round10($("#txtCant").val() * $("#txtPrec").val(), -1), 2));
         $("#chkLav").prop("checked", d.bPrSerLav);
         $("#chkPla").prop("checked", d.bPrSerPla);
@@ -778,10 +837,11 @@
     function CrearTabla(reg) {
         $("#cntRegProd").Tabla({
             tblId: "tblRegProd",
-            cabecera: "Codígo,Descripción,Lavado,Secado,Planchado,Cantidad,Precio Unit,Importe",
-            campos: "nPrId,cPrDesc,bPrSerLav,bPrSerPla,bPrSerSec,nCant,nPrPrecU,nImp",
+            cabecera: "Codígo,Descripción,Lavado,Secado,Planchado,Medida,Cantidad,Precio Unit,Importe",
+            campos: "nPrId,cPrDesc,bPrSerLav,bPrSerPla,bPrSerSec,oPrMed.nom,nCant,nPrPrecU,nImp",
             cellLen: "100,300,100,100,100,100,100,100",
-            alinear: "C,L,C,C,C,C,R,R",
+            tipoCampo: ",,,,,,D3,D,D",
+            alinear: "C,L,C,C,C,C,C,R,R",
             scrollVertical: "Si",
             datos: reg
         });
@@ -815,56 +875,123 @@
                     $("#hdnNotaId").val(data);
 
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
-                    //ImprimirNotaEntrega();
+                    SetEstadoPendiente();
                 } else {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
                 }
-                SetEstadoPendiente();
-                //ListarProducto();
             },
             bloqueo: true
         });
     }
 
-    //Cobrar Nota de Entrega
+    /*Cobrar Nota de Entrega*/
 
     $("#btnCobrarNota").bind("click", function () {
         $("#txtTotalC").val($("#txtTotal").val());
         $('#vntCobroCancelacion').modal('show');
+        $("#hdnCliBoId").val($("#hdnPersId").val());
+        $("#txtNombrePe").val($("#lblNom").html());
+        $("#txtDOIPe").val($("#lblDOI").html());
     });
 
     $("#btnAceptarC").bind("click", function () {
-        $("#txtTotalC").val($("#txtTotal").val());
-        $('#vntCobroCancelacion').modal('show');
-
         CobroTotal();
+        $('#vntCobroCancelacion').modal('hide');
+    });
+
+    $("#btnCancelarC").bind("click", function () {
+        $("#cmbTipoComp").val(1);
+        $("#txtBuscarCliBo,#hdnCliBoId,#txtNombrePe,#txtDOIPe,#txtEfectivoC,#txtCambioC").val("");
     });
 
     function CobroTotal() {
         var nNotaId = $("#hdnNotaId").val();
+        var nPersId = $("#hdnCliBoId").val();
+        var nTipoC = $("#cmbTipoComp").val();
         var nEfeCo = $("#txtEfectivoC").val();
         var nCambCo = $("#txtCambioC").val();
 
         $.fn.Conexion({
             direccion: '/NotaEntrega/RealizarCobroServicio',
-            datos: { "nNotaEntId": nNotaId, "nNotaEfecCo": nEfeCo, "nNotaCambioCo": nCambCo },
+            datos: { "nNotaEntId": nNotaId, "nPersId": nPersId, "nTipoC": nTipoC, "nEfecCo": nEfeCo, "nCambioCo": nCambCo },
             terminado: function (data, textStatus, jqXHR) {
                 if (data != -1) {
-                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente."});
-                    } else {
-                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-                    }
-                //ListarProducto();
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
+                    SetEstadoPagado();
+                } else {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                }
             },
-            bloqueo: true
+            bloqueo: false
         });
     }
 
     $("#txtEfectivoC").keyup(function () { $("#txtCambioC").val(number_format(Math.round10($("#txtTotalC").val() - $("#txtEfectivoC").val(), -1), 2)) });
 
-    //END - Cobrar Nota de Entrega
+    /*END - Cobrar Nota de Entrega*/
 
-    //Anular Nota
+    /*Confirmar Entrega */
+
+    $("#btnConfirmarEntrega").bind("click", function () {
+        $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "¿Desea confirmar la entrega de las prendas?", funcionAceptar: ConfirmarEntrega });
+    });
+
+    function ConfirmarEntrega() {
+        var nNotaId = $("#hdnNotaId").val();
+
+        $.fn.Conexion({
+            direccion: '/NotaEntrega/RealizarConfirmacionEntrega',
+            datos: { "nNotaEntId": nNotaId },
+            terminado: function (data, textStatus, jqXHR) {
+                if (data != -1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
+                    SetEstadoEntregado();
+                } else {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                }
+            },
+            bloqueo: false
+        });
+    }
+
+    /*End Confirmar Entrega*/
+
+    /*Buscar datos persona Boleta*/
+
+    var persSelec = {}
+
+    function BuscarCliBoleta(valor) {
+        var aceptar = function (d) {
+            persSelec = d;
+            $("#hdnCliBoId").val(d.id);
+            $("#txtNombrePe").val(d.nom);
+            $("#txtDOIPe").val(d.doi);
+            $('#vntBuscaPersona').modal('hide');
+        };
+
+        var cancelar = function () {
+            //$("#btnCancelar").click();
+        }
+        $.fn.BuscarPersona({
+            funcionAceptar: aceptar,
+            funcionCancelar: cancelar,
+            valor: valor
+        });
+    }
+
+    $("#btnBuscarCliBo").bind("click", function () {
+        BuscarCliBoleta($("#txtBuscarCliBo").val());
+    });
+
+    $("#txtBuscarCliBo").bind("keyup", function (e) {
+        if (e.which == 13) { BuscarCliBoleta($(this).val()); };
+    });
+
+    /*END  Buscar datos persona Boleta*/
+
+
+
+    /*Anular Nota*/
 
     $("#btnAnularNota").bind("click", function () {
         $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "¿Está seguro de que desea Anular esta Nota de Entrega?", funcionAceptar: AnularNota });
@@ -879,7 +1006,7 @@
         RestablecerElem();
     }
 
-    //END - Anular Nota
+    /*END - Anular Nota*/
 
     function Aceptar() {
         Limpiar();
@@ -906,14 +1033,9 @@
     }
 
 
-    //IMPRIMIR PRUEBA
-
-    //$("#btnImprimir").bind("click", function () {
-    //    Imprimir();
-    //});
+    /*IMPRIMIR PRUEBA*/
 
     function Imprimir() {
-
         $.fn.Conexion({
             direccion: '/NotaEntrega/Imprimir',
             terminado: function (data, textStatus, jqXHR) {

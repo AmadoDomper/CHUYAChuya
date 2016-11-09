@@ -590,7 +590,6 @@ table > thead > tr > th {
         color: #0067cb;
     }
 
-/*Color CMACM*/
 
 .btn-cmacm {
     color: #fff;
@@ -715,10 +714,62 @@ table > thead > tr > th {
 .ScrollY {
     overflow-y: auto;
 }
-/*@media (min-width: 1200px)
-.col-lg-11 {
-width: 91.66666667%;
-}*/
+
+
+.spinnerX {
+  margin: 20px auto;
+  width: 60px;
+  height: 50px;
+  text-align: center;
+  font-size: 15px;
+}
+.spinnerX > div {
+  background-color: #62cb31;
+  height: 100%;
+  width: 8px;
+  display: inline-block;
+  -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;
+  animation: sk-stretchdelay 1.2s infinite ease-in-out;
+}
+.spinnerX .rect2 {
+  -webkit-animation-delay: -1.1s;
+  animation-delay: -1.1s;
+}
+.spinnerX .rect3 {
+  -webkit-animation-delay: -1s;
+  animation-delay: -1s;
+}
+.spinnerX .rect4 {
+  -webkit-animation-delay: -0.9s;
+  animation-delay: -0.9s;
+}
+.spinnerX .rect5 {
+  -webkit-animation-delay: -0.8s;
+  animation-delay: -0.8s;
+}
+
+@-webkit-keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    -webkit-transform: scaleY(1);
+  }
+}
+@keyframes sk-stretchdelay {
+  0%,
+  40%,
+  100% {
+    transform: scaleY(0.4);
+    -webkit-transform: scaleY(0.4);
+  }
+  20% {
+    transform: scaleY(1);
+    -webkit-transform: scaleY(1);
+  }
+}
 
 
 .ColumnaPers1 {

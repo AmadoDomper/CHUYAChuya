@@ -17,14 +17,19 @@ namespace CHUYAChuya.LogicaNegocio
             oNotaEntregaAD = new NotaEntregaAD();
         }
 
-        public Ticket RegistrarNotaEntrega(NotaEntrega oNotEnt)
+        public int RegistrarNotaEntrega(NotaEntrega oNotEnt)
         {
             return oNotaEntregaAD.RegistrarNotaEntrega(oNotEnt);
         }
 
-        public int RealizarCobroServicio(int nNotaEntId, decimal nNotaEfecCo, decimal nNotaCambioCobro, string cNotaUsuCobro, string cNotaUsuAge)
+        public int RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo, string cNotaUsuCo, string cNotaUsuAge)
         {
-            return oNotaEntregaAD.RealizarCobroServicio(nNotaEntId,nNotaEfecCo, nNotaCambioCobro, cNotaUsuCobro, cNotaUsuAge);
+            return oNotaEntregaAD.RealizarCobroServicio(nNotaEntId, nPersId, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge);
+        }
+
+        public int RealizarConfirmacionEntrega(int nNotaEntId, string cUsuario, string cUsuarioAge)
+        {
+            return oNotaEntregaAD.RealizarConfirmacionEntrega(nNotaEntId, cUsuario, cUsuarioAge);
         }
 
         public ListaPaginada BuscarNotaEntPag( int nNotaEst,int nPage=1, int nSize=10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
@@ -37,9 +42,14 @@ namespace CHUYAChuya.LogicaNegocio
             return oNotaEntregaAD.CargoDatosNotaEntrega(nNotadId);
         }
 
-        public Ticket ObtenerDatosTicket(int nTicketSerie, int nTicketCorr)
+        public Ticket ObtenerDatosNotaEntImp(int nNotaId)
         {
-            return oNotaEntregaAD.ObtenerDatosTicket(nTicketSerie, nTicketCorr);
+            return oNotaEntregaAD.ObtenerDatosNotaEntImp(nNotaId);
+        }
+
+        public Ticket ObtenerDatosTicket(int nTicketId)
+        {
+            return oNotaEntregaAD.ObtenerDatosTicket(nTicketId);
         }
 
     }

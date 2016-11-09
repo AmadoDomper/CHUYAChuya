@@ -56,8 +56,8 @@ namespace CHUYAChuya.EntidadesNegocio
         [JsonProperty(PropertyName = "oTicketTpo")]
         public Constante oTicketTipo
         {
-            get { return oTicketTipo; }
-            set { oTicketTipo = value; }
+            get { return _oTicketTipo; }
+            set { _oTicketTipo = value; }
         }
 
         [JsonProperty(PropertyName = "oImp")]

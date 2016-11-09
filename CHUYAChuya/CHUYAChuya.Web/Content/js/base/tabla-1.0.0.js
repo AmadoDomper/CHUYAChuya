@@ -104,6 +104,14 @@
                     if (tipo[k] == "D") {
                         dat = number_format(dat, 2)
                     }
+                    if (tipo[k] == "D3") {
+
+                        if ((eval("m.datos[i].oPrMed.nom")) == "Kg") {
+                            dat = number_format(dat, 3);
+                        }else {
+                            dat = number_format(dat, 0);
+                        }
+                    }
                     if (tipo[k] == "F") {
                         dat = moment(dat).format("DD/MM/YYYY hh:mm:ss");
                     }

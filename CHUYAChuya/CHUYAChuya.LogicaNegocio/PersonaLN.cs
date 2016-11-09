@@ -39,9 +39,9 @@ namespace CHUYAChuya.LogicaNegocio
             return oPersonaAD.BuscarClientes(cPersDOI, cNombre);
         }
 
-        public List<Persona> BuscarProveedores(string cPersRUC, string cNombre)
+        public List<Persona> BuscarProveedores(string cProvRUC, string cNombre)
         {
-            return oPersonaAD.BuscarProveedores(cPersRUC, cNombre);
+            return oPersonaAD.BuscarProveedores(cProvRUC, cNombre);
         }
 
         public int EliminarCliente(int nPersId)

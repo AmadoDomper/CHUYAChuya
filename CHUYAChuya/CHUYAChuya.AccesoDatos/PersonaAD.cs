@@ -130,12 +130,12 @@ namespace CHUYAChuya.AccesoDatos
             return ListaClientes;
         }
 
-        public List<Persona> BuscarProveedores(string cPersDOI, string cNombre)
+        public List<Persona> BuscarProveedores(string cProvRUC, string cNombre)
         {
             List<Persona> ListaProveedores = new List<Persona>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarProveedores);
-            oDatabase.AddInParameter(oDbCommand, "@cPersRUC", DbType.String, (object)cPersDOI ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@cPersRUC", DbType.String, (object)cProvRUC ?? DBNull.Value);
             oDatabase.AddInParameter(oDbCommand, "@cPersDesc", DbType.String, (object)cNombre ?? DBNull.Value);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))

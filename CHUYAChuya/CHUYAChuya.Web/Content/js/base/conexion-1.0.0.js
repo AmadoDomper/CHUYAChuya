@@ -42,7 +42,9 @@
 function BloquearCarga() {
 
     var html = "";
-    html=('<div id="vntEspera" class="modal fade espera" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true"> <div class="modal-dialog modal-sm"> <div class="modal-content"> <div class="row"> <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"> <img class="img-responsive" src="/Content/img/cmacloader.gif" /> </div> <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9"> <div class="row"> <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 colorOficial"> <b>Por Favor Espere</b> </div> <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <b>La solicitud esta siendo procesada</b> </div> </div> </div> </div> </div> </div> </div>');
+    //html=('<div id="vntEspera" class="modal fade espera" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true"> <div class="modal-dialog modal-sm"> <div class="modal-content"> <div class="row"> <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3"> <img class="img-responsive" src="/Content/img/cmacloader.gif" /> </div> <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9"> <div class="row"> <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 colorOficial"> <b>Por Favor Espere</b> </div> <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"> <b>La solicitud esta siendo procesada</b> </div> </div> </div> </div> </div> </div> </div>');
+
+    html = ('<div id="vntEspera" class="modal fade espera" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="true"> <div class="modal-dialog modal-sm"> <div class="modal-content"> <div class="row"> <div class="col-xs-3 col-sm-3 col-md-3 col-lg-12"> <div class="spinnerX"><div class="rect1"></div> <div class="rect2"></div> <div class="rect3"></div> <div class="rect4"></div> <div class="rect5"></div> </div></div>  </div> <div class="row"><div class="col-xs-3 col-sm-3 col-md-3 col-lg-12"> <p style="text-align:center;font-size: 14px;"> Procesando... </p> </div></div></div> </div> </div>');
 
     $(html).appendTo('body');
     $("#vntEspera").modal('show');

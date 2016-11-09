@@ -17,13 +17,13 @@ namespace CHUYAChuya.EntidadesNegocio
             {
                 SqlDataRecord oSqlDataRecord = new SqlDataRecord(
                     new SqlMetaData[]{ new SqlMetaData("nProdId", SqlDbType.Int),
-                                        new SqlMetaData("nDetCantidad", SqlDbType.Decimal),
+                                        new SqlMetaData("nDetCantidad", SqlDbType.Decimal,12,3),
                                         new SqlMetaData("nDetProdPrecioUnit", SqlDbType.Money),
                                         new SqlMetaData("nDetImporte", SqlDbType.Money)
                                     });
 
                 oSqlDataRecord.SetInt32(0, oNotaEntProd.oProd.nProdId);
-                oSqlDataRecord.SetDecimal(1, oNotaEntProd.nDetCantidad);
+                oSqlDataRecord.SetSqlDecimal(1, oNotaEntProd.nDetCantidad);
                 oSqlDataRecord.SetSqlMoney(2, oNotaEntProd.nProdPrecioUnit);
                 oSqlDataRecord.SetSqlMoney(3, oNotaEntProd.nDetImporte);
                 listaSqlDataRecord.Add(oSqlDataRecord);

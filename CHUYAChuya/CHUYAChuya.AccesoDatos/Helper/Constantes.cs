@@ -63,6 +63,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_CargarNotaEntrega = "stp_sel_CargarNotaEntrega";
         public const string stp_sel_ListaNotaEntProductos = "stp_sel_ListaNotaEntProductos";
         public const string stp_ins_RealizarCobroServicio = "stp_ins_RealizarCobroServicio";
+        public const string stp_ins_ConfirmarEntrega = "stp_ins_ConfirmarEntrega";
         #endregion
 
         #region Caja
@@ -105,6 +106,7 @@ namespace CHUYAChuya.AccesoDatos.Helper
 
         #region Impresion
         public const string stp_sel_ObtenerDatosTicket = "stp_sel_ObtenerDatosTicket";
+        public const string stp_sel_ObtenerDatosNotaEntImp = "stp_sel_ObtenerDatosNotaEntImp";
         #endregion
     }
 }
