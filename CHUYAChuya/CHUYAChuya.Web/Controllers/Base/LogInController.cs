@@ -45,6 +45,19 @@ namespace CHUYAChuya.Web.Controllers.Base
             return Json(2);
         }
 
+        [AcceptVerbs(HttpVerbs.Post)]
+        public JsonResult MantenerSession()
+        {
+            if (System.Web.HttpContext.Current.Session["Datos"] != null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+
         public ActionResult CerrarSession()
         {
             FormsService.SignOut();

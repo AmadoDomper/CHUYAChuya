@@ -178,6 +178,7 @@
     <Content Include="Content\extend\datepicker\locales\bootstrap-datepicker.es.min.js" />
     <Content Include="Content\extend\highcharts\highcharts.js" />
     <Content Include="Content\extend\moment\moment-with-locales.js" />
+    <Content Include="Content\extend\timer\jquery.timers.js" />
     <Content Include="Content\extend\validator\validator.js" />
     <Content Include="Content\extend\validator\validator.min.js" />
     <Content Include="Content\font-awesome-4.1.0\css\font-awesome.css" />
