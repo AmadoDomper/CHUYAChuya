@@ -40,19 +40,38 @@ namespace CHUYAChuya.LogicaNegocio
 
         //CORTE DE CAJA
 
-        public Corte CargaDetalleCorte(string cUsuario, DateTime dFecha)
+        public Cierre CargaDetalleCierre(string cUsuario, DateTime dFecha)
         {
-            return oCajaAD.CargaDetalleCorte(cUsuario, dFecha);
+            return oCajaAD.CargaDetalleCierre(cUsuario, dFecha);
         }
 
         //END CORTE CAJA
 
-        //APERTURA DE CAJA
+
 
         public int RegistrarAperturaCaja(string cUsuarioOpe, decimal nMontoIni, DateTime dFechaApe, string cUsuarioSup, string cAgencia)
         {
             return oCajaAD.RegistrarAperturaCaja(cUsuarioOpe,nMontoIni,dFechaApe,cUsuarioSup,cAgencia);
         }
-        //END APERTURA DE CAJA
+
+        public int RegistrarAsigMonto(string cUsuarioOpe, decimal nMontoAsig, string cUsuarioSup, string cAgencia)
+        {
+            return oCajaAD.RegistrarAsigMonto(cUsuarioOpe, nMontoAsig, cUsuarioSup, cAgencia);
+        }
+
+        public int RegistrarConfDineroIni(int nCCId, string cUsuario, string cAgencia)
+        {
+            return oCajaAD.RegistrarConfDineroIni(nCCId, cUsuario, cAgencia);
+        }
+
+        public CajeroCaja BuscarConfirmacionDineroPendiente(string cUsuario)
+        {
+            return oCajaAD.BuscarConfirmacionDineroPendiente(cUsuario);
+        }
+
+        public Boolean CajaDiaAbierto()
+        {
+            return oCajaAD.CajaDiaAbierto();
+        }
     }
 }

@@ -13,7 +13,7 @@
             <div class="row">
                 <div class="col-lg-6 ">
                     <input href="#target4" id="btnApertura" type="button" class="btn btn-sm btn-success target" value="Apertura de Caja">
-                    <input href="#target5" id="btnCorteCaja" type="button" class="btn btn-sm btn-success target" value="Corte de Caja">
+                    <input href="#target5" id="btnCierreCaja" type="button" class="btn btn-sm btn-success target" value="Cierre de Caja">
                 </div>
                 <div class="col-lg-6 text-right">
                     <input href="#target3" id="btnSalEfectivo" type="button" class="btn btn-sm btn-danger target" value="Salida Efectivo">
@@ -344,7 +344,7 @@
         ListarMovCaja();
     });
 
-    $("#btnCorteCaja").bind("click", function () {
+    $("#btnCierreCaja").bind("click", function () {
         $("#contenido").load("/Caja/Caja");
     });
     

@@ -20,7 +20,20 @@ namespace CHUYAChuya.Web.Controllers
         public ActionResult Index()
         {
             ViewBag.titulo = "Inicio";
-            return View();
+            string cNotaUsuCo = ((Usuario)Session["Datos"]).cUsuNombre;
+
+            CajaLN oCajaLN = new CajaLN();
+            CajeroCaja oCajaCaja = oCajaLN.BuscarConfirmacionDineroPendiente(cNotaUsuCo);
+
+            if (oCajaCaja == null)
+            {
+                return View();
+            }
+            else
+            {
+                return View("_ConfirmarInicioCaja",oCajaCaja);
+            }
+
         }
     }
 

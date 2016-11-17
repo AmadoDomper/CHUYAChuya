@@ -22,7 +22,10 @@ namespace CHUYAChuya.Web.Controllers
 
         public ActionResult Caja()
         {
-            return View();
+             CajaLN oCajaLN = new CajaLN();
+             bool bEstado = oCajaLN.CajaDiaAbierto();
+             ViewBag.bEstado = bEstado;
+             return View();
         }
 
         //MOVIMIENTO DE CAJA
@@ -86,27 +89,26 @@ namespace CHUYAChuya.Web.Controllers
         #endregion
         //END MOVIMIENTO DE CAJA
 
-
-        public ActionResult AperturaCaja()
+        public ActionResult ConfirmarInicioCaja()
         {
             return View();
         }
 
         //CORTE DE CAJA
-        #region CorteCaja
+        #region CierreCaja
 
-        public ActionResult CorteCaja()
+        public ActionResult CierreCaja()
         {
             return View();
         }
 
-        public JsonResult CargaDetalleCorte(string cUsuario, DateTime dFecha)
+        public JsonResult CargaDetalleCierre(string cUsuario, DateTime dFecha)
         {
             CajaLN oCajaLN = new CajaLN();
-            Corte oCorteDet = new Corte();
-            oCorteDet = oCajaLN.CargaDetalleCorte(cUsuario, dFecha);
+            Cierre oCierreDet = new Cierre();
+            oCierreDet = oCajaLN.CargaDetalleCierre(cUsuario, dFecha);
 
-            return Json(JsonConvert.SerializeObject(oCorteDet));
+            return Json(JsonConvert.SerializeObject(oCierreDet));
         }
         #endregion
         //END CORTE DE CAJA
@@ -117,12 +119,36 @@ namespace CHUYAChuya.Web.Controllers
         {
             CajaLN oCajaLN = new CajaLN();
             string cUsuario = "", cAgencia = "01";
-            int resultado;
+            int nMovNro;
 
             cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
-            resultado = oCajaLN.RegistrarAperturaCaja(cUsuOpe, nMontoIni, dFechaApe, cUsuario, cAgencia);
-            return Json(resultado);
+            nMovNro = oCajaLN.RegistrarAperturaCaja(cUsuOpe, nMontoIni, dFechaApe, cUsuario, cAgencia);
+            return Json(nMovNro);
         }
+
+        public JsonResult RegistrarAsigMonto(string cUsuOpe, decimal nMontoAsig)
+        {
+            CajaLN oCajaLN = new CajaLN();
+            string cUsuario = "", cAgencia = "01";
+            int nMovNro;
+
+            cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            nMovNro = oCajaLN.RegistrarAsigMonto(cUsuOpe, nMontoAsig, cUsuario, cAgencia);
+            return Json(nMovNro);
+        }
+
+        public JsonResult RegistrarConfDineroIni(int nCCId)
+        {
+            CajaLN oCajaLN = new CajaLN();
+            string cUsuario = "", cAgencia = "01";
+            int nMovNro;
+
+            cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            nMovNro = oCajaLN.RegistrarConfDineroIni(nCCId, cUsuario, cAgencia);
+            return Json(nMovNro);
+        }
+
+
         #endregion
 
         //END APERTURA DE CAJA

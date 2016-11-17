@@ -1,4 +1,7 @@
-﻿@{
+﻿@using CHUYAChuya.Web.Models;
+@using CHUYAChuya.EntidadesNegocio;
+
+@{
     Layout = null;
 }
 
@@ -16,7 +19,7 @@
                     {
                         <input href="#target4" id="btnApertura" type="button" class="btn btn-sm btn-success target" value="Apertura de Caja">
                     }
-                        <input href="#target5" id="btnCorteCaja" type="button" class="btn btn-sm btn-success target" value="Corte de Caja">
+                    <input href="#target5" id="btnCierreCaja" type="button" class="btn btn-sm btn-success target" value="Cierre de Caja">
                 </div>
                 <div class="col-lg-6 text-right">
 
@@ -169,22 +172,23 @@
     </div>
 </div>
 
-
-
 <div class="col-lg-4 col-lg-offset-4">
     <div id="target4" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
         <div class="panel-heading">
-            <h4 class="panel-title">Datos de la Sesión de Cobranza</h4>
+            <h4 class="panel-title">Apertura de Caja</h4>
         </div>
         <div class="panel-body" style="display: block;">
             <form id="frmAperturaCaja" class="form-horizontal ng-pristine ng-valid">
                 <div id="cntApertura">
-                    <div class="form-group m-b-5">
-                        <label class="col-md-4 control-label">Fecha</label>
-                        <div class="col-md-7">
-                            <input type="text" id="txtFechaApe" name="" class="form-control" readonly="readonly">
+                    @if (@ViewBag.bEstado != true)
+                    {
+                        <div class="form-group m-b-5">
+                            <label class="col-md-4 control-label">Fecha</label>
+                            <div class="col-md-7">
+                                <input type="text" id="txtFechaApe" name="" class="form-control" readonly="readonly">
+                            </div>
                         </div>
-                    </div>
+                    }
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Usuario Cajero</label>
                         <div class="col-md-7">
@@ -201,7 +205,14 @@
                 </div>
                 <div class="row">
                     <div class="text-center">
-                        <input type="button" id="btnReApe" class="btn btn-sm btn-primary m-r-5" value="Realizar Apertura" />
+                        @if (@ViewBag.bEstado == true)
+                        {
+                            <input type="button" id="btnReAsig" class="btn btn-sm btn-primary m-r-5" value="Realizar Asignación" />
+                        }
+                        else
+                        {
+                            <input type="button" id="btnReApe" class="btn btn-sm btn-primary m-r-5" value="Realizar Apertura" />
+                        }
                         <input type="button" id="btnCaApe" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default" value="Cancelar" />
                     </div>
                 </div>
@@ -432,8 +443,8 @@
         ListarMovCaja();
     });
 
-    $("#btnCorteCaja").bind("click", function () {
-        $("#contenido").load("/Caja/CorteCaja");
+    $("#btnCierreCaja").bind("click", function () {
+        $("#contenido").load("/Caja/CierreCaja");
     });
 
 
@@ -458,13 +469,46 @@
             direccion: "/Caja/RegistrarAperturaCaja",
             datos: { "cUsuOpe": cUsuOpe, "nMontoIni": nMontoIni, "dFechaApe": dFechaApe },
             terminado: function (data, textStatus, jqXHR) {
-                Resultado(data);
+                if (data >= 1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se realizó la apertura de Caja del día correctamente. Solicite al usuario indicado la confirmación del monto asignado." });
+                } else if (data == -1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Es necesario realizar el Cierre del día para aperturar una nueva Caja del día." });
+                } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
+                }
             },
             bloqueo: true
         });
     }
+
+    $("#btnReAsig").bind("click", function () {
+        GrabarAsigMonto();
+    });
+
+    function GrabarAsigMonto() {
+
+        var cUsuOpe = $("#cmbUsuCaj").val();
+        var nMontoAsig = $("#txtEfeIni").val();
+
+        $.fn.Conexion({
+            direccion: "/Caja/RegistrarAsigMonto",
+            datos: { "cUsuOpe": cUsuOpe, "nMontoAsig": nMontoAsig },
+            terminado: function (data, textStatus, jqXHR) {
+                if (data >= 1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se realizó la asignación del monto correctamente. Solicite al usuario indicado la confirmación del monto asignado." });
+                } else if (data == -1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La asignación se debe realizar por el usuario que aperturo inicio de caja."});
+                } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "No se puede realizar asignación. Existe un usuario con caja sin cerrar." });
+                } else if (data == -3) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
+                }
+            },
+            bloqueo: true
+        });
+    }
+
+
     //End - Apertura de Caja
-
-
 
 </script>

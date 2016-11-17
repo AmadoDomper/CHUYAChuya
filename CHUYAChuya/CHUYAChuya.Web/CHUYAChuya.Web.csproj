@@ -321,19 +321,22 @@
     <Content Include="Views\NotaEntrega\NotaEntregas.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\MovCaja\MovCaja.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Views\Caja\Caja.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Caja\CorteCaja.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Config\Config.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Reporte\Reportes.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Caja\CierreCaja.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Caja\ConfirmarInicioCaja.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\_ConfirmarInicioCaja.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

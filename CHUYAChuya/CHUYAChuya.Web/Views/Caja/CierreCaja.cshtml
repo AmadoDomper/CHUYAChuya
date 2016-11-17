@@ -1,0 +1,254 @@
+﻿@{
+    Layout = null;
+}
+
+<div class="col-lg-11 col-lg-offset-0-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="text-center">CIERRE</h3>
+            <input id="hdnEstado" type="hidden" style="display: block;">
+            <div id="target1" class="panel panel-inverse active">
+                <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Detalle de Cierre </div>
+                <div class="panel-body">
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-lg-8">
+                            <div class="form-inline">
+                                <div class="form-group m-r-40">
+                                    <label class="control-label m-r-5" for="status">Fecha:</label>
+                                    <input type="text" id="txtFecha" class="form-control">
+                                </div>
+                                <div class="form-group m-r-10">
+                                    <label class="control-label m-r-5" for="product_name">Usuario:</label>
+                                    <select name="status" id="cmbUsuario" class="form-control">
+                                        <option value="AMDO" selected="">AMDO</option>
+                                    </select>
+                                    <button id="btnDetalleCierre" type="button" class="btn btn-sm btn-default" data-toggle="modal"><span class="glyphicon glyphicon-search"></span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 text-right">
+                            @if (FrontUser.TienePermiso(RolesPermisos.CorCaja_Realizar_Corte))
+                            {
+                                <input id="btnRealizarCierre" type="button" value="Realiza Cierre" class="btn btn-sm btn-danger m-r-5" disabled="disabled">
+                            }
+                            @if (FrontUser.TienePermiso(RolesPermisos.CorCaja_Realizar_Cierre_Final))
+                            {
+                                <input id="btnRealizarCierre" type="button" value="Realizar Cierre Final" class="btn btn-sm btn-success" disabled="disabled">
+                            }                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="panel igual">
+                <div class="panel-body float">
+                    <div class="ibox-title">
+                        <h5>Entrada de Efectivo</h5>
+                    </div>
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Dinero Inicial Caja:</td>
+                                        <td><span id="lblDinIni">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Entrada de Efectivo:</td>
+                                        <td><span id="lblEntEfe">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total:</strong></td>
+                                        <td><span id="lblEntTot">0.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel igual">
+                <div class="panel-body float">
+                    <div class="ibox-title">
+                        <h5>Total en caja</h5>
+                    </div>
+                    <div class="row m-b-10 m-t-10">
+                        <div class="col-lg-12">
+                            <table class="table table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td>Entrada Efectivo (+):</td>
+                                        <td><span id="lblTotEfe">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notas con Anticipo (+):</td>
+                                        <td><span id="lblNotAnt">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Notas de Entrega Pagadas (+):</td>
+                                        <td><span id="lblNotEntPag">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pago a proveedores (-):</td>
+                                        <td><span id="lblPagPro">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Salida de efectivo (-):</td>
+                                        <td><span id="lblSalEfe">0.00</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Total:</strong></td>
+                                        <td><span id="lblCajaTot">0.00</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="panel igual">
+                <div class="panel-body float">
+                    <div class="ibox-title">
+                        <h5>Lista de Pago a proveedores</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 m-b-10 m-t-10">
+                            <div id="cntListaPagoProv" class="table-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="panel panel-inverse">
+                <div class="panel-body float">
+                    <div class="ibox-title">
+                        <h5>Lista de Notas Pagadas</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 m-b-10 m-t-10">
+                            <div id="cntListaNotasPagados" class="table-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="panel panel-inverse">
+                <div class="panel-body float">
+                    <div class="ibox-title">
+                        <h5>Lista de Notas con Anticipo</h5>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 m-b-10 m-t-10">
+                            <div id="cntListaNotasAnticipo" class="table-responsive">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    jQuery(function ($) {
+        $('#txtFecha').datetimepicker({
+            locale: 'es', format: 'DD/MM/YYYY'
+        });
+        MostrarTablas();
+        //$('input.target').click(function () {
+        //    vista($(this).attr('href'));
+        //});
+
+        var heights = $(".igual").map(function () {
+            return $(this).height();
+        }).get(),
+
+        maxHeight = Math.max.apply(null, heights);
+
+        $(".igual").height(maxHeight);
+
+    });
+
+    $("#btnDetalleCierre").bind("click", function () {
+        CargarCierreDet();
+    });
+
+    function CargarCierreDet() {
+
+        var dFecha,cUsu;
+        var dFecha = $("#txtFecha").val();
+        var cUsu = $("#cmbUsuario").val();
+        
+
+        $.fn.Conexion({
+            direccion: '/Caja/CargaDetalleCierre',
+            datos: { "cUsuario": cUsu, "dFecha": dFecha },
+            terminado: function (data) {
+                var oCor = JSON.parse(data);
+
+                $("#lblDinIni").html(oCor.nCajaIni);
+                $("#lblEntEfe").html(oCor.nCajaEntEfec);
+                $("#lblEntTot").html(oCor.nEntTot);
+                $("#lblTotEfe").html(oCor.nEntTot);
+                $("#lblNotAnt").html(oCor.nCajaNotaAnt);
+                $("#lblNotEntPag").html(oCor.nCajaNotaPag);
+                $("#lblPagPro").html(oCor.nPagoProv);
+                $("#lblSalEfe").html(oCor.nSalOtro);
+                $("#lblCajaTot").html(oCor.nCajaTot);
+                MostrarTablas(oCor.oLisPagoProv,oCor.oLisNotaPag,oCor.oLisNotAnt);
+            }
+        });
+    }
+
+    function MostrarTablas(oL1, oL2,oL3){
+        $("#cntListaPagoProv").Tabla({
+            tblId: "tblListProv",
+            cabecera: "Fecha,Descripción,Monto",
+            campos: "dMovFecha,cPersDesc,nMonto",
+            scrollVertical: "Si",
+            tipoCampo: "F,,D",
+            alinear: "L,L,L",
+            cantRegVertical: 45,
+            datos: oL1
+        });
+
+        $("#cntListaNotasPagados").Tabla({
+            tblId: "tblListNotPag",
+            cabecera: "Fecha,Id,Persona,SubTotal,Descuento,Anticipo,Total",
+            campos: "dFecReg,nNotaEntId,cPersDesc,nNotSubTot,nNotaDes,nNotaAnt,nNotaMonTot",
+            scrollVertical: "Si",
+            tipoCampo: "F,,,D,D,D,D",
+            alinear: "C,C,L,R,R,R,R",
+            cantRegVertical: 45,
+            datos: oL2
+        });
+
+        $("#cntListaNotasAnticipo").Tabla({
+            tblId: "tblListNotAnt",
+            cabecera: "Fecha,Id,Persona,SubTotal,Descuento,Anticipo,Total",
+            campos: "dFecReg,nNotaEntId,cPersDesc,nNotSubTot,nNotaDes,nNotaAnt,nNotaMonTot",
+            scrollVertical: "Si",
+            tipoCampo: "F,,,D,D,D,D",
+            alinear: "C,C,L,R,R,R,R",
+            cantRegVertical: 45,
+            datos: oL3
+        });
+    }
+
+
+</script>

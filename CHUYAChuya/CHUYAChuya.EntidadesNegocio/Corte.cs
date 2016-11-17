@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace CHUYAChuya.EntidadesNegocio
 {
-    public class Corte
+    public class Cierre
     {
     /*ENTRADA DE EFECTIVO*/
         private decimal	_nCajaInicio;

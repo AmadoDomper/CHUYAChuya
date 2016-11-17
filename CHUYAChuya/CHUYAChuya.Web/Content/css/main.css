@@ -219,6 +219,8 @@ label {
   float: left;
 }
 
+ul#side-menu li a[disabled] {cursor: not-allowed;}
+
 h1,
 h2,
 h3,

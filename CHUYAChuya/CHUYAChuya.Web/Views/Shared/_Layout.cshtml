@@ -109,10 +109,13 @@
 
 
             $("nav a").click(function () {
-                if ($(this).attr("href") != "#") {
+                if ($(this).attr("href") != "#" && $(this).attr("disabled") != "disabled") {
                     $("#contenido").load($(this).attr("data-url"));//.substring(1));
                 }
             });
+
+            @RenderSection("Scripts",required:false)
+
         </script>
 </body>
 </html>

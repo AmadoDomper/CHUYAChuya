@@ -64,6 +64,8 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ListaNotaEntProductos = "stp_sel_ListaNotaEntProductos";
         public const string stp_ins_RealizarCobroServicio = "stp_ins_RealizarCobroServicio";
         public const string stp_ins_ConfirmarEntrega = "stp_ins_ConfirmarEntrega";
+        public const string stp_ins_RealizarAnularComprobante = "stp_ins_RealizarAnularComprobante";
+        public const string stp_ins_RealizarAnularNota = "stp_ins_RealizarAnularNota";
         #endregion
 
         #region Caja
@@ -71,14 +73,18 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_ins_SalidaEfectivoOtros = "stp_ins_SalidaEfectivoOtros";
         public const string stp_ins_IngresoEfectivo = "stp_ins_IngresoEfectivo";
         public const string stp_sel_BuscarMovCaja = "stp_sel_BuscarMovCaja";
+        public const string stp_sel_ConfirmacionDineroPendiente = "stp_sel_ConfirmacionDineroPendiente";
+        public const string stp_sel_CajaDiaAbierto = "stp_sel_CajaDiaAbierto";
+        public const string stp_ins_RegistrarAsigMonto = "stp_ins_RegistrarAsigMonto";
+        public const string stp_ins_ConfirmarDineroEntrega = "stp_ins_ConfirmarDineroEntrega";
         #endregion
 
 
-        #region CorteDeCaja
+        #region CierreDeCaja
         public const string stp_sel_ListaNotasAnticipo = "stp_sel_ListaNotasAnticipo";
         public const string stp_sel_ListaNotasPagadas = "stp_sel_ListaNotasPagadas";
         public const string stp_sel_ListaPagoProveedores = "stp_sel_ListaPagoProveedores";
-        public const string stp_sel_ListaDetalleCorte = "stp_sel_ListaDetalleCorte";
+        public const string stp_sel_ListaDetalleCierre = "stp_sel_ListaDetalleCierre";
         #endregion
 
         #region AperturaCaja

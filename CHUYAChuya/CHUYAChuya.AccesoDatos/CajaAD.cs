@@ -247,11 +247,11 @@ namespace CHUYAChuya.AccesoDatos
         }
 
         //CORTE DE CAJA
-        public Corte CargaDetalleCorte(string cUsuario, DateTime dFecha)
+        public Cierre CargaDetalleCierre(string cUsuario, DateTime dFecha)
         {
-            Corte oDetalleCorte = new Corte();
+            Cierre oDetalleCierre = new Cierre();
 
-            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaDetalleCorte);
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaDetalleCierre);
             oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
             oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
 
@@ -268,20 +268,20 @@ namespace CHUYAChuya.AccesoDatos
 
                 while (oIDataReader.Read())
                 {
-                    oDetalleCorte.nCajaInicio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaInicio]);
-                    oDetalleCorte.nCajaEntradaEfectivo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaEntradaEfectivo]);
-                    oDetalleCorte.nEntTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inEntTotal]);
-                    oDetalleCorte.nCajaNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaAnticipo]);
-                    oDetalleCorte.nCajaNotaPagadas = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaPagadas]);
-                    oDetalleCorte.nPagoProv = DataUtil.DbValueToDefault<decimal>(oIDataReader[inPagoProvl]);
-                    oDetalleCorte.nSalidaOtro = DataUtil.DbValueToDefault<decimal>(oIDataReader[inSalidaOtro]);
-                    oDetalleCorte.nCajaTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
-                    oDetalleCorte.oListaNotaPag = ListaNotasPagada(cUsuario, dFecha);
-                    oDetalleCorte.oListaNotAnt = ListaNotasAnticipo(cUsuario, dFecha);
-                    oDetalleCorte.oListaPagoProv = ListaPagoProveedores(cUsuario, dFecha);
+                    oDetalleCierre.nCajaInicio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaInicio]);
+                    oDetalleCierre.nCajaEntradaEfectivo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaEntradaEfectivo]);
+                    oDetalleCierre.nEntTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inEntTotal]);
+                    oDetalleCierre.nCajaNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaAnticipo]);
+                    oDetalleCierre.nCajaNotaPagadas = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaPagadas]);
+                    oDetalleCierre.nPagoProv = DataUtil.DbValueToDefault<decimal>(oIDataReader[inPagoProvl]);
+                    oDetalleCierre.nSalidaOtro = DataUtil.DbValueToDefault<decimal>(oIDataReader[inSalidaOtro]);
+                    oDetalleCierre.nCajaTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
+                    oDetalleCierre.oListaNotaPag = ListaNotasPagada(cUsuario, dFecha);
+                    oDetalleCierre.oListaNotAnt = ListaNotasAnticipo(cUsuario, dFecha);
+                    oDetalleCierre.oListaPagoProv = ListaPagoProveedores(cUsuario, dFecha);
                 }
             }
-            return oDetalleCorte;
+            return oDetalleCierre;
         }
 
 
@@ -389,7 +389,7 @@ namespace CHUYAChuya.AccesoDatos
         //APERTURA DE CAJA
         public int RegistrarAperturaCaja(string cUsuarioOpe,decimal nMontoIni,DateTime dFechaApe, string cUsuarioSup, string cAgencia)
         {
-            int resultado = 0;
+            int nMovNro = -2;
 
             try
             {
@@ -399,7 +399,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.CommandText = Procedimiento.stp_ins_AperturarCaja;
                     oSqlCommand.CommandType = CommandType.StoredProcedure;
                     oSqlCommand.Connection = oSqlConnection;
-
+                    
                     oSqlCommand.Parameters.Add("@cUsuarioOpe", SqlDbType.VarChar, 4).Value = (object)cUsuarioOpe ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@nMontoIni", SqlDbType.Money).Value = (object)nMontoIni ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@dFechaApertura", SqlDbType.DateTime).Value = (object)dFechaApe ?? DBNull.Value;
@@ -410,23 +410,141 @@ namespace CHUYAChuya.AccesoDatos
 
                     using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
                     {
-                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
 
                         while (oIDataReader.Read())
                         {
-                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                            nMovNro = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
                         }
                     }
                 }
             }
             catch (Exception ex)
             {
-                resultado = -1;
-
+                nMovNro = -2;
             }
-            return resultado;
+            return nMovNro;
         }
 
+        public int RegistrarAsigMonto(string cUsuarioOpe, decimal nMontoIni, string cUsuarioSup, string cAgencia)
+        {
+            int nMovNro = -3;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_RegistrarAsigMonto;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@cUsuarioOpe", SqlDbType.VarChar, 4).Value = (object)cUsuarioOpe ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nMontoIni", SqlDbType.Money).Value = (object)nMontoIni ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuarioSup", SqlDbType.VarChar, 4).Value = (object)cUsuarioSup ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar, 4).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+
+                        while (oIDataReader.Read())
+                        {
+                            nMovNro = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nMovNro = -3;
+            }
+            return nMovNro;
+        }
+
+        public int RegistrarConfDineroIni(int nCCId, string cUsuario, string cAgencia)
+        {
+            int nMovNro = -2;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_ConfirmarDineroEntrega;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nCCId", SqlDbType.Int).Value = (object)nCCId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar,4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar,2).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+
+                        while (oIDataReader.Read())
+                        {
+                            nMovNro = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nMovNro = -2;
+            }
+            return nMovNro;
+        }
+        
+
         //END APERTURA DE CAJA
+
+        public CajeroCaja BuscarConfirmacionDineroPendiente(string cUsuario)
+        {
+            try
+            {
+                CajeroCaja oCajeroCaja = null;
+
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ConfirmacionDineroPendiente);
+                oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, (object)cUsuario ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inCajeroCajaId = oIDataReader.GetOrdinal("nCajeroCajaId");
+                    int inCajeCaMontoInicial = oIDataReader.GetOrdinal("nCajeCaMontoInicial");
+
+                    while (oIDataReader.Read())
+                    {
+                        oCajeroCaja = new CajeroCaja();
+
+                        oCajeroCaja.nCajeroCajaId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inCajeroCajaId]);
+                        oCajeroCaja.nCajeCaMontoInicial = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajeCaMontoInicial]);
+                    }
+                }
+
+                return oCajeroCaja;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool CajaDiaAbierto()
+        {
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_CajaDiaAbierto);
+            oDatabase.AddOutParameter(oDbCommand, "@nRes", DbType.Boolean, 10);
+
+            oDatabase.ExecuteScalar(oDbCommand);
+            return Convert.ToBoolean(oDatabase.GetParameterValue(oDbCommand, "@nRes"));
+        }
+
+
     }
 }
