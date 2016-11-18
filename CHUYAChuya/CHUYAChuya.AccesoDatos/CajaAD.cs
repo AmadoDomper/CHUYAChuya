@@ -215,11 +215,12 @@ namespace CHUYAChuya.AccesoDatos
             return resultado;
         }
 
-        public List<MovCaja> BuscarMovCaja(string cMovDesc = null)
+        public List<MovCaja> BuscarMovCaja(string cUsuario, string cMovDesc = null)
         {
             List<MovCaja> ListaMovCaja = new List<MovCaja>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_BuscarMovCaja);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, (object)cUsuario ?? DBNull.Value);
             oDatabase.AddInParameter(oDbCommand, "@cMovDesc", DbType.String, (object)cMovDesc ?? DBNull.Value);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))

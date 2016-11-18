@@ -32,9 +32,9 @@ namespace CHUYAChuya.LogicaNegocio
             return oCajaAD.RegistrarEntradaEfe(nMontoEntrada, cUsuario, cAgencia);
         }
 
-        public List<MovCaja> BuscarMovCaja(string cMovDesc = null)
+        public List<MovCaja> BuscarMovCaja(string cUsuario , string cMovDesc = null)
         {
-            return oCajaAD.BuscarMovCaja(cMovDesc);
+            return oCajaAD.BuscarMovCaja(cUsuario, cMovDesc);
         }
 
 

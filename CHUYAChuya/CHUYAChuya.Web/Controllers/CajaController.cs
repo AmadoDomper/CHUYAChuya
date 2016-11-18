@@ -81,9 +81,13 @@ namespace CHUYAChuya.Web.Controllers
 
         public JsonResult BuscarMovCaja(string cMovDesc = null)
         {
+
+            string cUsuario = "";
+            cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+
             CajaLN oCajaLN = new CajaLN();
             List<MovCaja> ListasMovCaja = new List<MovCaja>();
-            ListasMovCaja = oCajaLN.BuscarMovCaja(cMovDesc);
+            ListasMovCaja = oCajaLN.BuscarMovCaja(cUsuario, cMovDesc);
             return Json(JsonConvert.SerializeObject(ListasMovCaja, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
         #endregion
