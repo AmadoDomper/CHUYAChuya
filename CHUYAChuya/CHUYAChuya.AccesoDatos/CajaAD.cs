@@ -546,6 +546,5 @@ namespace CHUYAChuya.AccesoDatos
             return Convert.ToBoolean(oDatabase.GetParameterValue(oDbCommand, "@nRes"));
         }
 
-
     }
 }

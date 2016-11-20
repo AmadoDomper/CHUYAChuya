@@ -52,5 +52,17 @@ namespace CHUYAChuya.LogicaNegocio
             return oNotaEntregaAD.ObtenerDatosTicket(nTicketId);
         }
 
+        public int RealizarAnularComprobante(int nNotaEntId, string cUsuario, string cUsuarioAge)
+        {
+            return oNotaEntregaAD.RealizarAnularComprobante(nNotaEntId, cUsuario, cUsuarioAge);
+        }
+
+        public int RealizarAnularNota(int nNotaEntId, string cUsuario, string cUsuarioAge)
+        {
+            return oNotaEntregaAD.RealizarAnularNota(nNotaEntId, cUsuario, cUsuarioAge);
+        }
+
+        
+
     }
 }

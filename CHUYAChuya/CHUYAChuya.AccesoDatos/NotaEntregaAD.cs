@@ -68,7 +68,6 @@ namespace CHUYAChuya.AccesoDatos
             return nNoTaEntId;
         }
 
-
         public int RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo, string cNotaUsuCo, string cNotaUsuAge)
         {
             int nTicketId = 0;
@@ -167,6 +166,78 @@ namespace CHUYAChuya.AccesoDatos
             catch (Exception ex)
             {
                 nMovNro = -1;
+            }
+            return nMovNro;
+        }
+
+        public int RealizarAnularComprobante(int nNotaEntId, string cUsuario, string cUsuarioAge)
+        {
+            int nMovNro = -2;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_RealizarAnularComprobante;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nNotaEntId", SqlDbType.Int).Value = (object)nNotaEntId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuarioAge", SqlDbType.VarChar, 2).Value = (object)cUsuarioAge ?? DBNull.Value;
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+
+                        while (oIDataReader.Read())
+                        {
+                            nMovNro = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nMovNro = -2;
+            }
+            return nMovNro;
+        }
+
+        public int RealizarAnularNota(int nNotaEntId, string cUsuario, string cUsuarioAge)
+        {
+            int nMovNro = -2;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_RealizarAnularNota;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nNotaEntId", SqlDbType.Int).Value = (object)nNotaEntId ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cUsuarioAge", SqlDbType.VarChar, 2).Value = (object)cUsuarioAge ?? DBNull.Value;
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+
+                        while (oIDataReader.Read())
+                        {
+                            nMovNro = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nMovNro = -2;
             }
             return nMovNro;
         }

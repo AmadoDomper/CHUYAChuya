@@ -82,6 +82,34 @@ namespace CHUYAChuya.Web.Controllers
             return Json(nMovNro);
         }
 
+       [RequiresAuthenticationAttribute]
+        public JsonResult RealizarAnularComprobante(int nNotaEntId)
+        {
+            NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
+
+            int nMovNro;
+            string cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            string cUsuarioAge = "01";
+
+            nMovNro = oNotaEntLN.RealizarAnularComprobante(nNotaEntId, cUsuario, cUsuarioAge);
+            
+            return Json(nMovNro);
+        }
+
+       [RequiresAuthenticationAttribute]
+       public JsonResult RealizarAnularNota(int nNotaEntId)
+       {
+           NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
+
+           int nMovNro;
+           string cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+           string cUsuarioAge = "01";
+
+           nMovNro = oNotaEntLN.RealizarAnularNota(nNotaEntId, cUsuario, cUsuarioAge);
+
+           return Json(nMovNro);
+       }
+
         [AcceptVerbs(HttpVerbs.Post)]
         public JsonResult CargoDatosNotaEntrega(int nNotaId)
         {

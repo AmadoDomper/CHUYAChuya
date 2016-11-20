@@ -7,7 +7,7 @@
     <input id="hdnEstado" type="hidden" />
     <input id="hdnNotaEst" type="hidden" />
     <div id="target1" class="panel move panel-inverse active">
-        <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Nota de Entregas</div>
+        <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Lista de Nota de Entregas</div>
         <div class="panel-body">
 
             <div class="row">
@@ -97,7 +97,7 @@
                     {
                         <input id="btnAnularNota" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Nota" disabled>
                     }
-@*<input id="btnAnularBoleta" type="button" class="btn btn-sm btn-danger" value="Anular Boleta" disabled>*@
+                    <input id="btnAnularComp" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Comprobante" disabled>
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
@@ -573,7 +573,7 @@
 
     function SetEstadoPagado() {
         $("#target2").find("input,textarea,button").attr("disabled", true);
-        $("#btnConfirmarEntrega,#btnAnularNota,#btnCanEnt").attr("disabled", false);
+        $("#btnConfirmarEntrega,#btnAnularNota,#btnAnularComp,#btnCanEnt").attr("disabled", false);
         $("#btnCobrarNota").attr("disabled", true);
         $("#hdnEstado").val("");
         $("#hdnNotaEst").val(2);
@@ -581,7 +581,7 @@
 
     function SetEstadoEntregado() {
         $("#target2").find("input,textarea,button").attr("disabled", true);
-        $("#btnAnularNota,#btnCanEnt").attr("disabled", false);
+        $("#btnAnularNota,#btnCanEnt,#btnAnularComp").attr("disabled", false);
         $("#hdnEstado").val("");
         $("#hdnNotaEst").val(3);
     }
@@ -998,13 +998,53 @@
     });
 
     function AnularNota() {
-        $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "Se realizó el proceso de Anulación con exito. ¿Desea mantener los datos actuales?", funcionAceptar: ConservarDatos, funcionCancelar: Limpiar });
+        var nNotaId = $("#hdnNotaId").val();
+
+        $.fn.Conexion({
+            direccion: '/NotaEntrega/RealizarAnularNota',
+            datos: { "nNotaEntId": nNotaId },
+            terminado: function (data, textStatus, jqXHR) {
+                if (data >= 1) {
+                    $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "Se realizó el proceso de Anulación con exito. ¿Desea mantener los datos actuales?", funcionAceptar: ConservarDatos, funcionCancelar: Limpiar });
+                } else if (data == -1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La Nota de Entrega ya se encuentra anulada." });
+                } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
+                }
+            },
+            bloqueo: false
+        });
     }
 
     function ConservarDatos() {
         $("input[type=hidden],#txtCodNota").val("");
         RestablecerElem();
     }
+
+    $("#btnAnularComp").bind("click", function () {
+        $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "¿Está seguro de que desea Anular el Comprobante de Pago?", funcionAceptar: AnularComprob });
+    });
+
+    function AnularComprob() {
+        var nNotaId = $("#hdnNotaId").val();
+
+        $.fn.Conexion({
+            direccion: '/NotaEntrega/RealizarAnularComprobante',
+            datos: { "nNotaEntId": nNotaId },
+            terminado: function (data, textStatus, jqXHR) {
+                if (data >= 1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se realizó la anulación del Comprobante de Pago correctamente." });
+                    SetEstadoPendiente();
+                } else if (data == 1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El Comprobante de Pago no existe o ya se encuentra anulado." });
+                } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
+                }
+            },
+            bloqueo: false
+        });
+    }
+
 
     /*END - Anular Nota*/
 
