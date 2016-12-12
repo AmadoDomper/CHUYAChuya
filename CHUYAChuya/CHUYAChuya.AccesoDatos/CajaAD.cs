@@ -248,13 +248,15 @@ namespace CHUYAChuya.AccesoDatos
         }
 
         //CORTE DE CAJA
-        public Cierre CargaDetalleCierre(string cUsuario, DateTime dFecha)
+        public Cierre CargaDetalleCierre(string cUsuario, DateTime dFecha, int nCierre)
         {
             Cierre oDetalleCierre = new Cierre();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaDetalleCierre);
             oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
-            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.String, dFecha.ToString("yyyyMMdd"));
+            oDatabase.AddInParameter(oDbCommand, "@nCierre", DbType.Int32, nCierre);
+
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -265,6 +267,7 @@ namespace CHUYAChuya.AccesoDatos
                 int inCajaNotaPagadas = oIDataReader.GetOrdinal("nCajaNotaPagadas");
                 int inPagoProvl = oIDataReader.GetOrdinal("nPagoProv");
                 int inSalidaOtro = oIDataReader.GetOrdinal("nSalidaOtro");
+                int inAnula = oIDataReader.GetOrdinal("nAnula");
                 int inCajaTotal = oIDataReader.GetOrdinal("nCajaTotal");
 
                 while (oIDataReader.Read())
@@ -276,23 +279,25 @@ namespace CHUYAChuya.AccesoDatos
                     oDetalleCierre.nCajaNotaPagadas = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaPagadas]);
                     oDetalleCierre.nPagoProv = DataUtil.DbValueToDefault<decimal>(oIDataReader[inPagoProvl]);
                     oDetalleCierre.nSalidaOtro = DataUtil.DbValueToDefault<decimal>(oIDataReader[inSalidaOtro]);
+                    oDetalleCierre.nAnula = DataUtil.DbValueToDefault<decimal>(oIDataReader[inAnula]);
                     oDetalleCierre.nCajaTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
-                    oDetalleCierre.oListaNotaPag = ListaNotasPagada(cUsuario, dFecha);
-                    oDetalleCierre.oListaNotAnt = ListaNotasAnticipo(cUsuario, dFecha);
-                    oDetalleCierre.oListaPagoProv = ListaPagoProveedores(cUsuario, dFecha);
                 }
+                oDetalleCierre.oListaNotaPag = ListaNotasPagada(cUsuario, dFecha, nCierre);
+                oDetalleCierre.oListaNotAnt = ListaNotasAnticipo(cUsuario, dFecha, nCierre);
+                oDetalleCierre.oListaPagoProv = ListaPagoProveedores(cUsuario, dFecha, nCierre);
             }
             return oDetalleCierre;
         }
 
 
-        public List<NotaEntregaL> ListaNotasPagada(string cUsuario, DateTime dFecha)
+        public List<NotaEntregaL> ListaNotasPagada(string cUsuario, DateTime dFecha, int nCierre)
         {
             List<NotaEntregaL> ListaNotasPagada = new List<NotaEntregaL>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaNotasPagadas);
             oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
             oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+            oDatabase.AddInParameter(oDbCommand, "@nCierre", DbType.Int32, nCierre);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -322,13 +327,14 @@ namespace CHUYAChuya.AccesoDatos
             return ListaNotasPagada;
         }
 
-        public List<NotaEntregaL> ListaNotasAnticipo(string cUsuario, DateTime dFecha)
+        public List<NotaEntregaL> ListaNotasAnticipo(string cUsuario, DateTime dFecha, int nCierre)
         {
             List<NotaEntregaL> ListaNotasAnticipo = new List<NotaEntregaL>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaNotasAnticipo);
             oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
             oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+            oDatabase.AddInParameter(oDbCommand, "@nCierre", DbType.Int32, nCierre);
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -358,13 +364,14 @@ namespace CHUYAChuya.AccesoDatos
             return ListaNotasAnticipo;
         }
 
-        public List<PagoProveedores> ListaPagoProveedores(string cUsuario, DateTime dFecha)
+        public List<PagoProveedores> ListaPagoProveedores(string cUsuario, DateTime dFecha, int nCierre)
         {
             List<PagoProveedores> ListaProveedores = new List<PagoProveedores>();
 
             DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaPagoProveedores);
             oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
             oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+            oDatabase.AddInParameter(oDbCommand, "@nCierre", DbType.Int32, nCierre);    
 
             using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
             {
@@ -544,6 +551,274 @@ namespace CHUYAChuya.AccesoDatos
 
             oDatabase.ExecuteScalar(oDbCommand);
             return Convert.ToBoolean(oDatabase.GetParameterValue(oDbCommand, "@nRes"));
+        }
+
+        public CierreDatos UltimaFechaCajaDia()
+        {
+            CierreDatos oCierreDatos = new CierreDatos();
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_UltimaFechaCajaDia);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int idCajaFecha = oIDataReader.GetOrdinal("dCajaFecha");
+                int inCajeCaTotal = oIDataReader.GetOrdinal("nCajeCaTotal");
+                int inEstado = oIDataReader.GetOrdinal("nEstado");
+
+                while (oIDataReader.Read())
+                {
+                    oCierreDatos.nEstado = DataUtil.DbValueToDefault<Byte>(oIDataReader[inEstado]);
+                    oCierreDatos.dFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idCajaFecha]);
+                    oCierreDatos.nCalculado = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajeCaTotal]);
+                }
+            }
+            return oCierreDatos;
+        }
+
+        public CierreDatos CargaUsuariosCierres(DateTime dFecha)
+        {
+            CierreDatos oCierreDatos = new CierreDatos();
+            oCierreDatos.dFecha = dFecha == default(DateTime) ? UltimaFechaCajaDia().dFecha : dFecha;
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaCajeros);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, oCierreDatos.dFecha);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int icUsuario = oIDataReader.GetOrdinal("cUsuario");
+
+                while (oIDataReader.Read())
+                {
+                    UsuarioCierres oUsuCierres = new UsuarioCierres();
+                    oUsuCierres.cUsuario = DataUtil.DbValueToDefault<string>(oIDataReader[icUsuario]);
+                    oUsuCierres.oListCierres = ListaCierres( oUsuCierres.cUsuario,oCierreDatos.dFecha);
+
+                    oCierreDatos.oListUsuarioCierres.Add(oUsuCierres);
+                }
+            }
+            return oCierreDatos;
+        }
+
+        public List<Cierres> ListaCierres(string cUsuario, DateTime dFecha)
+        {
+            List<Cierres> ListaCierres = new List<Cierres>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ListaCierre);
+            oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, cUsuario);
+            oDatabase.AddInParameter(oDbCommand, "@dFecha", DbType.Date, dFecha);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int inCajeroCajaId = oIDataReader.GetOrdinal("nCajeroCajaId");
+                int idFechaInicio = oIDataReader.GetOrdinal("dFechaInicio");
+                int idFechaCierre = oIDataReader.GetOrdinal("dFechaCierre");
+
+                while (oIDataReader.Read())
+                {
+                    Cierres oCierres = new Cierres();
+
+                    oCierres.nCajeCaId = DataUtil.DbValueToDefault<int>(oIDataReader[inCajeroCajaId]);
+                    oCierres.dFechaIni = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaInicio]);
+                    oCierres.dFechaFin = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaCierre]);
+
+                    ListaCierres.Add(oCierres);
+                }
+            }
+            return ListaCierres;
+        }
+
+
+        public int RealizarCierreCaja(string cUsuario, string cAgencia, decimal nCont, decimal nDif)
+        {
+            int nCajaCaId = -3;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_RealizarCierreCaja;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar, 4).Value = (object)cAgencia ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nCont", SqlDbType.Money, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nDif", SqlDbType.Money, 4).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inCajaCaId = oIDataReader.GetOrdinal("nCajaCaId");
+
+                        while (oIDataReader.Read())
+                        {
+                            nCajaCaId = DataUtil.DbValueToDefault<int>(oIDataReader[inCajaCaId]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nCajaCaId = -3;
+            }
+            return nCajaCaId;
+        }
+
+        public int RealizarCierreCajaDia(string cUsuario, string cAgencia)
+        {
+            int nCajaId = -4;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_ins_RealizarCierreCajaDia;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar, 4).Value = (object)cAgencia ?? DBNull.Value;
+
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+
+                        while (oIDataReader.Read())
+                        {
+                            nCajaId = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                nCajaId = -4;
+            }
+            return nCajaId;
+        }
+
+        public TicketCierre ObtenerDatosCierreImp(int nCajeCaId)
+        {
+            try
+            {
+                TicketCierre oTicketC = new TicketCierre();
+
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerDatosCierre);
+                oDatabase.AddInParameter(oDbCommand, "@nCajaCaId", DbType.Int32, (object)nCajeCaId ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inCajaCaId = oIDataReader.GetOrdinal("nCajaCaId");
+                    int idFechaApertura = oIDataReader.GetOrdinal("dFechaApertura");
+                    int idFechaCierre = oIDataReader.GetOrdinal("dFechaCierre");
+                    int icUsuario = oIDataReader.GetOrdinal("cUsuario");
+                    int inContado = oIDataReader.GetOrdinal("nContado");
+                    int inDiferencia = oIDataReader.GetOrdinal("nDiferencia");
+
+                    int inCajaInicio = oIDataReader.GetOrdinal("nCajaInicio");
+                    int inCajaEntradaEfectivo = oIDataReader.GetOrdinal("nCajaEntradaEfectivo");
+                    int inEntTotal = oIDataReader.GetOrdinal("nEntTotal");
+
+                    int inCajaNotaAnticipo = oIDataReader.GetOrdinal("nCajaNotaAnticipo");
+                    int inCajaNotaPagadas = oIDataReader.GetOrdinal("nCajaNotaPagadas");
+                    int inPagoProv = oIDataReader.GetOrdinal("nPagoProv");
+                    int inSalidaOtro = oIDataReader.GetOrdinal("nSalidaOtro");
+                    int inAnula = oIDataReader.GetOrdinal("nAnula");
+                    int inCajaTotal = oIDataReader.GetOrdinal("nCajaTotal");
+
+                    while (oIDataReader.Read())
+                    {
+                        oTicketC.nCajaCaId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inCajaCaId]);
+                        oTicketC.dFechaApertura = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaApertura]);
+                        oTicketC.dFechaCierre = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaCierre]);
+                        oTicketC.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuario]);
+                        oTicketC.nContado = DataUtil.DbValueToDefault<decimal>(oIDataReader[inContado]);
+                        oTicketC.nDiferencia = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDiferencia]);
+
+                        oTicketC.nCajaInicio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaInicio]);
+                        oTicketC.nCajaEntEfec = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaEntradaEfectivo]);
+                        oTicketC.nEntTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inEntTotal]);
+
+                        oTicketC.nCajaNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaAnticipo]);
+                        oTicketC.nCajaNotaPagadas = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaPagadas]);
+                        oTicketC.nPagoProv = DataUtil.DbValueToDefault<decimal>(oIDataReader[inPagoProv]);
+                        oTicketC.nSalidaOtro = DataUtil.DbValueToDefault<decimal>(oIDataReader[inSalidaOtro]);
+                        oTicketC.nAnula = DataUtil.DbValueToDefault<decimal>(oIDataReader[inAnula]);
+                        oTicketC.nCajaTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
+                    }
+                }
+
+                return oTicketC;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public TicketCierre ObtenerDatosCierreDiaImp(int nCajeId)
+        {
+            try
+            {
+                TicketCierre oTicketC = new TicketCierre();
+
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerDatosCierreDia);
+                oDatabase.AddInParameter(oDbCommand, "@nCaja", DbType.Int32, (object)nCajeId ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inCajaCaId = oIDataReader.GetOrdinal("nCajaCaId");
+                    int idFechaApertura = oIDataReader.GetOrdinal("dFechaApertura");
+                    int idFechaCierre = oIDataReader.GetOrdinal("dFechaCierre");
+                    int icUsuario = oIDataReader.GetOrdinal("cUsuario");
+                    int inContado = oIDataReader.GetOrdinal("nContado");
+                    int inDiferencia = oIDataReader.GetOrdinal("nDiferencia");
+
+                    int inCajaInicio = oIDataReader.GetOrdinal("nCajaInicio");
+                    int inCajaEntradaEfectivo = oIDataReader.GetOrdinal("nCajaEntradaEfectivo");
+                    int inEntTotal = oIDataReader.GetOrdinal("nEntTotal");
+
+                    int inCajaNotaAnticipo = oIDataReader.GetOrdinal("nCajaNotaAnticipo");
+                    int inCajaNotaPagadas = oIDataReader.GetOrdinal("nCajaNotaPagadas");
+                    int inPagoProv = oIDataReader.GetOrdinal("nPagoProv");
+                    int inSalidaOtro = oIDataReader.GetOrdinal("nSalidaOtro");
+                    int inAnula = oIDataReader.GetOrdinal("nAnula");
+                    int inCajaTotal = oIDataReader.GetOrdinal("nCajaTotal");
+
+                    while (oIDataReader.Read())
+                    {
+                        oTicketC.nCajaCaId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inCajaCaId]);
+                        oTicketC.dFechaApertura = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaApertura]);
+                        oTicketC.dFechaCierre = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaCierre]);
+                        oTicketC.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuario]);
+                        oTicketC.nContado = DataUtil.DbValueToDefault<decimal>(oIDataReader[inContado]);
+                        oTicketC.nDiferencia = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDiferencia]);
+
+                        oTicketC.nCajaInicio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaInicio]);
+                        oTicketC.nCajaEntEfec = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaEntradaEfectivo]);
+                        oTicketC.nEntTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inEntTotal]);
+
+                        oTicketC.nCajaNotaAnticipo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaAnticipo]);
+                        oTicketC.nCajaNotaPagadas = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaNotaPagadas]);
+                        oTicketC.nPagoProv = DataUtil.DbValueToDefault<decimal>(oIDataReader[inPagoProv]);
+                        oTicketC.nSalidaOtro = DataUtil.DbValueToDefault<decimal>(oIDataReader[inSalidaOtro]);
+                        oTicketC.nAnula = DataUtil.DbValueToDefault<decimal>(oIDataReader[inAnula]);
+                        oTicketC.nCajaTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
+                    }
+                }
+
+                return oTicketC;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
     }

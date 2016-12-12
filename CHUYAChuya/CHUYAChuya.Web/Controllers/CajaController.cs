@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+
+using System.Diagnostics;
+using System.Text;
+using System.IO;
+
 using System.Web;
 using System.Web.Mvc;
 using CHUYAChuya.Web.Models;
@@ -103,14 +108,26 @@ namespace CHUYAChuya.Web.Controllers
 
         public ActionResult CierreCaja()
         {
-            return View();
+            CajaLN oCajaLN = new CajaLN();
+            CierreDatos oCierreDet = new CierreDatos();
+            oCierreDet = oCajaLN.UltimaFechaCajaDia();
+            return View(oCierreDet);
         }
 
-        public JsonResult CargaDetalleCierre(string cUsuario, DateTime dFecha)
+        public JsonResult CargaUsuariosCierres(DateTime dFecha)
+        {
+            CajaLN oCajaLN = new CajaLN();
+            CierreDatos oCierreDet = new CierreDatos();
+            oCierreDet = oCajaLN.CargaUsuariosCierres(dFecha);
+
+            return Json(JsonConvert.SerializeObject(oCierreDet));
+        }
+
+        public JsonResult CargaDetalleCierre(string cUsuario, DateTime dFecha, int nCierre)
         {
             CajaLN oCajaLN = new CajaLN();
             Cierre oCierreDet = new Cierre();
-            oCierreDet = oCajaLN.CargaDetalleCierre(cUsuario, dFecha);
+            oCierreDet = oCajaLN.CargaDetalleCierre(cUsuario, dFecha, nCierre);
 
             return Json(JsonConvert.SerializeObject(oCierreDet));
         }
@@ -157,6 +174,199 @@ namespace CHUYAChuya.Web.Controllers
 
         //END APERTURA DE CAJA
 
+        //CIERRE DE CAJA
+
+        public JsonResult RealizarCierreCaja(decimal nCont, decimal nDif)
+        {
+            CajaLN oCajaLN = new CajaLN();
+            string cUsuario = "", cAgencia = "01";
+            int nCajaCaId;
+
+            cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            nCajaCaId = oCajaLN.RealizarCierreCaja(cUsuario, cAgencia, nCont, nDif);
+
+            if (nCajaCaId > 0)
+            {
+                ImprimirCierre(nCajaCaId);
+            }
+
+            return Json(nCajaCaId);
+        }
+
+        public JsonResult RealizarCierreCajaDia()
+        {
+            CajaLN oCajaLN = new CajaLN();
+            string cUsuario = "", cAgencia = "01";
+            int nCajaId;
+
+            cUsuario = ((Usuario)Session["Datos"]).cUsuNombre;
+            nCajaId = oCajaLN.RealizarCierreCajaDia(cUsuario, cAgencia);
+
+            if (nCajaId > 0)
+            {
+                ImprimirCierreDia(nCajaId);
+            }
+
+            return Json(nCajaId);
+        }
+
+        //END CIERRE DE CAJA
+
+
+        public void ImprimirCierre(int nCajeCaId)
+        {
+            Process p;
+
+            CajaLN oCajaLN = new CajaLN();
+            TicketCierre oTicketCierre = new TicketCierre();
+            oTicketCierre = oCajaLN.ObtenerDatosCierreImp(nCajeCaId);
+
+
+            using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
+            {
+
+                //writer.WriteLine("          LAVANDERIA CHUYACHUYA         ");
+                //writer.WriteLine("           RUC: 2056727288057           ");
+                //writer.WriteLine("  JR. MORONA Nº 441 - IQUITOS - MAYNAS  ");
+                //writer.WriteLine("          Telefono: (065)242847         ");
+                //writer.WriteLine("");
+                //CabeceraTicket(writer);
+
+                writer.WriteLine("Fecha: " + ((DateTime)oTicketCierre.dFechaCierre).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicketCierre.dFechaCierre).ToString("HH:mm:ss"));
+                writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + "FFGF252758");
+                writer.WriteLine("Usuario: " + oTicketCierre.cUsuario.PadRight(15) + "Caja Id: " + oTicketCierre.nCajaCaId.ToString().PadLeft(7));
+                writer.WriteLine("");
+                writer.WriteLine("************ CIERRE DE CAJA ************");
+                writer.WriteLine("");
+                writer.WriteLine("PERIODO:" + oTicketCierre.dFechaApertura.ToString("hh:mm tt") + "-" + oTicketCierre.dFechaCierre.ToString("hh:mm tt"));
+                writer.WriteLine("");
+                writer.WriteLine(" CALCULADO: S/.".PadLeft(15) + oTicketCierre.nCajaTotal.ToString("#,##0.00").PadLeft(9));
+                writer.WriteLine("   CONTADO: S/.".PadLeft(15) + oTicketCierre.nContado.ToString("#,##0.00").PadLeft(9));
+                writer.WriteLine("DIFERENCIA: S/.".PadLeft(15) + oTicketCierre.nDiferencia.ToString("#,##0.00").PadLeft(9));
+                writer.WriteLine("");
+                writer.WriteLine("********** Entrada de Efectivo *********");
+                writer.WriteLine("");
+                writer.WriteLine("Dinero Inicial Caja     : + S/.".PadLeft(31) + oTicketCierre.nCajaInicio.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Entrada de Efectivo     : + S/.".PadLeft(31) + oTicketCierre.nCajaEntEfec.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("TOTAL                   :   S/.".PadLeft(31) + oTicketCierre.nEntTotal.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("");
+                writer.WriteLine("************* Total en Caja ************");
+                writer.WriteLine("");
+                writer.WriteLine("Entrada Efectivo        : + S/.".PadLeft(31) + oTicketCierre.nEntTotal.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Notas con Anticipo      : + S/.".PadLeft(31) + oTicketCierre.nCajaNotaAnticipo.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Notas de Entrega Pagadas: + S/.".PadLeft(31) + oTicketCierre.nCajaNotaPagadas.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Pago a proveedores      : - S/.".PadLeft(31) + oTicketCierre.nPagoProv.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Salida de efectivo      : - S/.".PadLeft(31) + oTicketCierre.nSalidaOtro.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Anulaciones             : - S/.".PadLeft(31) + oTicketCierre.nAnula.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("TOTAL                   :   S/.".PadLeft(31) + oTicketCierre.nCajaTotal.ToString("#,##0.00").PadLeft(8));                
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+
+                writer.WriteLine(char.ConvertFromUtf32(27) + "i");
+                writer.Close();
+
+                //using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+                //{
+                //    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+
+                //    writerBat.Close();
+                //}
+
+                //p = new Process();
+                //p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+
+                //p.Start();
+                //p.Close();
+                //p.Dispose();
+
+
+            }
+        }
+
+        public void ImprimirCierreDia(int nCajaId)
+        {
+            Process p;
+
+            CajaLN oCajaLN = new CajaLN();
+            TicketCierre oTicketCierre = new TicketCierre();
+            oTicketCierre = oCajaLN.ObtenerDatosCierreDiaImp(nCajaId);
+
+            using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
+            {
+
+                //writer.WriteLine("          LAVANDERIA CHUYACHUYA         ");
+                //writer.WriteLine("           RUC: 2056727288057           ");
+                //writer.WriteLine("  JR. MORONA Nº 441 - IQUITOS - MAYNAS  ");
+                //writer.WriteLine("          Telefono: (065)242847         ");
+                //writer.WriteLine("");
+                //CabeceraTicket(writer);
+
+                writer.WriteLine("Fecha: " + ((DateTime)oTicketCierre.dFechaCierre).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicketCierre.dFechaCierre).ToString("HH:mm:ss"));
+                writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + "FFGF252758");
+                writer.WriteLine("Usuario: " + oTicketCierre.cUsuario.PadRight(15) + "Caja Día Id: " + oTicketCierre.nCajaCaId.ToString().PadLeft(7));
+                writer.WriteLine("");
+                writer.WriteLine("******** CIERRE DE CAJA DEL DÍA ********");
+                writer.WriteLine("");
+                writer.WriteLine("PERIODO:" + oTicketCierre.dFechaApertura.ToString("hh:mm tt") + "-" + oTicketCierre.dFechaCierre.ToString("hh:mm tt"));
+                writer.WriteLine("");
+                writer.WriteLine(" CALCULADO: S/.".PadLeft(15) + oTicketCierre.nCajaTotal.ToString("#,##0.00").PadLeft(9));
+                writer.WriteLine("   CONTADO: S/.".PadLeft(15) + oTicketCierre.nContado.ToString("#,##0.00").PadLeft(9));
+                writer.WriteLine("DIFERENCIA: S/.".PadLeft(15) + oTicketCierre.nDiferencia.ToString("#,##0.00").PadLeft(9));
+                writer.WriteLine("");
+                writer.WriteLine("********** Entrada de Efectivo *********");
+                writer.WriteLine("");
+                writer.WriteLine("Dinero Inicial Caja     : + S/.".PadLeft(31) + oTicketCierre.nCajaInicio.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Entrada de Efectivo     : + S/.".PadLeft(31) + oTicketCierre.nCajaEntEfec.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("TOTAL                   :   S/.".PadLeft(31) + oTicketCierre.nEntTotal.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("");
+                writer.WriteLine("************* Total en Caja ************");
+                writer.WriteLine("");
+                writer.WriteLine("Entrada Efectivo        : + S/.".PadLeft(31) + oTicketCierre.nEntTotal.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Notas con Anticipo      : + S/.".PadLeft(31) + oTicketCierre.nCajaNotaAnticipo.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Notas de Entrega Pagadas: + S/.".PadLeft(31) + oTicketCierre.nCajaNotaPagadas.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Pago a proveedores      : - S/.".PadLeft(31) + oTicketCierre.nPagoProv.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Salida de efectivo      : - S/.".PadLeft(31) + oTicketCierre.nSalidaOtro.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("Anulaciones             : - S/.".PadLeft(31) + oTicketCierre.nAnula.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("".PadRight(40, '-'));
+                writer.WriteLine("TOTAL                   :   S/.".PadLeft(31) + oTicketCierre.nCajaTotal.ToString("#,##0.00").PadLeft(8));
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+                writer.WriteLine("");
+
+                writer.WriteLine(char.ConvertFromUtf32(27) + "i");
+                writer.Close();
+
+                //using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+                //{
+                //    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+
+                //    writerBat.Close();
+                //}
+
+                //p = new Process();
+                //p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+
+                //p.Start();
+                //p.Close();
+                //p.Dispose();
+
+
+            }
+        }
 
     }
 }

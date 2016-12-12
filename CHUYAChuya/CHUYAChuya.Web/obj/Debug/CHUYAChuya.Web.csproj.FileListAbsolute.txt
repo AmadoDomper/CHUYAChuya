@@ -54,3 +54,5 @@ C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\Microsoft.Pract
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\Microsoft.Practices.ServiceLocation.pdb
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\Microsoft.Practices.Unity.pdb
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\Microsoft.Practices.Unity.Interception.pdb
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\EPPlus.dll
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\EPPlus.xml

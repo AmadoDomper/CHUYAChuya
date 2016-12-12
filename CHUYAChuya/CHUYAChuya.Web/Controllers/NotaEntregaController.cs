@@ -50,7 +50,11 @@ namespace CHUYAChuya.Web.Controllers
 
             nNotaEntId = oNotaEntLN.RegistrarNotaEntrega(oNotaEntregaViewModel.oNotEnt);
 
-            ImprimirNotaEntrega(nNotaEntId);
+            if (nNotaEntId > 0)
+            {
+                ImprimirNotaEntrega(nNotaEntId);
+            }
+            
             return Json(nNotaEntId);
         }
         
@@ -64,7 +68,12 @@ namespace CHUYAChuya.Web.Controllers
             string cNotaUsuAge = "01";
 
             nTicketId = oNotaEntLN.RealizarCobroServicio(nNotaEntId, nPersId, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge);
-            ImprimirBoFa(nTicketId);
+
+            if (nTicketId > 0)
+            {
+                ImprimirBoFa(nTicketId);
+            }
+            
             return Json(nTicketId);
         }
 
@@ -314,7 +323,7 @@ namespace CHUYAChuya.Web.Controllers
 
 
 
-                writer.WriteLine("Fecha: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("HH:mm:ss"));
+                writer.WriteLine("Fecha: " + ((DateTime)oTicket.oMov.dMovFecha).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oMov.dMovFecha).ToString("HH:mm:ss"));
                 writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + oTicket.oImp.nImpSerie);
                 writer.WriteLine("Usuario: " + ((Usuario)Session["Datos"]).cUsuNombre.PadRight(12) + "Ticket: " + oTicket.nTicketSerie.ToString().PadLeft(3, '0') + "-" + oTicket.nTicketCorrelativo.ToString().PadLeft(7, '0'));
                 writer.WriteLine("");

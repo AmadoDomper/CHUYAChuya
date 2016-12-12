@@ -49,6 +49,7 @@
     <Compile Include="PersonaNatLN.cs" />
     <Compile Include="ProductoLN.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReporteLN.cs" />
     <Compile Include="RolLN.cs" />
     <Compile Include="SeguridadLN.cs" />
     <Compile Include="UsuarioLN.cs" />

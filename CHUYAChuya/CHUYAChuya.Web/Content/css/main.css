@@ -750,6 +750,23 @@ table > thead > tr > th {
   animation-delay: -0.8s;
 }
 
+.sum {
+    color: #26a011;
+}
+
+.res {
+    color: #d02222;
+}
+
+.total {
+    color: #3c3535;
+    font-weight: bold;
+}
+
+.caja tr td:nth-child(2) {
+    text-align: right;
+}
+
 @-webkit-keyframes sk-stretchdelay {
   0%,
   40%,

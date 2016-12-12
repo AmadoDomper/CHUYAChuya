@@ -5,19 +5,17 @@
     <h3 class="text-center">REPORTES</h3>
     <input id="hdnEstado" type="hidden" style="display: block;" />
     <div id="target1" class="panel move panel-inverse active">
-        <div class="panel-heading">COBRANZA DIARIA POR CAP</div>
+        <div class="panel-heading">GENERACIÓN DE REPORTES</div>
         <div class="panel-body">
             <div class="hr-line-dashed"></div>
             <div class="row m-b-10 m-t-10">
-                <div class="col-sm-11">
+                <div class="col-sm-10">
                     <div class="form-inline">
                         <div class="form-group m-r-40">
-                            <label class="control-label m-r-5" for="status">Seleccionar CAP :</label>
-                            <select name="status" id="cmbNotaEstado" class="form-control">
-                                <option value="1" selected="">TODOS</option>
-                                <option value="2">CAP 1</option>
-                                <option value="3">CAP 2</option>
-                                <option value="4">CAP 3</option>
+                            <label class="control-label m-r-5" for="status">Reporte :</label>
+                            <select name="status" id="cmbReportes" class="form-control">
+                                <option value="1" selected="">Reporte de Ventas o Ingresos</option>
+                                <option value="2">Reporte de Compras</option>
                             </select>
                         </div>
                         <div class="form-group m-r-10">
@@ -31,20 +29,29 @@
                                 <input id="txtFF" type="text" class="form-control" name="end">
                             </div>
                         </div>
-                        <input id="btnBuscarNota" type="button" value="Buscar" class="btn btn-sm btn-primary">
+                        @*<input id="btnBuscarNota" type="button" value="Buscar" class="btn btn-sm btn-primary">*@
+                        <input id="btnGenerarRep" type="button" value="Generar" class="btn btn-sm btn-primary">
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-inline">
+                        <button id="btnExportar" type="button" class="btn btn-success btn-sm m-l-20">
+                            <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span> Exportar</button>
                     </div>
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
             <div class="row table-main">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+                    @*<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
+                    <div id="cntListaRep" class="table-responsive">
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-        <script type="text/javascript">
+@*        <script type="text/javascript">
 
             $(function () {
                 $('#container').highcharts({
@@ -52,25 +59,25 @@
                         type: 'column'
                     },
                     title: {
-                        text: 'Cantidad de operaciones por CAPs del X al X'
+                        text: 'Recaudaciones realizadas del 01/01/2016 al 31/12/2016'
                     },
                     /*subtitle: {
                         text: 'Source: WorldClimate.com'
                     },*/
                     xAxis: {
                         categories: [
-                            'CAP 1',
-                            'CAP 2',
-                            'CAP 3',
-                            'CAP 4',
-                            'CAP 5',
-                            'CAP 6',
-                            'CAP 7',
-                            'CAP 8',
-                            'CAP 9',
-                            'CAP 10',
-                            'CAP 11',
-                            'CAP 12'
+                            'ENERO',
+                            'FEBRERO',
+                            'MARZO',
+                            'ABRIL',
+                            'MAYO',
+                            'JUNIO',
+                            'JULIO',
+                            'AGOSTO',
+                            'SEPTIEMBRE',
+                            'OCTUBRE',
+                            'NOVIEMBRE',
+                            'DICIEMBRE'
                         ],
                         crosshair: true
                     },
@@ -97,12 +104,12 @@
                     legend: { enabled: false },
                     series: [{
                         name: 'Tokyo',
-                        data: [250, 100, 500, 238, 120, 362, 463, 351, 365, 187, 325, 412]
+                        data: [10000,30000 ,20000, 25000, 35000, 40000, 38000, 60000, 65000, 58000, 70000, 60000]
 
                     }]
                 });
             });
-        </script>
+        </script>*@
 
 
 <script type="text/javascript">
@@ -134,169 +141,94 @@
         }
     };
 
-    $("#btnBuscarCli").bind("click", function () {
-        ListarUsuarios();
-    });
+    $("#btnGenerarRep").bind("click", function () {
 
-    $("#txtValor").keyup(function (e) {
-        if (e.which == 13) { ListarUsuarios(); }
-    });
+        var nRep = $("#cmbReportes").val();
 
-    //Buscar datos persona
-
-    var persSelec = {}
-
-    function BuscarPersona(valor) {
-        var aceptar = function (d) {
-            persSelec = d;
-            $("#hdnPersId").val(d.id);
-            $("#txtDNI").val(d.doi);
-            $("#txtNom").val(d.nom);
-            $("#cmbSex input:radio").val([d.sexo]);
-            $("#txtNatTel1").val(d.tel1);
-            $("#txtNatDir").val(d.direc);
-            $('#vntBuscaPersona').modal('hide');
-        };
-
-        var cancelar = function () {
-
+        switch (nRep) {
+            case "1":
+                ListarRepVentas();
+                break;
+            case "2":
+                ListarRevCompras()
+                break;
         }
-        $.fn.BuscarPersona({
-            funcionAceptar: aceptar,
-            funcionCancelar: cancelar,
-            valor: valor
-        });
-    }
-
-    $("#btnBuscarPers").bind("click", function () {
-        BuscarPersona($("#txtBuscarPers").val());
     });
 
-    $("#txtBuscarPers").bind("keyup", function (e) {
-        if (e.which == 13) { BuscarPersona($(this).val()); };
+    $("#btnExportar").bind("click", function () {
+        var dIni, dFin;
+
+        dIni = encodeURIComponent($("#txtFI").val());
+        dFin = encodeURIComponent($("#txtFF").val());
+
+        var nRep = $("#cmbReportes").val();
+
+        switch (nRep) {
+            case "1":
+                window.location.href = '/Reporte/GetExcelVentas' + "?dIni=" + dIni + "&dFin=" + dFin;
+                break;
+            case "2":
+                window.location.href = '/Reporte/GetExcelCompras' + "?dIni=" + dIni + "&dFin=" + dFin;
+                break;
+        }
     });
 
-    $("#btnBuscarRol").bind("click", function () {
-        $.fn.Ventana({
-            id: "vntBuscaRol",
-            titulo: "Seleccionar Rol",
-            tamano: "sm"
-        });
 
-        var html = '<div class="row"><div class="row"><div id="cntListaRol" class="table-responsive"></div></div><div class="hr-line-dashed"></div><div class="row"><div class="col-sm-8 col-md-offset-4 text-right"><button id="btnRolAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnRolCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div></div>';
+    function ListarRepVentas() {
 
-        $("#vntBuscaRol .panel-body").html(html);
-        $('#vntBuscaRol').modal('show');
+        var dIni, dFin;
 
-        ListarRoles();
+        dIni = $("#txtFI").val();
+        dFin = $("#txtFF").val();
 
-        $("#btnRolAceptar").bind("click", function () {
-            if ($("#tblRol").find("tr.seleccionado").index() != -1) {
-                var nRolId = $("#tblRol").find("tr.seleccionado").find("td").eq(0).html();
-                var cRolDesc = $("#tblRol").find("tr.seleccionado").find("td").eq(1).html();
-
-                $("#hdnPersRolId").val(nRolId);
-                $("#txtRol").val(cRolDesc);
-                $('#vntBuscaRol').modal('hide');
-            } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Es necesario seleccionar un Rol" });
-            }
-        });
-
-    });
-
-    function ListarRoles() {
         $.fn.Conexion({
-            direccion: '/Config/ListaRoles',
+            direccion: '/Reporte/ListarVentasIngresos',
+            datos: { "dIni": dIni, "dFin": dFin },
             terminado: function (data) {
                 var d = JSON.parse(data);
-                listaRoles = d;
 
-                CrearTablaRoles(d);
+                $("#cntListaRep").Tabla({
+                    tblId: "tblRepVentas",
+                    cabecera: "N° Reg,Fecha Pago,Tipo Tabla,Serie Imp.,N° Coprobante,DOI,Cliente, Importe Total",
+                    campos: "nNum,dFecha,cTpoT,cSerT,cCorrT,cDoi,cPersDesc,nNotSub",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,,,,D",
+                    alinear: "C,C,C,C,C,C,L,C",
+                    cellLen: "40,100,40,60,100,100,150,60",
+                    cantRegVertical: 15,
+                    datos: d
+                });
             }
         });
     }
 
-    function CrearTablaRoles(listaR) {
-        $("#cntListaRol").Tabla({
-            tblId: "tblRol",
-            cabecera: "ID,ROLES",
-            campos: "nRolId,cRolDesc",
-            tblStyle: "table-inbox",
-            scrollVertical: "Si",
-            cellLen: "0",
-            dblClick: true,
-            alinear: "L,L",
-            cantRegVertical: 15,
-            editEvent: function (fila) {
-                var nRolId = fila.find("td").eq(0).html();
-                var cRolDesc = fila.find("td").eq(1).html();
+    function ListarRevCompras() {
 
-                $("#hdnPersRolId").val(nRolId);
-                $("#txtRol").val(cRolDesc);
-                $('#vntBuscaRol').modal('hide');
+        var dIni, dFin;
 
-            },
-            datos: listaR
+        dIni = $("#txtFI").val();
+        dFin = $("#txtFF").val();
+
+        $.fn.Conexion({
+            direccion: '/Reporte/ListarCompras',
+            datos: { "dIni": dIni, "dFin": dFin },
+            terminado: function (data) {
+                var d = JSON.parse(data);
+
+                $("#cntListaRep").Tabla({
+                    tblId: "tblRepCompras",
+                    cabecera: "N° Reg,Fecha Emisión,Tipo Tabla,N° Coprobante,DOI,Cliente, Importe Total",
+                    campos: "nNum,dFecha,cTpoT,cComp,cDoi,cPersDesc,nMonto",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,,,D",
+                    alinear: "C,C,C,C,C,L,C",
+                    cellLen: "40,100,40,60,100,100,150,60",
+                    cantRegVertical: 15,
+                    datos: d
+                });
+            }
         });
     }
 
-    //Registrar Usuario
-
-    $("#btnGrabarUsu").bind("click", function () {
-        var form = $("#frmUsuario");
-        form.validator();
-
-        var validator = form.data("bs.validator");
-        validator.validate();
-
-        if (!validator.hasErrors()) {
-            valores = form.serializeArray();
-
-            $.fn.Conexion({
-                direccion: form.attr("action"),
-                datos: valores,
-                terminado: function (data, textStatus, jqXHR) {
-                    if (data == -2) {
-                        alerta("#msg", "Ya existe un usuario asignado a esta persona");
-                        $("#txtBuscarPers").focus();
-                    } else {
-                        Resultado(data);
-                    }
-                },
-                bloqueo: true
-            });
-        } else if ($("#txtCont1").val() != $("#txtCont2").val()) {
-            alerta("#msg", "Los valores de la contraseña deben de ser iguales.");
-        } else {
-            alerta("#msg", "Es necesario completar los campos que están en rojo.");
-        }
-
-    });
-
-    $("#btnCanUsu").bind("click", function () {
-        Limpiar();
-    });
-
-    function Limpiar() {
-        $('#frmUsuario')[0].reset();
-        $('#frmDatPer')[0].reset();
-        $("#hdnPersId").val("");
-        $("#hdnPersRolId").val("");
-        vista("#target1");
-    }
-
-
-    function Resultado(dato) {
-        if (dato != -1) {
-            if ($("#hdnEstado").val() == "E") {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó datos del usuario correctamente", funcionAceptar: Limpiar });
-            } else {
-                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró datos del usuario correctamente", funcionAceptar: Limpiar });
-            }
-        } else {
-            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-        }
-    }
 
 </script>

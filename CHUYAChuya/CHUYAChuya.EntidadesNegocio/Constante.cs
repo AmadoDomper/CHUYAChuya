@@ -29,12 +29,12 @@ namespace CHUYAChuya.EntidadesNegocio
             set { _cNombre = value; }
         }
 
-        //[JsonProperty(PropertyName = "sub")]
-        //public List<Constante> oSubConstante
-        //{
-        //    get { return _oSubConstante; }
-        //    set { _oSubConstante = value; }
-        //}
+        [JsonProperty(PropertyName = "sub")]
+        public List<Constante> oSubConstante
+        {
+            get { return _oSubConstante; }
+            set { _oSubConstante = value; }
+        }
 
         [JsonIgnore]
         public bool Estado

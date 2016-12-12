@@ -85,6 +85,13 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ListaNotasPagadas = "stp_sel_ListaNotasPagadas";
         public const string stp_sel_ListaPagoProveedores = "stp_sel_ListaPagoProveedores";
         public const string stp_sel_ListaDetalleCierre = "stp_sel_ListaDetalleCierre";
+        public const string stp_sel_ListaCajeros = "stp_sel_ListaCajeros";
+        public const string stp_sel_ListaCierre = "stp_sel_ListaCierre";
+        public const string stp_sel_UltimaFechaCajaDia = "stp_sel_UltimaFechaCajaDia";
+        public const string stp_ins_RealizarCierreCaja = "stp_ins_RealizarCierreCaja";
+        public const string stp_ins_RealizarCierreCajaDia = "stp_ins_RealizarCierreCajaDia";
+        public const string stp_sel_ObtenerDatosCierre = "stp_sel_ObtenerDatosCierre";
+        public const string stp_sel_ObtenerDatosCierreDia = "stp_sel_ObtenerDatosCierreDia";
         #endregion
 
         #region AperturaCaja
@@ -113,6 +120,12 @@ namespace CHUYAChuya.AccesoDatos.Helper
         #region Impresion
         public const string stp_sel_ObtenerDatosTicket = "stp_sel_ObtenerDatosTicket";
         public const string stp_sel_ObtenerDatosNotaEntImp = "stp_sel_ObtenerDatosNotaEntImp";
+        #endregion
+
+
+        #region Reportes
+        public const string stp_sel_ObtenerComprasProveedores = "stp_sel_ObtenerComprasProveedores";
+        public const string stp_sel_ObtenerVentasIngresos = "stp_sel_ObtenerVentasIngresos";
         #endregion
     }
 }

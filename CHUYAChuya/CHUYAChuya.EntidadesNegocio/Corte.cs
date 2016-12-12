@@ -18,6 +18,7 @@ namespace CHUYAChuya.EntidadesNegocio
 		private decimal	_nCajaNotaPagadas;
 		private decimal	_nPagoProv;
 		private decimal	_nSalidaOtro;
+        private decimal _nAnula;
         private decimal _nCajaTotal;
         List<PagoProveedores> _oListaPagoProv = new List<PagoProveedores>();
         List<NotaEntregaL> _oListaNotaPag = new List<NotaEntregaL>();
@@ -71,6 +72,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _nSalidaOtro; }
             set { _nSalidaOtro = value; }
+        }
+
+        [JsonProperty(PropertyName = "nAnula")]
+        public decimal nAnula
+        {
+            get { return _nAnula; }
+            set { _nAnula = value; }
         }
 
         [JsonProperty(PropertyName = "nCajaTot")]

@@ -63,7 +63,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                nNoTaEntId = -2;
+                nNoTaEntId = -1;
             }
             return nNoTaEntId;
         }

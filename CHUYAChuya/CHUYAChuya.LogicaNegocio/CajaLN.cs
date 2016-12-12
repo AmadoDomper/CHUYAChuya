@@ -40,9 +40,31 @@ namespace CHUYAChuya.LogicaNegocio
 
         //CORTE DE CAJA
 
-        public Cierre CargaDetalleCierre(string cUsuario, DateTime dFecha)
+        public CierreDatos UltimaFechaCajaDia()
         {
-            return oCajaAD.CargaDetalleCierre(cUsuario, dFecha);
+            return oCajaAD.UltimaFechaCajaDia();
+        }
+
+        public CierreDatos CargaUsuariosCierres(DateTime dFecha)
+        {
+            CierreDatos oCierreDatos = new CierreDatos();
+            oCierreDatos = oCajaAD.CargaUsuariosCierres(dFecha);
+
+
+            foreach (var oListaUC in oCierreDatos.oListUsuarioCierres)
+	        {
+                foreach (var oCierre in oListaUC.oListCierres)
+                {
+                    oCierre.cFecha = oCierre.dFechaIni.ToString("hh:mm tt") +"-"+ oCierre.dFechaFin.ToString("hh:mm tt");
+                }
+	        }
+            
+            return oCierreDatos;
+        }
+
+        public Cierre CargaDetalleCierre(string cUsuario, DateTime dFecha, int nCierre)
+        {
+            return oCajaAD.CargaDetalleCierre(cUsuario, dFecha, nCierre);
         }
 
         //END CORTE CAJA
@@ -73,5 +95,26 @@ namespace CHUYAChuya.LogicaNegocio
         {
             return oCajaAD.CajaDiaAbierto();
         }
+
+        public int RealizarCierreCaja(string cUsuario, string cAgencia, decimal nCont, decimal nDif)
+        {
+            return oCajaAD.RealizarCierreCaja(cUsuario, cAgencia, nCont, nDif);
+        }
+
+        public int RealizarCierreCajaDia(string cUsuario, string cAgencia)
+        {
+            return oCajaAD.RealizarCierreCajaDia(cUsuario, cAgencia);
+        }
+
+        public TicketCierre ObtenerDatosCierreImp(int nCajeCaId)
+        {
+            return oCajaAD.ObtenerDatosCierreImp(nCajeCaId);
+        }
+
+        public TicketCierre ObtenerDatosCierreDiaImp(int nCajeId)
+        {
+            return oCajaAD.ObtenerDatosCierreDiaImp(nCajeId);
+        }
+
     }
 }
