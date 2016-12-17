@@ -1,0 +1,230 @@
+﻿@{
+    Layout = null;
+}
+<div class="col-lg-11 col-lg-offset-0-5">
+    <h3 class="text-center">PRODUCTOS</h3>
+    <input id="hdnEstado" type="hidden" style="display: block;" />
+
+    <div id="target1" class="panel move panel-inverse active">
+        <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Lista de Productos</div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    @if (FrontUser.TienePermiso(RolesPermisos.Pro_Nuevo_Producto))
+                    {
+                       <input href="#target2" id="btnNuevoProducto" type="button" class="btn btn-sm btn-success target" value="Nuevo Producto" />                 
+                    }
+
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row table-main">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div id="cntListaProductos" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-5 col-lg-offset-4">
+    <div id="target2" class="panel move panel-inverse" data-sortable-id="form-stuff-1" style="display: none;">
+        <div class="panel-heading">
+            <h4 class="panel-title">Nuevo Producto</h4>
+        </div>
+        <div class="panel-body" style="display: block;">
+                <form action="/Producto/RegistrarProducto" autocomplete="off" id="frmProducto" class="form-horizontal ng-pristine ng-valid" method="post">
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Codigo</label>
+                        <div class="col-md-3">
+                            <input id="hdnProd" type="hidden" name="Producto.nProdId" />
+                            <input type="text" id="txtCod" class="form-control" disabled>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Descripción</label>
+                        <div class="col-md-7">
+                            <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Precio Unitario</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <span class="input-group-addon">S/.</span>
+                                <input type="text" id="txtPrecioUnit" name="Producto.nProdPrecioUnit" class="form-control" placeholder="0.00">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Medida</label>
+                        <div class="col-md-3">
+                            <select id="cmbMedida" name="Producto.oProdMedida.cConstanteID" class="form-control">
+                                <option value="1">Kg</option>
+                                <option value="2">Prenda</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Servicio</label>
+                        <div class="col-md-8">
+                            <label class="checkbox-inline">
+                                <input id="chkLav" type="checkbox" name="Producto.bProdSerLavado" value="true">Lavado</label>
+                            <label class="checkbox-inline">
+                                <input id="chkSec" type="checkbox" name="Producto.bProdSerSecado" value="true">Secado</label>
+                            <label class="checkbox-inline">
+                                <input id="chkPla" type="checkbox" name="Producto.bProdSerPlanchado" value="true">Planchado</label>
+                        </div>
+                    </div>
+                    <div class="row m-b-10 m-t-10">
+                        <div class="text-center">
+                            <input type="button" id="btnGrabarProducto" class="btn btn-sm btn-primary m-r-5" value="Grabar"/>
+                            <input type="button" id="btnCanPro" class="btn btn-sm btn-default m-r-5" value="Cancelar"/>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(function ($) {
+        $("#txtFechaNac,#txtFechaConst").mask("99/99/9999", { placeholder: "dd/mm/yyyy" });
+
+        $('input.target').click(function () {
+            vista($(this).attr('href'));
+        });
+    });
+
+
+    var vista = function ($target) {
+        var $target = $($target),
+            $other = $('.active');
+
+        if (!$target.hasClass('active')) {
+            $other.each(function (index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 500).hide();
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 500);
+        }
+    };
+
+    ListarProducto();
+
+    function ListarProducto() {
+        $.fn.Conexion({
+            direccion: '/Producto/ListaProductos',
+            datos: {},
+            terminado: function (data) {
+                $("#cntListaProductos").Tabla({
+                    tblId: "tblProducto",
+                    cabecera: "Codígo,Descripción,Precio Unit,Medida,Lavado,Secado,Planchado,Fecha Reg.",
+                    campos: "nPrId,cPrDesc,nPrPrecU,oPrMed.nom,bPrSerLav,bPrSerSec,bPrSerPla,dPrReg",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,D,,,,,F",
+                    alinear: "C,L,C,C,C,C,C,C",
+                    cellLen: "70,364,80,80,70,70,70,150,60,60",
+                    cantRegVertical: 10,
+                    edit: @if (FrontUser.TienePermiso(RolesPermisos.Pro_Editar_Producto)){<text>(true)</text>}else{ <text>(false)</text> },
+                    elim: @if (FrontUser.TienePermiso(RolesPermisos.Pro_Eliminar_Producto)){<text>(true)</text>}else{ <text>(false)</text> },
+                    dblClick: @if (FrontUser.TienePermiso(RolesPermisos.Pro_Editar_Producto)){<text>(true)</text>}else{ <text>(false)</text> },
+                    editEvent: function (fila) {
+                        var nProdId = fila.find("td").eq(0).html();
+                        $("#hdnEstado").val("E");
+                        $('input.target')[0].click();
+
+                        $.fn.Conexion({
+                            direccion: '/Producto/CargoDatosProducto',
+                            datos: { "nProdId": nProdId },
+                            terminado: function (data, textStatus, jqXHR) {
+                                var oPro = JSON.parse(data);
+
+                                $("#hdnProd").val(oPro.nPrId);
+                                $("#txtCod").val(oPro.nPrId);
+                                $("#txtDesc").val(oPro.cPrDesc);
+                                $("#txtPrecioUnit").val(number_format(oPro.nPrPrecU, 2));
+                                $("#cmbMedida").val(oPro.oPrMed.id);
+                                $("#chkLav").prop("checked", oPro.bPrSerLav);
+                                $("#chkPla").prop("checked", oPro.bPrSerPla);
+                                $("#chkSec").prop("checked", oPro.bPrSerSec);
+                            },
+                            bloqueo: false
+                        });
+                    },
+                    elimEvent: function (fila) {
+                        var nProdId = fila.find("td").eq(0).html();
+
+                        $.fn.Conexion({
+                            direccion: '/Producto/EliminarProducto',
+                            datos: { "nProdId": nProdId },
+                            terminado: function (data, textStatus, jqXHR) {
+                                ListarProducto();
+                            },
+                            bloqueo: false
+                        });
+
+                    },
+                    datos: JSON.parse(data)
+                });
+            }
+        });
+    }
+
+    function Aceptar() {
+        Limpiar();
+        ListarProducto();
+    }
+
+
+    //Registrar Clientes Natural
+
+    $("#btnGrabarProducto").bind("click", function () {
+        var form = $("#frmProducto");
+
+        valores = form.serializeArray();
+
+        $.fn.Conexion({
+            direccion: form.attr("action"),
+            datos: valores,
+            terminado: function (data, textStatus, jqXHR) {
+                Resultado(data);
+            },
+            bloqueo: true
+        });
+
+    });
+
+    
+    $("#btnCanPro").bind("click", function () {
+        Limpiar();
+    });
+
+    function Limpiar() {
+        $('#frmProducto')[0].reset();
+        $("#hdnProd").val("")
+        vista("#target1");
+    }
+
+    function Resultado(dato) {
+        if (dato != -1) {
+            if ($("#hdnEstado").val() == "E") {
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
+            } else {
+                $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
+            }
+        } else {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+        }
+    }
+
+</script>

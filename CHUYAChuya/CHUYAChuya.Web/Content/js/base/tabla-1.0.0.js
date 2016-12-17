@@ -230,7 +230,7 @@
                     mensaje: "&iquest;Est&aacutes seguro que deseas eliminar el registro?",
                     tamano: "md",
                     tipo: "SiNo",
-                    funcionSi: function () {
+                    funcionAceptar: function () {
                         m["elimEvent"](fila, nPage);
                     }
                 });

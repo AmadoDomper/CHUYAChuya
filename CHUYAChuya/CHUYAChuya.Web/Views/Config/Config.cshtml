@@ -242,6 +242,7 @@
         $("#btnPersAceptar").bind("click", function () {
             var obj = { cRolDesc: $("#txtBuscar").val(), nRolId: 0 };
             listaRoles = listaRoles.concat([obj]);
+            estado = "N";
             CrearTablaRoles(listaRoles);
             $('#vntNuevoRol').modal('hide');
             $("#tblRol tbody tr").last().click();
@@ -253,7 +254,7 @@
         $("#txtBuscar").bind("keyup", function (e) {
             if (e.which == 13) { $("#btnPersAceptar").click(); };
         });
-        estado = "N";
+
     });
 
     $("#btnCancelar").bind("click", function () {
@@ -311,7 +312,6 @@
                         bloqueo: false
                     });
                 }
-                Bloqueo();
             },
             datos: listaR
         });
@@ -335,8 +335,12 @@
                 var index = $(fila).index();
                 var bCheck = $(fila).find("input").is(':checked');
                 ListarModulos(lista.ListaMenus[index].lstMods);
-                $("#tblModulo tbody tr input").attr("disabled", !bCheck);
-                Bloqueo();
+                $("#tblModulo tbody tr input").attr("disabled", (estado == "E" || estado == "N" ? !bCheck : true));
+
+
+
+
+                //Bloqueo();
             },
             checkEvent: function (fila) {
                 var index = $(fila).index();
@@ -347,6 +351,7 @@
             datos: lista.ListaMenus
         });
 
+        Bloqueo();
         $("#tblMenu tbody tr")[0].click();
     }
 
@@ -375,7 +380,8 @@
     }
 
     function Bloqueo() {
-        var valor = (estado == "E" ? false : true);
+        var valor = (estado == "E" || estado == "N" ? false :  true);
+        //var valor = (estado == "E" ? false : true);
 
         $("#tblMenu tbody tr input").attr("disabled", valor);
         $("#tblModulo tbody tr input").attr("disabled", valor);
@@ -401,8 +407,8 @@
                 var index = $(fila).index();
                 var bCheck = $(fila).find("input").is(':checked');
                 ListarPermisos(lista[index].lstPerms);
-                $("#tblPermiso tbody tr input").attr("disabled", !bCheck);
-                Bloqueo();
+                $("#tblPermiso tbody tr input").attr("disabled", (estado == "E" || estado == "N" ? !bCheck : true));
+                //Bloqueo();
 
             },
             checkEvent: function (fila) {

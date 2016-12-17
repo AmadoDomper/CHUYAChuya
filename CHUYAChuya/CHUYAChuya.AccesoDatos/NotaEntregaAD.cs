@@ -123,7 +123,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                nTicketId = -1;
+                nTicketId = -2;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();

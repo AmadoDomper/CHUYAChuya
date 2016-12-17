@@ -1,0 +1,234 @@
+﻿@{
+    Layout = null;
+}
+<div class="col-lg-11 col-lg-offset-0-5">
+    <h3 class="text-center">REPORTES</h3>
+    <input id="hdnEstado" type="hidden" style="display: block;" />
+    <div id="target1" class="panel move panel-inverse active">
+        <div class="panel-heading">GENERACIÓN DE REPORTES</div>
+        <div class="panel-body">
+            <div class="hr-line-dashed"></div>
+            <div class="row m-b-10 m-t-10">
+                <div class="col-sm-10">
+                    <div class="form-inline">
+                        <div class="form-group m-r-40">
+                            <label class="control-label m-r-5" for="status">Reporte :</label>
+                            <select name="status" id="cmbReportes" class="form-control">
+                                <option value="1" selected="">Reporte de Ventas o Ingresos</option>
+                                <option value="2">Reporte de Compras</option>
+                            </select>
+                        </div>
+                        <div class="form-group m-r-10">
+                            <label class="control-label m-r-5" for="product_name">Del</label>
+
+                        </div>
+                        <div class="form-group">
+                            <div class="input-daterange input-group" id="dtRango">
+                                <input id="txtFI" type="text" class="form-control" name="start">
+                                <span class="input-group-addon">al</span>
+                                <input id="txtFF" type="text" class="form-control" name="end">
+                            </div>
+                        </div>
+                        @*<input id="btnBuscarNota" type="button" value="Buscar" class="btn btn-sm btn-primary">*@
+                        <input id="btnGenerarRep" type="button" value="Generar" class="btn btn-sm btn-primary">
+                    </div>
+                </div>
+                <div class="col-sm-1">
+                    <div class="form-inline">
+                        <button id="btnExportar" type="button" class="btn btn-success btn-sm m-l-20">
+                            <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span> Exportar</button>
+                    </div>
+                </div>
+            </div>
+            <div class="hr-line-dashed"></div>
+            <div class="row table-main">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    @*<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
+                    <div id="cntListaRep" class="table-responsive">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*        <script type="text/javascript">
+
+            $(function () {
+                $('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
+                    title: {
+                        text: 'Recaudaciones realizadas del 01/01/2016 al 31/12/2016'
+                    },
+                    /*subtitle: {
+                        text: 'Source: WorldClimate.com'
+                    },*/
+                    xAxis: {
+                        categories: [
+                            'ENERO',
+                            'FEBRERO',
+                            'MARZO',
+                            'ABRIL',
+                            'MAYO',
+                            'JUNIO',
+                            'JULIO',
+                            'AGOSTO',
+                            'SEPTIEMBRE',
+                            'OCTUBRE',
+                            'NOVIEMBRE',
+                            'DICIEMBRE'
+                        ],
+                        crosshair: true
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Operaciones'
+                        }
+                    },
+                    tooltip: {
+                        headerFormat: '<center><span style="font-size:11px">{point.key}</span></center><table>',
+                        pointFormat: '<tr>' +
+                            '<td style="padding:0"><b>{point.y:.1f}</b></td></tr>',
+                        footerFormat: '</table>',
+                        shared: true,
+                        useHTML: true
+                    },
+                    plotOptions: {
+                        column: {
+                            pointPadding: 0.2,
+                            borderWidth: 0
+                        }
+                    },
+                    legend: { enabled: false },
+                    series: [{
+                        name: 'Tokyo',
+                        data: [10000,30000 ,20000, 25000, 35000, 40000, 38000, 60000, 65000, 58000, 70000, 60000]
+
+                    }]
+                });
+            });
+        </script>*@
+
+
+<script type="text/javascript">
+
+    jQuery(function ($) {
+        SetRangoFecha("#dtRango");
+        $('input.target').click(function () {
+            vista($(this).attr('href'));
+        });
+    });
+
+    var vista = function ($target) {
+        var $target = $($target),
+            $other = $('.active');
+
+        if (!$target.hasClass('active')) {
+            $other.each(function (index, self) {
+                var $this = $(this);
+                $this.removeClass('active').animate({
+                    left: $this.width()
+                }, 500).hide();
+            });
+
+            $target.addClass('active').show().css({
+                left: -($target.width())
+            }).animate({
+                left: 0
+            }, 500);
+        }
+    };
+
+    $("#btnGenerarRep").bind("click", function () {
+
+        var nRep = $("#cmbReportes").val();
+
+        switch (nRep) {
+            case "1":
+                ListarRepVentas();
+                break;
+            case "2":
+                ListarRevCompras()
+                break;
+        }
+    });
+
+    $("#btnExportar").bind("click", function () {
+        var dIni, dFin;
+
+        dIni = encodeURIComponent($("#txtFI").val());
+        dFin = encodeURIComponent($("#txtFF").val());
+
+        var nRep = $("#cmbReportes").val();
+
+        switch (nRep) {
+            case "1":
+                window.location.href = '/Reporte/GetExcelVentas' + "?dIni=" + dIni + "&dFin=" + dFin;
+                break;
+            case "2":
+                window.location.href = '/Reporte/GetExcelCompras' + "?dIni=" + dIni + "&dFin=" + dFin;
+                break;
+        }
+    });
+
+
+    function ListarRepVentas() {
+
+        var dIni, dFin;
+
+        dIni = $("#txtFI").val();
+        dFin = $("#txtFF").val();
+
+        $.fn.Conexion({
+            direccion: '/Reporte/ListarVentasIngresos',
+            datos: { "dIni": dIni, "dFin": dFin },
+            terminado: function (data) {
+                var d = JSON.parse(data);
+
+                $("#cntListaRep").Tabla({
+                    tblId: "tblRepVentas",
+                    cabecera: "N° Reg,Fecha Pago,Tipo Tabla,Serie Imp.,N° Coprobante,DOI,Cliente, Importe Total",
+                    campos: "nNum,dFecha,cTpoT,cSerT,cCorrT,cDoi,cPersDesc,nNotSub",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,,,,D",
+                    alinear: "C,C,C,C,C,C,L,C",
+                    cellLen: "40,100,40,60,100,100,150,60",
+                    cantRegVertical: 15,
+                    datos: d
+                });
+            }
+        });
+    }
+
+    function ListarRevCompras() {
+
+        var dIni, dFin;
+
+        dIni = $("#txtFI").val();
+        dFin = $("#txtFF").val();
+
+        $.fn.Conexion({
+            direccion: '/Reporte/ListarCompras',
+            datos: { "dIni": dIni, "dFin": dFin },
+            terminado: function (data) {
+                var d = JSON.parse(data);
+
+                $("#cntListaRep").Tabla({
+                    tblId: "tblRepCompras",
+                    cabecera: "N° Reg,Fecha Emisión,Tipo Tabla,N° Coprobante,DOI,Cliente, Importe Total",
+                    campos: "nNum,dFecha,cTpoT,cComp,cDoi,cPersDesc,nMonto",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,,,D",
+                    alinear: "C,C,C,C,C,L,C",
+                    cellLen: "40,100,40,60,100,100,150,60",
+                    cantRegVertical: 15,
+                    datos: d
+                });
+            }
+        });
+    }
+
+
+</script>

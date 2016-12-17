@@ -10,7 +10,8 @@
         m.funcionSi = m.funcionSi || function () { };
         m.funcionNo = m.funcionNo || function () { };
         m.indice = m.indice || 0;
-        m.focusElement = m.focusElement || "";
+        m.focusOpen = m.focusOpen || "";
+        m.focusClose = m.focusClose || "";
 
         var html = '<div class="row"><div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"><h4 class="text-center">' + m.mensaje + '</h4></div></div>';
         var btnId;
@@ -31,7 +32,8 @@
             titulo: m.titulo,
             tamano: m.tamano,
             cuerpo: html,
-            focusElement: m.focusElement || "btnAceptarMen",
+            focusOpen: m.focusOpen || "btnAceptarMen",
+            focusClose: m.focusClose,
             funcionCerrar: m.funcionCerrar
         });
 
