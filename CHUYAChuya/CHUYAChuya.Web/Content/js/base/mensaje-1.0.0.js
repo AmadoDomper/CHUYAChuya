@@ -7,6 +7,7 @@
         m.tipo = m.tipo || "Aceptar";
         m.funcionCerrar = m.funcionCerrar || function () { };
         m.funcionAceptar = m.funcionAceptar || function () { };
+        m.funcionCancelar = m.funcionCancelar || function () { };
         m.funcionSi = m.funcionSi || function () { };
         m.funcionNo = m.funcionNo || function () { };
         m.indice = m.indice || 0;
@@ -45,7 +46,7 @@
         });
 
         $("#btnCancMen").bind("click", function () {
-            m.funcionNo();
+            m.funcionCancelar();
             $("#vntMensaje").modal('hide');
         });
 

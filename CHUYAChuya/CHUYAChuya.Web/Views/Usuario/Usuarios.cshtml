@@ -109,7 +109,7 @@
                         <label class="col-md-4 control-label">Usuario</label>
                         <div class="col-md-3">
                             <input id="hdnPersId" type="hidden" name="oUsu.oPersNat.oPers.nPersId" />
-                            <input type="text" id="txtUsu" name="oUsu.cUsuNombre" class="form-control" required>
+                            <input type="text" id="txtUsu" name="oUsu.cUsuNombre" class="form-control upper" required> 
                         </div>
                     </div>
                     <div class="form-group m-b-5">
@@ -213,12 +213,15 @@
 
                 $("#cntListaUsuarios").Tabla({
                     tblId: "tblUsuarios",
-                    cabecera: "Codígo,Usuario,Nombre,DOI,Teléfono,Dirección",
-                    campos: "oPersNat.oPers.id,cUsuNom,oPersNat.oPers.nom,oPersNat.oPers.doi,oPersNat.oPers.tel1,oPersNat.oPers.direc",
+                    cabecera: "Codígo,Usuario,Nombre,Rol,DOI,Dirección",
+                    campos: "oPersNat.oPers.id,cUsuNom,oPersNat.oPers.nom,cRolDes,oPersNat.oPers.doi,oPersNat.oPers.direc",
                     scrollVertical: "Si",
-                    alinear: "C,C,L,C,C,L",
+                    alinear: "C,C,L,C,C,L,C",
                     cellLen: "70,80,364,60,60,250,60,60",
                     cantRegVertical: 15,
+                    pag: true,
+                    pagDato: { "nPage": d.nPage, "nPageTot": d.nPageTot, "nPageSize": d.nPageSize, "nRows": d.nRows },
+                    pagEvent: ListarUsuarios,
                     edit: @if (FrontUser.TienePermiso(RolesPermisos.Usu_Editar_Usuario)){<text>(true)</text>}else{ <text>(false)</text> },
                     elim: @if (FrontUser.TienePermiso(RolesPermisos.Usu_Eliminar_Usuario)){<text>(true)</text>}else{ <text>(false)</text> },
                     dblClick: @if (FrontUser.TienePermiso(RolesPermisos.Usu_Editar_Usuario)){<text>(true)</text>}else{ <text>(false)</text> },
@@ -385,28 +388,26 @@
         var validator = form.data("bs.validator");
         validator.validate();
 
-        if (!validator.hasErrors()) {
-            valores = form.serializeArray();
-
-            $.fn.Conexion({
-                direccion: form.attr("action"),
-                datos: valores,
-                terminado: function (data, textStatus, jqXHR) {
-                    if (data == -2) {
-                        alerta("#msg", "Ya existe un usuario asignado a esta persona");
-                        $("#txtBuscarPers").focus();
-                    } else {
-                        Resultado(data);
-                    }
-                },
-                bloqueo: true
-            });
-        } else if ($("#txtCont1").val() != $("#txtCont2").val()) {
+        if ($("#txtCont1").val() != $("#txtCont2").val()) {
             alerta("#msg", "Los valores de la contraseña deben de ser iguales.");
+        } else if ($("#hdnPersRolId").val() == "") {
+            alerta("#msg", "Es necesario indicar el Rol del usuario.");
         } else {
-            alerta("#msg", "Es necesario completar los campos que están en rojo.");
-        }
+            if (!validator.hasErrors()) {
+                valores = form.serializeArray();
 
+                $.fn.Conexion({
+                    direccion: form.attr("action"),
+                    datos: valores,
+                    terminado: function (data, textStatus, jqXHR) {
+                        Resultado(data);
+                    },
+                    bloqueo: true
+                });
+            } else {
+                alerta("#msg", "Es necesario completar los campos que están en rojo.");
+            }
+        }
     });
 
     $("#btnCanUsu").bind("click", function () {
@@ -418,18 +419,26 @@
         $('#frmDatPer')[0].reset();
         $("#hdnPersId").val("");
         $("#hdnPersRolId").val("");
+        $("#msg").html("");
         vista("#target1");
     }
 
 
     function Resultado(dato) {
-        if (dato != -1) {
+        if (dato > 0) {
             if ($("#hdnEstado").val() == "E") {
                 $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó datos del usuario correctamente", funcionAceptar: Limpiar });
             } else {
                 $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró datos del usuario correctamente", funcionAceptar: Limpiar });
             }
-        } else {
+            ListarUsuarios(1,10);
+        } else if (dato == -1) {
+            alerta("#msg", "Ya existe un usuario asignado a esta persona");
+            $("#txtBuscarPers").focus();
+        } else if (dato == -2) {
+            alerta("#msg", "El nombre de usuario " + $("#txtUsu").val().toUpperCase() + " ya existe.");
+            $("#txtBuscarPers").focus();
+        } else if (dato == -3) {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
         }
     }

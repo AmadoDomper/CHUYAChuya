@@ -37,9 +37,9 @@ namespace CHUYAChuya.AccesoDatos
                 int inUsuId = oIDataReader.GetOrdinal("nUsuId");
                 int icUsuNombre = oIDataReader.GetOrdinal("cUsuNombre");
                 int icNombre = oIDataReader.GetOrdinal("cNombre");
+                int icRol = oIDataReader.GetOrdinal("cRolDesc");
                 int icSexo = oIDataReader.GetOrdinal("cSexo");
                 int icDOI = oIDataReader.GetOrdinal("cDOI");
-                int icPersTelefono1 = oIDataReader.GetOrdinal("cPersTelefono1");
                 int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
 
                 while (oIDataReader.Read())
@@ -49,10 +49,10 @@ namespace CHUYAChuya.AccesoDatos
                     oUsuario.oPersNat.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
                     oUsuario.nUsuId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inUsuId]);
                     oUsuario.cUsuNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuNombre]);
+                    oUsuario.cRolDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icRol]);
                     oUsuario.oPersNat.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icNombre]);
                     oUsuario.oPersNat.oPers.cPersSexo = DataUtil.DbValueToDefault<String>(oIDataReader[icSexo]);
                     oUsuario.oPersNat.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
-                    oUsuario.oPersNat.oPers.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
                     oUsuario.oPersNat.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
 
                     ListaUsuPag.oLista.Add(oUsuario);
@@ -153,7 +153,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarUsuario(Usuario oUsuario)
         {
-            int resultado = 0;
+            int resultado = -3;
 
             try
             {
@@ -186,7 +186,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                resultado = -1;
+                resultado = -3;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();

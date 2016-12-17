@@ -788,9 +788,6 @@
             estado = "E";
             LlenarDatos(lstProd[index]);
 
-            //$("#btnEditar,#btnAgregar,#btnEliminar").hide();
-            //$("#btnCancelar,#btnAceptarEdi").show();
-            //$("#btnGrabar, #btnSalir").addClass("disabled");
             $("#tblRegProd").attr("data-edit", true);
             $("#btnEditar,#btnEliminar").attr("disabled", true);
             $("#btnAgregar,#btnCancelar").attr("disabled", false);
@@ -803,7 +800,6 @@
         $("#txtCant,#txtPrec,#txtImp,#txtBuscarProducto").val("");
         $("#lblProducto").html("")
         $("#chkLav,#chkSec,#chkPla").prop("checked", "");
-        //$("#btnBuscarProd").focus();
         DeshabilitarBotones();
         $("#tblRegProd").attr("data-edit", false);
         estado = "";
@@ -840,7 +836,7 @@
         $("#lblProducto").html(d.cPrDesc);
         $("#txtPrec").val(number_format(d.nPrPrecU, 2));
         $("#txtCant").val(estado == "E" ? d.nCant : 1);
-        $("#txtCant").attr("onkeypress", d.oPrMed.nom != "Kg" ? "return val_09(event)" : "");
+        $("#txtCant").attr("onkeypress", d.oPrMed.nom != "Kg" ? "return val_09(event)" : "return val_09D(event)");
         $("#txtImp").val(number_format(Math.round10($("#txtCant").val() * $("#txtPrec").val(), -1), 2));
         $("#chkLav").prop("checked", d.bPrSerLav);
         $("#chkPla").prop("checked", d.bPrSerPla);
@@ -884,14 +880,16 @@
                 direccion: form.attr("action"),
                 datos: valores,
                 terminado: function (data, textStatus, jqXHR) {
-                    if (data != -1) {
+                    if (data > 0) {
                         $("#txtCodNota").val(data);
                         $("#hdnNotaId").val(data);
 
                         $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
                         SetEstadoPendiente();
-                    } else {
-                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                    } else if(data == -1) {
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                    } else if (data == -2) {
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                     }
                 },
                 bloqueo: true
@@ -958,7 +956,7 @@
                     direccion: '/NotaEntrega/RealizarCobroServicio',
                     datos: { "nNotaEntId": nNotaId, "nPersId": nPersId, "nTipoC": nTipoC, "nEfecCo": nEfeCo, "nCambioCo": nCambCo },
                     terminado: function (data, textStatus, jqXHR) {
-                        if (data != -1) {
+                        if (data > 0) {
                             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
                             SetEstadoPagado();
                         } else if (data == -1) {
@@ -996,11 +994,13 @@
             direccion: '/NotaEntrega/RealizarConfirmacionEntrega',
             datos: { "nNotaEntId": nNotaId },
             terminado: function (data, textStatus, jqXHR) {
-                if (data != -1) {
+                if (data > 0) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
                     SetEstadoEntregado();
-                } else {
-                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                } else if(data == -1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                 }
             },
             bloqueo: false
@@ -1063,6 +1063,8 @@
                 } else if (data == -1) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La Nota de Entrega ya se encuentra anulada." });
                 } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                } else if (data == -3) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                 }
             },
@@ -1089,9 +1091,11 @@
                 if (data >= 1) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se realizó la anulación del Comprobante de Pago correctamente." });
                     SetEstadoPendiente();
-                } else if (data == 1) {
+                } else if (data == -1) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El Comprobante de Pago no existe o ya se encuentra anulado." });
                 } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                } else if (data == -3) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                 }
             },
@@ -1125,37 +1129,4 @@
         $("#target2").find("input,textarea,button").attr("disabled", false);
         $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularComp").attr("disabled", true);
     }
-
-
-    /*IMPRIMIR PRUEBA*/
-
-    function Imprimir() {
-        $.fn.Conexion({
-            direccion: '/NotaEntrega/Imprimir',
-            terminado: function (data, textStatus, jqXHR) {
-                alert("Terminado");
-            },
-            bloqueo: false
-        });
-    }
-
-    //function Resultado(dato) {
-    //    if (dato != -1) {
-    //        if ($("#hdnEstado").val() == "E") {
-    //            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
-    //        } else {
-    //            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
-    //        }
-    //    } else {
-    //        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-    //    }
-    //}
-
-
-
-
-    //$("#btnAgregar,#btnEditar,#btnEliminar,#btnCancelar").attr("disabled", "disabled");
-
-    //$("#btnAgregar").removeAttr("disabled", "disabled");
-
 </script>

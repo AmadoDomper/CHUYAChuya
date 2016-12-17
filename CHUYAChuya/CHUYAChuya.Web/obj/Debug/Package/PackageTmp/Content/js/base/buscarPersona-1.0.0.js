@@ -16,6 +16,8 @@
         m.durante = m.durante || function () { };
         //m["terminado"] = m["terminado"] || function () { };
         m.error = m.error || function () { };
+        m.focusOpen = m.focusOpen || "";
+        m.focusClose = m.focusClose || "";
 
         var tablaId = "tblPersonas";
         var btnAceptar = "#vntBuscaPersona #btnPersAceptar";
@@ -39,7 +41,9 @@
             $.fn.Ventana({
                 id: "vntBuscaPersona",
                 titulo: "Buscar Persona",
-                tamano: "lg"
+                tamano: "lg",
+                focusOpen: buscarId,
+                focusClose: m.focusClose
             });
 
             var html = '<div class="row"><div class="col-xs-12 col-sm-9 col-md-12 col-lg-12"><div class="form-inline ng-pristine ng-valid"><input id="txtBuscar" type="text" onclick="this.select();" class="form-control " placeholder="Buscar cliente..." tabindex="1" style="border-bottom-width: 1px;margin-bottom: 10px;width: 70%;"><button id="btnBuscar" type="button" style="border-bottom-width: 1px;margin-left: 5px;margin-bottom: 10px;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-search"></span></button></div></div><div class="row"><div id="' + 'cntBuscarPersona' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div><div class="row"><div class="col-md-3 col-md-offset-9 text-right"><button id="btnPersAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnPersCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div>';

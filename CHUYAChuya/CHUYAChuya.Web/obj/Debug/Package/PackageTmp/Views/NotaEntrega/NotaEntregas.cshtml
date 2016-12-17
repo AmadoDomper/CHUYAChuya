@@ -6,6 +6,7 @@
     <h3 class="text-center">NOTA DE ENTREGA</h3>
     <input id="hdnEstado" type="hidden" />
     <input id="hdnNotaEst" type="hidden" />
+    <input id="hdnPag" type="hidden" />
     <div id="target1" class="panel move panel-inverse active">
         <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Nota de Entregas</div>
         <div class="panel-body">
@@ -196,7 +197,7 @@
                                 <div class="form-horizontal">
 
                                     <div class="form-group m-b-5">
-                                        <label class="col-md-3 control-label">F. Entrega</label>
+                                        <label class="col-md-3 control-label">Recoger</label>
                                         <div class="col-md-5">
                                             <input type="text" id="txtFechaEnt" name="oNotEnt.dFechaEntrega" class="form-control">
                                         </div>
@@ -327,7 +328,9 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="margin-top: 0px;">×</button>
             </div>
             <div class="panel-body" style="display: block;">
-                <form id="frmCobroTotal" class="form-horizontal ng-pristine ng-valid" autocomplete="off">
+                <div id="msg">
+                </div>
+                <form id="frmCobroTotal" data-toggle="validator" class="form-horizontal ng-pristine ng-valid" autocomplete="off">
                     <div>
                         <div id="cntProveedor" style="display: block;">
                             <div class="form-group m-b-5">
@@ -376,7 +379,7 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <span class="input-group-addon">S/.</span>
-                                        <input type="text" id="txtEfectivoC" class="form-control" autocomplete="off" placeholder="0.00">
+                                        <input type="text" id="txtEfectivoC" onkeypress="return val_09D(event)" class="form-control" autocomplete="off" placeholder="0.00" required>
                                     </div>
                                 </div>
                             </div>
@@ -418,6 +421,10 @@
         $('input.target').click(function () {
             vista($(this).attr('href'));
         });
+
+        $('#btnNuevaNota').click(function () {
+            $("#txtBuscarCliente").focus();
+        });
     });
 
     var vista = function ($target) {
@@ -450,6 +457,7 @@
         var valor = $("#txtValor").val();
         valor = valor == "" ? null : valor;
         nNotaEst = $("#cmbNotaEstado").val();
+        $("#hdnPag").val(nPage);
 
         switch (tpoBsq) {
             case "1":
@@ -637,7 +645,8 @@
         $.fn.BuscarPersona({
             funcionAceptar: aceptar,
             funcionCancelar: cancelar,
-            valor: valor
+            valor: valor,
+            focusClose: "txtBuscarCliente"
         });
     }
 
@@ -678,7 +687,8 @@
         $.fn.BuscarProducto({
             funcionAceptar: aceptar,
             funcionCancelar: cancelar,
-            valor: valor
+            valor: valor,
+            focusClose: "txtBuscarProducto"
         });
     }
 
@@ -747,6 +757,7 @@
         LimpiarPro();
 
         $("#btnEliminar,#btnEditar").attr("disabled", false);
+        $("#txtBuscarProducto").focus();
 
         //$("#btnAgregar,#btnEditar,#btnEliminar").show().removeClass("disabled");
         //$("#btnAceptar,#btnCancelar,#btnAceptarEdi").hide();
@@ -777,12 +788,10 @@
             estado = "E";
             LlenarDatos(lstProd[index]);
 
-            //$("#btnEditar,#btnAgregar,#btnEliminar").hide();
-            //$("#btnCancelar,#btnAceptarEdi").show();
-            //$("#btnGrabar, #btnSalir").addClass("disabled");
             $("#tblRegProd").attr("data-edit", true);
             $("#btnEditar,#btnEliminar").attr("disabled", true);
             $("#btnAgregar,#btnCancelar").attr("disabled", false);
+            $("#txtCant").focus();
         }
     }
 
@@ -791,7 +800,6 @@
         $("#txtCant,#txtPrec,#txtImp,#txtBuscarProducto").val("");
         $("#lblProducto").html("")
         $("#chkLav,#chkSec,#chkPla").prop("checked", "");
-        //$("#btnBuscarProd").focus();
         DeshabilitarBotones();
         $("#tblRegProd").attr("data-edit", false);
         estado = "";
@@ -828,7 +836,7 @@
         $("#lblProducto").html(d.cPrDesc);
         $("#txtPrec").val(number_format(d.nPrPrecU, 2));
         $("#txtCant").val(estado == "E" ? d.nCant : 1);
-        $("#txtCant").attr("onkeypress", d.oPrMed.nom != "Kg" ? "return val_09(event)" : "");
+        $("#txtCant").attr("onkeypress", d.oPrMed.nom != "Kg" ? "return val_09(event)" : "return val_09D(event)");
         $("#txtImp").val(number_format(Math.round10($("#txtCant").val() * $("#txtPrec").val(), -1), 2));
         $("#chkLav").prop("checked", d.bPrSerLav);
         $("#chkPla").prop("checked", d.bPrSerPla);
@@ -852,37 +860,55 @@
     //Grabar Nota Entrega
 
     function Grabar() {
+        if (ValidaRegNotaEnt()) {
 
-        if (!(typeof (lstProd) == "undefined" || lstProd == null)) {
-            if (!(jQuery.isEmptyObject(lstProd))) {
-                for (i in lstProd) {
-                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].oProd.nProdId", lstProd[i].nPrId);
-                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nDetCantidad", lstProd[i].nCant);
-                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nProdPrecioUnit", lstProd[i].nPrPrecU);
-                    CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nDetImporte", lstProd[i].nImp);
+            if (!(typeof (lstProd) == "undefined" || lstProd == null)) {
+                if (!(jQuery.isEmptyObject(lstProd))) {
+                    for (i in lstProd) {
+                        CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].oProd.nProdId", lstProd[i].nPrId);
+                        CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nDetCantidad", lstProd[i].nCant);
+                        CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nProdPrecioUnit", lstProd[i].nPrPrecU);
+                        CrearHidden("#cntHidden", "oNotEnt.ListaNotaEntProd[" + i + "].nDetImporte", lstProd[i].nImp);
+                    }
                 }
             }
+
+            var form = $("#frmNotaEntrega");
+            valores = form.serializeArray();
+
+            $.fn.Conexion({
+                direccion: form.attr("action"),
+                datos: valores,
+                terminado: function (data, textStatus, jqXHR) {
+                    if (data > 0) {
+                        $("#txtCodNota").val(data);
+                        $("#hdnNotaId").val(data);
+
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
+                        SetEstadoPendiente();
+                    } else if(data == -1) {
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                    } else if (data == -2) {
+                        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
+                    }
+                },
+                bloqueo: true
+            });
+        }
+    }
+
+    function ValidaRegNotaEnt() {
+        var bVal = true;
+
+        if ($("#hdnPersId").val() == "") {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Es necesario asignar un cliente a la Nota de Entrega.", focusClose: "txtBuscarCliente" });
+            bVal = false;
+        } else if ($("#txtFechaEnt").val() == "") {
+            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Es necesario indicar la fecha de recojo de las prendas.", focusClose: "txtFechaEnt" });
+            bVal = false;
         }
 
-        var form = $("#frmNotaEntrega");
-        valores = form.serializeArray();
-
-        $.fn.Conexion({
-            direccion: form.attr("action"),
-            datos: valores,
-            terminado: function (data, textStatus, jqXHR) {
-                if (data != -1) {
-                    $("#txtCodNota").val(data);
-                    $("#hdnNotaId").val(data);
-
-                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
-                    SetEstadoPendiente();
-                } else {
-                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-                }
-            },
-            bloqueo: true
-        });
+        return bVal
     }
 
     /*Cobrar Nota de Entrega*/
@@ -896,35 +922,59 @@
     });
 
     $("#btnAceptarC").bind("click", function () {
-        CobroTotal();
-        $('#vntCobroCancelacion').modal('hide');
+        CobroTotal();        
     });
 
     $("#btnCancelarC").bind("click", function () {
-        $("#cmbTipoComp").val(1);
-        $("#txtBuscarCliBo,#hdnCliBoId,#txtNombrePe,#txtDOIPe,#txtEfectivoC,#txtCambioC").val("");
+        LimpiarVtnCobroTotal();
     });
 
-    function CobroTotal() {
-        var nNotaId = $("#hdnNotaId").val();
-        var nPersId = $("#hdnCliBoId").val();
-        var nTipoC = $("#cmbTipoComp").val();
-        var nEfeCo = $("#txtEfectivoC").val();
-        var nCambCo = $("#txtCambioC").val();
+    function LimpiarVtnCobroTotal() {
+        $("#cmbTipoComp").val(1);
+        $("#txtBuscarCliBo,#hdnCliBoId,#txtNombrePe,#txtDOIPe,#txtEfectivoC,#txtCambioC").val("");
+    }
 
-        $.fn.Conexion({
-            direccion: '/NotaEntrega/RealizarCobroServicio',
-            datos: { "nNotaEntId": nNotaId, "nPersId": nPersId, "nTipoC": nTipoC, "nEfecCo": nEfeCo, "nCambioCo": nCambCo },
-            terminado: function (data, textStatus, jqXHR) {
-                if (data != -1) {
-                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
-                    SetEstadoPagado();
-                } else {
-                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-                }
-            },
-            bloqueo: false
-        });
+    function CobroTotal() {
+        var form = $("#frmCobroTotal");
+
+        form.validator();
+
+        var validator = form.data("bs.validator");
+        validator.validate();
+
+        if (!validator.hasErrors()) {
+
+            var nNotaId = $("#hdnNotaId").val();
+            var nPersId = $("#hdnCliBoId").val();
+            var nTipoC = $("#cmbTipoComp").val();
+            var nEfeCo = $("#txtEfectivoC").val();            
+            var nCambCo = $("#txtCambioC").val();
+            
+
+            if (nCambCo <= 0) {
+                $.fn.Conexion({
+                    direccion: '/NotaEntrega/RealizarCobroServicio',
+                    datos: { "nNotaEntId": nNotaId, "nPersId": nPersId, "nTipoC": nTipoC, "nEfecCo": nEfeCo, "nCambioCo": nCambCo },
+                    terminado: function (data, textStatus, jqXHR) {
+                        if (data > 0) {
+                            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
+                            SetEstadoPagado();
+                        } else if (data == -1) {
+                            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                        } else if (data == -2) {
+                            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
+                        }
+                        $('#vntCobroCancelacion').modal('hide');
+                        LimpiarVtnCobroTotal();
+                    },
+                    bloqueo: false
+                });
+            }else{
+                advertencia("#msg", "El monto del efectivo es menor al monto total.");
+            }
+        } else {
+            advertencia("#msg", "Ingrese el monto del efectivo.");
+        }
     }
 
     $("#txtEfectivoC").keyup(function () { $("#txtCambioC").val(number_format(Math.round10($("#txtTotalC").val() - $("#txtEfectivoC").val(), -1), 2)) });
@@ -944,11 +994,13 @@
             direccion: '/NotaEntrega/RealizarConfirmacionEntrega',
             datos: { "nNotaEntId": nNotaId },
             terminado: function (data, textStatus, jqXHR) {
-                if (data != -1) {
+                if (data > 0) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación se realizó correctamente." });
                     SetEstadoEntregado();
-                } else {
-                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
+                } else if(data == -1) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                 }
             },
             bloqueo: false
@@ -1007,9 +1059,12 @@
             terminado: function (data, textStatus, jqXHR) {
                 if (data >= 1) {
                     $.fn.Mensaje({ titulo: "Atención", tipo: "SiNo", mensaje: "Se realizó el proceso de Anulación con exito. ¿Desea mantener los datos actuales?", funcionAceptar: ConservarDatos, funcionCancelar: Limpiar });
+                    ListarNotaEntrega(1, 10);
                 } else if (data == -1) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La Nota de Entrega ya se encuentra anulada." });
                 } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                } else if (data == -3) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                 }
             },
@@ -1036,9 +1091,11 @@
                 if (data >= 1) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se realizó la anulación del Comprobante de Pago correctamente." });
                     SetEstadoPendiente();
-                } else if (data == 1) {
+                } else if (data == -1) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El Comprobante de Pago no existe o ya se encuentra anulado." });
                 } else if (data == -2) {
+                    $.fn.Mensaje({ titulo: "Mensaje", mensaje: "El usuario no tiene ninguna caja aperturada." });
+                } else if (data == -3) {
                     $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente." });
                 }
             },
@@ -1070,39 +1127,6 @@
 
     function RestablecerElem() {
         $("#target2").find("input,textarea,button").attr("disabled", false);
-        $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularBoleta").attr("disabled", true);
+        $("#txtCodNota,#txtPrec,#txtImp,#btnCobrarNota,#btnConfirmarEntrega,#btnAnularNota,#btnAnularComp").attr("disabled", true);
     }
-
-
-    /*IMPRIMIR PRUEBA*/
-
-    function Imprimir() {
-        $.fn.Conexion({
-            direccion: '/NotaEntrega/Imprimir',
-            terminado: function (data, textStatus, jqXHR) {
-                alert("Terminado");
-            },
-            bloqueo: false
-        });
-    }
-
-    //function Resultado(dato) {
-    //    if (dato != -1) {
-    //        if ($("#hdnEstado").val() == "E") {
-    //            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se modificó el producto correctamente", funcionAceptar: Aceptar });
-    //        } else {
-    //            $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el producto correctamente", funcionAceptar: Aceptar });
-    //        }
-    //    } else {
-    //        $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
-    //    }
-    //}
-
-
-
-
-    //$("#btnAgregar,#btnEditar,#btnEliminar,#btnCancelar").attr("disabled", "disabled");
-
-    //$("#btnAgregar").removeAttr("disabled", "disabled");
-
 </script>

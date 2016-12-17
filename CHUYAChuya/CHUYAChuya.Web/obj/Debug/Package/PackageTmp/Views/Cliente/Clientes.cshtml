@@ -4,6 +4,7 @@
 <div class="col-lg-11 col-lg-offset-0-5">
     <h3 class="text-center">CLIENTES</h3>
     <input id="hdnEstado" type="hidden" name="PersNat.oPers.nPersId" />
+    <input id="hdnPag" type="hidden" />
     <div id="target1" class="panel move panel-inverse active" style="display: block;">
         <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Lista de Clientes</div>
         <div class="panel-body">
@@ -297,6 +298,8 @@
         var tpoBsq = $("#cmbTpoBsq").val();
         var valor = $("#txtValor").val();
         valor = valor == "" ? null : valor;
+        $("#hdnPag").val(nPage);
+
 
         switch (tpoBsq) {
             case "1":
@@ -492,7 +495,8 @@
         $('#frmClienteNat')[0].reset();
         $('#frmClienteJur')[0].reset();
         $("#btnCliente a").attr("disabled", false);
-        $("#btnCliente a")[0].click()
+        $("#btnCliente a")[0].click();
+        $("#msg").html("");
         vista("#target1");
     }
 
@@ -549,6 +553,7 @@
             } else {
                 $.fn.Mensaje({ titulo: "Mensaje", mensaje: "Se registró el cliente correctamente" , funcionAceptar: Limpiar});
             }
+            ListaCliente($("#hdnPag").val(), 10);
         } else {
             $.fn.Mensaje({ titulo: "Mensaje", mensaje: "La operación no se realizó correctamente" });
         }

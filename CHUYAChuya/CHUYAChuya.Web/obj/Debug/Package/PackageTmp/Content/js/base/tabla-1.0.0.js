@@ -216,7 +216,7 @@
 
         if (m.elim) {
             $("#" + m.tblId + " tbody tr .elim").bind("click", function () {
-                var nPage = 0;
+                var nPage = 1;
                 var fila = $(this).parent();
 
                 if (m.pag) {
@@ -230,7 +230,7 @@
                     mensaje: "&iquest;Est&aacutes seguro que deseas eliminar el registro?",
                     tamano: "md",
                     tipo: "SiNo",
-                    funcionSi: function () {
+                    funcionAceptar: function () {
                         m["elimEvent"](fila, nPage);
                     }
                 });

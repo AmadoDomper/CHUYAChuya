@@ -8,7 +8,8 @@
         m.funcionCerrar = m.funcionCerrar || function () { };
         m.tamano = m.tamano || "";
         m.cuerpo = m.cuerpo || "";
-        m.focusElement = m.focusElement || "";
+        m.focusOpen = m.focusOpen || "";
+        m.focusClose = m.focusClose || "";
 
         var cssModal = "modal-dialog";
 
@@ -38,6 +39,7 @@
         {
             $("div#" + m.id).remove();
             m.funcionCerrar();
+            $("#" + m.focusClose).focus();
         });
 
         $('.modal').on('show.bs.modal', function (event) {
@@ -49,7 +51,7 @@
             var idx = ($('.modal:visible').length) - 1; // raise backdrop after animation.
             //$('.modal-backdrop').not('.stacked').css('z-index', 1049 + (10 * idx));
             $('.modal-backdrop').not('.stacked').addClass('stacked');
-            $("#" + m.focusElement).focus();
+            $("#" + m.focusOpen).focus();
         });
     }
 })(jQuery);

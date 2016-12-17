@@ -34,7 +34,9 @@
             <h4 class="panel-title">Nuevo Producto</h4>
         </div>
         <div class="panel-body" style="display: block;">
-                <form action="/Producto/RegistrarProducto" autocomplete="off" id="frmProducto" class="form-horizontal ng-pristine ng-valid" method="post">
+            <div id="msg">
+            </div>
+                <form action="/Producto/RegistrarProducto" data-toggle="validator" autocomplete="off" id="frmProducto" class="form-horizontal ng-pristine ng-valid" method="post">
                     <div class="form-group">
                         <label class="col-md-4 control-label">Codigo</label>
                         <div class="col-md-3">
@@ -45,7 +47,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label">Descripción</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control">
+                            <input type="text" id="txtDesc" name="Producto.cProdDesc" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group">
@@ -53,7 +55,7 @@
                         <div class="col-md-3">
                             <div class="input-group">
                                 <span class="input-group-addon">S/.</span>
-                                <input type="text" id="txtPrecioUnit" name="Producto.nProdPrecioUnit" class="form-control" placeholder="0.00">
+                                <input type="text" id="txtPrecioUnit" name="Producto.nProdPrecioUnit" class="form-control" placeholder="0.00" required>
                             </div>
                         </div>
                     </div>
@@ -190,17 +192,25 @@
 
     $("#btnGrabarProducto").bind("click", function () {
         var form = $("#frmProducto");
+        form.validator();
 
-        valores = form.serializeArray();
+        var validator = form.data("bs.validator");
+        validator.validate();
 
-        $.fn.Conexion({
-            direccion: form.attr("action"),
-            datos: valores,
-            terminado: function (data, textStatus, jqXHR) {
-                Resultado(data);
-            },
-            bloqueo: true
-        });
+        if (!validator.hasErrors()) {
+            valores = form.serializeArray();
+
+            $.fn.Conexion({
+                direccion: form.attr("action"),
+                datos: valores,
+                terminado: function (data, textStatus, jqXHR) {
+                    Resultado(data);
+                },
+                bloqueo: true
+            });
+        } else {
+            alerta("#msg", "Es necesario completar los campos que están en rojo.");
+        }
 
     });
 
@@ -211,7 +221,8 @@
 
     function Limpiar() {
         $('#frmProducto')[0].reset();
-        $("#hdnProd").val("")
+        $("#hdnProd").val("");
+        $("#msg").html("");
         vista("#target1");
     }
 

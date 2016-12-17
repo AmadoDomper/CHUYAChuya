@@ -10,34 +10,34 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/CHUYAChuya.AccesoDatos.dll">
-      <publishTime>12/14/2016 00:04:37</publishTime>
+      <publishTime>12/17/2016 16:23:20</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.AccesoDatos.pdb">
-      <publishTime>12/14/2016 00:04:37</publishTime>
+      <publishTime>12/17/2016 16:23:20</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.EntidadesNegocio.dll">
-      <publishTime>12/14/2016 00:04:37</publishTime>
+      <publishTime>12/17/2016 16:23:19</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.EntidadesNegocio.pdb">
-      <publishTime>12/14/2016 00:04:37</publishTime>
+      <publishTime>12/17/2016 16:23:19</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.LogicaNegocio.dll">
-      <publishTime>12/14/2016 00:04:38</publishTime>
+      <publishTime>12/17/2016 16:23:20</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.LogicaNegocio.pdb">
-      <publishTime>12/14/2016 00:04:38</publishTime>
+      <publishTime>12/17/2016 16:23:20</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Seguridad.dll">
-      <publishTime>12/14/2016 00:04:38</publishTime>
+      <publishTime>12/17/2016 16:23:20</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Seguridad.pdb">
-      <publishTime>12/14/2016 00:04:38</publishTime>
+      <publishTime>12/17/2016 16:23:20</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Web.dll">
-      <publishTime>12/14/2016 00:04:39</publishTime>
+      <publishTime>12/17/2016 16:23:22</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Web.pdb">
-      <publishTime>12/14/2016 00:04:39</publishTime>
+      <publishTime>12/17/2016 16:23:22</publishTime>
     </File>
     <File Include="bin/EPPlus.dll">
       <publishTime>12/11/2016 19:50:45</publishTime>
@@ -388,10 +388,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>07/29/2016 13:08:20</publishTime>
     </File>
     <File Include="Content/js/base/buscarPersona-1.0.0.js">
-      <publishTime>07/14/2016 23:01:59</publishTime>
+      <publishTime>12/15/2016 22:30:47</publishTime>
     </File>
     <File Include="Content/js/base/buscarProducto-1.0.0.js">
-      <publishTime>06/26/2016 13:48:37</publishTime>
+      <publishTime>12/15/2016 22:25:37</publishTime>
     </File>
     <File Include="Content/js/base/buscarProveedor-1.0.0.js">
       <publishTime>06/27/2016 22:00:44</publishTime>
@@ -409,7 +409,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>11/13/2015 20:50:24</publishTime>
     </File>
     <File Include="Content/js/base/mensaje-1.0.0.js">
-      <publishTime>09/03/2016 16:57:59</publishTime>
+      <publishTime>12/17/2016 10:02:58</publishTime>
     </File>
     <File Include="Content/js/base/recuperacion/AsignacionCVG.js">
       <publishTime>11/13/2015 20:50:24</publishTime>
@@ -439,13 +439,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>11/13/2015 20:50:26</publishTime>
     </File>
     <File Include="Content/js/base/tabla-1.0.0.js">
-      <publishTime>11/05/2016 14:46:59</publishTime>
+      <publishTime>12/17/2016 09:51:08</publishTime>
     </File>
     <File Include="Content/js/base/ventana-1.0.0.js">
-      <publishTime>11/06/2016 01:02:24</publishTime>
+      <publishTime>12/15/2016 22:25:29</publishTime>
     </File>
     <File Include="Content/js/main.js">
-      <publishTime>08/06/2016 22:53:20</publishTime>
+      <publishTime>12/15/2016 16:01:35</publishTime>
     </File>
     <File Include="Content/js/vendor/bootstrap-datetimepicker.es.js">
       <publishTime>11/13/2015 20:50:28</publishTime>
@@ -505,10 +505,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>11/15/2016 22:31:22</publishTime>
     </File>
     <File Include="Views/Cliente/Clientes.cshtml">
-      <publishTime>11/15/2016 11:04:49</publishTime>
+      <publishTime>12/15/2016 16:09:05</publishTime>
     </File>
     <File Include="Views/Config/Config.cshtml">
-      <publishTime>11/15/2016 11:05:25</publishTime>
+      <publishTime>12/16/2016 20:21:52</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>11/15/2016 22:29:20</publishTime>
@@ -526,10 +526,10 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>09/29/2016 20:11:52</publishTime>
     </File>
     <File Include="Views/NotaEntrega/NotaEntregas.cshtml">
-      <publishTime>12/03/2016 09:55:04</publishTime>
+      <publishTime>12/17/2016 12:04:49</publishTime>
     </File>
     <File Include="Views/Producto/Productos.cshtml">
-      <publishTime>11/15/2016 11:04:30</publishTime>
+      <publishTime>12/15/2016 23:36:38</publishTime>
     </File>
     <File Include="Views/Reporte/Reportes.cshtml">
       <publishTime>12/13/2016 20:57:23</publishTime>
@@ -538,7 +538,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>11/15/2016 12:49:44</publishTime>
     </File>
     <File Include="Views/Usuario/Usuarios.cshtml">
-      <publishTime>11/15/2016 11:04:26</publishTime>
+      <publishTime>12/17/2016 16:03:59</publishTime>
     </File>
     <File Include="Views/Web.config">
       <publishTime>10/27/2016 23:21:45</publishTime>
@@ -547,7 +547,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/04/2016 20:06:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/14/2016 00:05:04</publishTime>
+      <publishTime>12/17/2016 16:24:17</publishTime>
     </File>
   </ItemGroup>
 </Project>

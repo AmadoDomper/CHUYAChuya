@@ -9,6 +9,8 @@
         m.valor = m.valor || null;
         m.durante = m.durante || function () { };
         m.error = m.error || function () { };
+        m.focusOpen = m.focusOpen || "";
+        m.focusClose = m.focusClose || "";
 
         var tablaId = "tblProductos";
         var btnAceptar = "#vntBuscaProducto #btnProdAceptar";
@@ -34,14 +36,15 @@
             $.fn.Ventana({
                 id: "vntBuscaProducto",
                 titulo: "Buscar Producto",
-                tamano: "lg"
+                tamano: "lg",
+                focusOpen: buscarId,
+                focusClose: m.focusClose
             });
 
             var html = '<div class="row"><div class="col-xs-12 col-sm-9 col-md-12 col-lg-12"><div class="form-inline ng-pristine ng-valid"><input id="txtBuscar" type="text" onclick="this.select();" class="form-control " placeholder="Buscar producto..." tabindex="1" style="border-bottom-width: 1px;margin-bottom: 10px;width: 70%;"><button id="btnBuscar" type="button" style="border-bottom-width: 1px;margin-left: 5px;margin-bottom: 10px;" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-search"></span></button></div></div><div class="row"><div id="' + 'cntBuscarProducto' + '" class="col-xs-12 col-sm-12 col-md-12 col-lg-12"></div></div><div class="row"><div class="col-md-3 col-md-offset-9 text-right"><button id="btnProdAceptar" type="submit" class="btn btn-sm btn-primary m-r-5">Aceptar</button><button id="btnProdCancelar" type="submit" data-dismiss="modal" aria-hidden="true" class="btn btn-sm btn-default">Cancelar</button></div></div>';
             $("#vntBuscaProducto .panel-body").html(html);
 
-            var focus = function () { $(buscar_Id).focus().select(); };
-            setTimeout(focus(), 500);
+
             CrearTabla(lista);
             $("#txtBuscar").val(valor);
             $('#vntBuscaProducto').modal('show');

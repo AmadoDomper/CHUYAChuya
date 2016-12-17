@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
+﻿    using Microsoft.Practices.EnterpriseLibrary.Common.Configuration;
 using Microsoft.Practices.EnterpriseLibrary.Data;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarNotaEntrega(NotaEntrega oNotEnt)
         {
-            int nNoTaEntId = -1;
+            int nNoTaEntId = -2;
 
             try
             {
@@ -63,14 +63,14 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                nNoTaEntId = -1;
+                nNoTaEntId = -2;
             }
             return nNoTaEntId;
         }
 
         public int RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo, string cNotaUsuCo, string cNotaUsuAge)
         {
-            int nTicketId = 0;
+            int nTicketId = -2;
 
             try
             {
@@ -136,7 +136,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RealizarConfirmacionEntrega(int nNotaEntId, string cUsuario, string cUsuarioAge)
         {
-            int nMovNro = 0;
+            int nMovNro = -2;
 
             try
             {
@@ -165,14 +165,14 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                nMovNro = -1;
+                nMovNro = -2;
             }
             return nMovNro;
         }
 
         public int RealizarAnularComprobante(int nNotaEntId, string cUsuario, string cUsuarioAge)
         {
-            int nMovNro = -2;
+            int nMovNro = -3;
 
             try
             {
@@ -201,14 +201,14 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                nMovNro = -2;
+                nMovNro = -3;
             }
             return nMovNro;
         }
 
         public int RealizarAnularNota(int nNotaEntId, string cUsuario, string cUsuarioAge)
         {
-            int nMovNro = -2;
+            int nMovNro = -3;
 
             try
             {
@@ -237,7 +237,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                nMovNro = -2;
+                nMovNro = -3;
             }
             return nMovNro;
         }

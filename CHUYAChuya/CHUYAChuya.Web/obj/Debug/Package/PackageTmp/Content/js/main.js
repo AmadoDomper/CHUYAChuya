@@ -237,6 +237,10 @@ function alerta($id,$msg) {
     $($id).html('<div class="alert alert-danger alert-dismissible text-center" role="alert" style="margin-bottom: 10px;"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button><strong>Error! </strong>' + $msg + '</div>');
 }
 
+function advertencia($id, $msg) {
+    $($id).html('<div class="alert alert-warning alert-dismissible text-center" role="alert" style="margin-bottom: 10px;"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button><strong>Advertencia! </strong>' + $msg + '</div>');
+}
+
 function hCombos() {
     this.ids = [];
     this.info = [];
