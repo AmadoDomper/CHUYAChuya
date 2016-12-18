@@ -13,41 +13,46 @@ namespace CHUYAChuya.AccesoDatos.Commons
             NotaE_Cobrar_Nota_de_Entrega = 3,
             NotaE_Confirmar_Entrega = 4,
             NotaE_Anular_Nota_de_Entrega = 5,
+            NotaE_Anular_Comprobante = 6,
         #endregion
 
         #region Clientes
-            Clie_Crear_Nuevo_Cliente = 6,
-            Clie_Editar_Cliente = 7,
-            Clie_Eliminar_Cliente = 8,
+            Clie_Crear_Nuevo_Cliente = 7,
+            Clie_Editar_Cliente = 8,
+            Clie_Eliminar_Cliente = 9,
         #endregion
 
         #region Usuarios
-            Usu_Nuevo_Usuario = 9,
-            Usu_Editar_Usuario = 10,
-            Usu_Eliminar_Usuario = 11,
+            Usu_Nuevo_Usuario = 10,
+            Usu_Editar_Usuario = 11,
+            Usu_Eliminar_Usuario = 12,
         #endregion
 
         #region Producto
-            Pro_Nuevo_Producto = 12,
-            Pro_Editar_Producto = 13,
-            Pro_Eliminar_Producto = 14,
+            Pro_Nuevo_Producto = 13,
+            Pro_Editar_Producto = 14,
+            Pro_Eliminar_Producto = 15,
         #endregion
 
         #region Configuración
-            Con_Agregar_Rol = 15,
-            Con_Editar_Rol = 16,
-            Con_Eliminar_Rol = 17,
+            Con_Agregar_Rol = 16,
+            Con_Editar_Rol = 17,
+            Con_Eliminar_Rol = 18,
         #endregion
 
         #region Caja
-            Caja_Apertura_de_Caja = 18,
-            Caja_Salida_Efectivo = 19,
-            Caja_Entrada_Efectivo = 20,
+            Caja_Apertura_de_Caja = 19,
+            Caja_Salida_Efectivo = 20,
+            Caja_Entrada_Efectivo = 21,
         #endregion
 
         #region Corte de Caja
-            CorCaja_Realizar_Corte = 21,
-            CorCaja_Realizar_Cierre_Final = 22,
+            CorCaja_Realizar_Cierre = 22,
+            CorCaja_Realizar_Cierre_Final = 23,
+        #endregion
+
+        #region Reporte
+            Rep_Exportar = 24,
         #endregion
 
     }

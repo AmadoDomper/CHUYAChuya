@@ -10,34 +10,34 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
   </PropertyGroup>
   <ItemGroup>
     <File Include="bin/CHUYAChuya.AccesoDatos.dll">
-      <publishTime>12/17/2016 16:23:20</publishTime>
+      <publishTime>12/17/2016 17:51:31</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.AccesoDatos.pdb">
-      <publishTime>12/17/2016 16:23:20</publishTime>
+      <publishTime>12/17/2016 17:51:31</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.EntidadesNegocio.dll">
-      <publishTime>12/17/2016 16:23:19</publishTime>
+      <publishTime>12/17/2016 17:51:31</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.EntidadesNegocio.pdb">
-      <publishTime>12/17/2016 16:23:19</publishTime>
+      <publishTime>12/17/2016 17:51:31</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.LogicaNegocio.dll">
-      <publishTime>12/17/2016 16:23:20</publishTime>
+      <publishTime>12/17/2016 17:51:31</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.LogicaNegocio.pdb">
-      <publishTime>12/17/2016 16:23:20</publishTime>
+      <publishTime>12/17/2016 17:51:31</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Seguridad.dll">
-      <publishTime>12/17/2016 16:23:20</publishTime>
+      <publishTime>12/17/2016 17:51:32</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Seguridad.pdb">
-      <publishTime>12/17/2016 16:23:20</publishTime>
+      <publishTime>12/17/2016 17:51:32</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Web.dll">
-      <publishTime>12/17/2016 16:23:22</publishTime>
+      <publishTime>12/17/2016 17:51:33</publishTime>
     </File>
     <File Include="bin/CHUYAChuya.Web.pdb">
-      <publishTime>12/17/2016 16:23:22</publishTime>
+      <publishTime>12/17/2016 17:51:33</publishTime>
     </File>
     <File Include="bin/EPPlus.dll">
       <publishTime>12/11/2016 19:50:45</publishTime>
@@ -499,7 +499,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>11/17/2016 01:35:48</publishTime>
     </File>
     <File Include="Views/Caja/CierreCaja.cshtml">
-      <publishTime>12/04/2016 20:28:49</publishTime>
+      <publishTime>12/17/2016 17:39:57</publishTime>
     </File>
     <File Include="Views/Caja/ConfirmarInicioCaja.cshtml">
       <publishTime>11/15/2016 22:31:22</publishTime>
@@ -508,7 +508,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>12/15/2016 16:09:05</publishTime>
     </File>
     <File Include="Views/Config/Config.cshtml">
-      <publishTime>12/16/2016 20:21:52</publishTime>
+      <publishTime>12/17/2016 17:02:42</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
       <publishTime>11/15/2016 22:29:20</publishTime>
@@ -526,13 +526,13 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>09/29/2016 20:11:52</publishTime>
     </File>
     <File Include="Views/NotaEntrega/NotaEntregas.cshtml">
-      <publishTime>12/17/2016 12:04:49</publishTime>
+      <publishTime>12/17/2016 17:41:57</publishTime>
     </File>
     <File Include="Views/Producto/Productos.cshtml">
       <publishTime>12/15/2016 23:36:38</publishTime>
     </File>
     <File Include="Views/Reporte/Reportes.cshtml">
-      <publishTime>12/13/2016 20:57:23</publishTime>
+      <publishTime>12/17/2016 17:40:07</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
       <publishTime>11/15/2016 12:49:44</publishTime>
@@ -547,7 +547,7 @@ editando este archivo MSBuild. Para conocer más acerca de esto, visite http://g
       <publishTime>02/04/2016 20:06:40</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/17/2016 16:24:17</publishTime>
+      <publishTime>12/17/2016 17:51:38</publishTime>
     </File>
   </ItemGroup>
 </Project>

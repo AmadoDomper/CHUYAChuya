@@ -29,21 +29,24 @@
                                 <input id="txtFF" type="text" class="form-control" name="end">
                             </div>
                         </div>
-                        @*<input id="btnBuscarNota" type="button" value="Buscar" class="btn btn-sm btn-primary">*@
                         <input id="btnGenerarRep" type="button" value="Generar" class="btn btn-sm btn-primary">
                     </div>
                 </div>
                 <div class="col-sm-1">
                     <div class="form-inline">
-                        <button id="btnExportar" type="button" class="btn btn-success btn-sm m-l-20">
-                            <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span> Exportar</button>
+                            @if (FrontUser.TienePermiso(RolesPermisos.Rep_Exportar))
+                            {
+                                <button id="btnExportar" type="button" class="btn btn-success btn-sm m-l-20">
+                                <span class="glyphicon glyphicon glyphicon-file" aria-hidden="true"></span> Exportar</button>
+                            }
+
+
                     </div>
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
             <div class="row table-main">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    @*<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>*@
                     <div id="cntListaRep" class="table-responsive">
                     </div>
                 </div>

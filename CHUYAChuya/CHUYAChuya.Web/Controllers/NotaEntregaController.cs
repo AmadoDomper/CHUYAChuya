@@ -279,19 +279,19 @@ namespace CHUYAChuya.Web.Controllers
                 writer.WriteLine(char.ConvertFromUtf32(27) + "i");
                 writer.Close();
 
-                //using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
-                //{
-                //    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+                using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+                {
+                    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
 
-                //    writerBat.Close();
-                //}
+                    writerBat.Close();
+                }
 
-                //p = new Process();
-                //p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+                p = new Process();
+                p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
 
-                //p.Start();
-                //p.Close();
-                //p.Dispose();
+                p.Start();
+                p.Close();
+                p.Dispose();
 
 
             }

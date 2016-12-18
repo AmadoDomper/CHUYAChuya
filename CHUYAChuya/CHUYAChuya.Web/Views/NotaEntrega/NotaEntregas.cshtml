@@ -99,7 +99,10 @@
                     {
                         <input id="btnAnularNota" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Nota" disabled>
                     }
-                    <input id="btnAnularComp" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Comprobante" disabled>
+                    @if (FrontUser.TienePermiso(RolesPermisos.NotaE_Anular_Comprobante))
+                    {
+                        <input id="btnAnularComp" type="button" class="btn btn-sm btn-danger m-r-5" value="Anular Comprobante" disabled>
+                    }
                 </div>
             </div>
             <div class="hr-line-dashed"></div>
