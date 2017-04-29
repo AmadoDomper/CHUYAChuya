@@ -14,7 +14,7 @@ namespace CHUYAChuya.EntidadesNegocio
         private string _cPersJurRep;
         private string _cPersJurRUC;
         private DateTime _dPersJurFecConst;
-        private Constante _oPersJurActividad = new Constante();
+        //private Constante _oPersJurActividad = new Constante();
 
         [JsonProperty(PropertyName = "oPers")]
         public Persona oPers
@@ -51,12 +51,12 @@ namespace CHUYAChuya.EntidadesNegocio
             set { _dPersJurFecConst = value; }
         }
 
-        [JsonProperty(PropertyName = "oAct")]
-        public Constante oPersJurActividad
-        {
-            get { return _oPersJurActividad; }
-            set { _oPersJurActividad = value; }
-        }
+        //[JsonProperty(PropertyName = "oAct")]
+        //public Constante oPersJurActividad
+        //{
+        //    get { return _oPersJurActividad; }
+        //    set { _oPersJurActividad = value; }
+        //}
 
 
 

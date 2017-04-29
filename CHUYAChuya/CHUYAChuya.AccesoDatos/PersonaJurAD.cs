@@ -37,23 +37,19 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@cPersDir", SqlDbType.VarChar, 150).Value = (object)oPersJur.oPers.cPersDireccion ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cPersUbigeo", SqlDbType.VarChar, 20).Value = (object)oPersJur.oPers.oPersUbigeo.cConstanteID ?? DBNull.Value;
 
-                    oSqlCommand.Parameters.Add("@cPersJurEmpresa", SqlDbType.VarChar, 100).Value = oPersJur.cPersJurEmpresa;
-                    oSqlCommand.Parameters.Add("@cPersJurRep", SqlDbType.VarChar, 100).Value = oPersJur.cPersJurRep;
-                    oSqlCommand.Parameters.Add("@cPersJurRUC", SqlDbType.VarChar, 11).Value = oPersJur.cPersJurRUC;
-                    oSqlCommand.Parameters.Add("@dPersJurFecConst", SqlDbType.DateTime).Value = (oPersJur.dPersJurFecConst).Add(DateTime.Now.TimeOfDay);
-                    oSqlCommand.Parameters.Add("@nPersJurActividad", SqlDbType.SmallInt).Value = oPersJur.oPersJurActividad.cConstanteID;
+                    oSqlCommand.Parameters.Add("@cPersJurEmpresa", SqlDbType.VarChar, 100).Value = (object)oPersJur.cPersJurEmpresa ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cPersJurRep", SqlDbType.VarChar, 100).Value = (object)oPersJur.cPersJurRep ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cPersJurRUC", SqlDbType.VarChar, 11).Value = (object)oPersJur.cPersJurRUC ?? "";
+                    oSqlCommand.Parameters.Add("@nRes", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
+                    //oSqlCommand.Parameters.Add("@dPersJurFecConst", SqlDbType.DateTime).Value = (oPersJur.dPersJurFecConst).Add(DateTime.Now.TimeOfDay);
+                    //oSqlCommand.Parameters.Add("@nPersJurActividad", SqlDbType.SmallInt).Value = oPersJur.oPersJurActividad.cConstanteID;
 
                     oSqlConnection.Open();
+                    oSqlCommand.ExecuteNonQuery();
 
-                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
-                    {
-                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+                    resultado = (int)oSqlCommand.Parameters["@nRes"].Value;
 
-                        while (oIDataReader.Read())
-                        {
-                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
-                        }
-                    }
+                    oSqlConnection.Close();
 
                 }
             }
@@ -91,8 +87,8 @@ namespace CHUYAChuya.AccesoDatos
                     int icPersJurEmpresa = oIDataReader.GetOrdinal("cPersJurEmpresa");
                     int icPersJurRep = oIDataReader.GetOrdinal("cPersJurRep");
                     int icPersJurRUC = oIDataReader.GetOrdinal("cPersJurRUC");
-                    int idPersJurFecConst = oIDataReader.GetOrdinal("dPersJurFecConst");
-                    int inPersJurActividad = oIDataReader.GetOrdinal("nPersJurActividad");
+                    //int idPersJurFecConst = oIDataReader.GetOrdinal("dPersJurFecConst");
+                    //int inPersJurActividad = oIDataReader.GetOrdinal("nPersJurActividad");
 
                     while (oIDataReader.Read())
                     {
@@ -107,8 +103,8 @@ namespace CHUYAChuya.AccesoDatos
                         oPersonaJur.cPersJurEmpresa = DataUtil.DbValueToDefault<String>(oIDataReader[icPersJurEmpresa]);
                         oPersonaJur.cPersJurRep = DataUtil.DbValueToDefault<String>(oIDataReader[icPersJurRep]);
                         oPersonaJur.cPersJurRUC = DataUtil.DbValueToDefault<String>(oIDataReader[icPersJurRUC]);
-                        oPersonaJur.dPersJurFecConst = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idPersJurFecConst]);
-                        oPersonaJur.oPersJurActividad.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inPersJurActividad].ToString());
+                        //oPersonaJur.dPersJurFecConst = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idPersJurFecConst]);
+                        //oPersonaJur.oPersJurActividad.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inPersJurActividad].ToString());
                     }
                 }
 

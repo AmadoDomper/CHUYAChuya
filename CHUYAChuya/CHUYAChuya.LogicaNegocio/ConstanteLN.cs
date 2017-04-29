@@ -17,6 +17,11 @@ namespace CHUYAChuya.LogicaNegocio
             oConstanteAD = new ConstanteAD();
         }
 
+        public List<Constante> ListaConstante(int id)
+        {
+            return oConstanteAD.ListaConstante(id);
+        }       
+
         public List<Constante> ListaDepartamento()
         {
             return oConstanteAD.ListaDepartamento();

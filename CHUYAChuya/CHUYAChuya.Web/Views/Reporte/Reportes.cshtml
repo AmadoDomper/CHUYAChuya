@@ -16,6 +16,7 @@
                             <select name="status" id="cmbReportes" class="form-control">
                                 <option value="1" selected="">Reporte de Ventas o Ingresos</option>
                                 <option value="2">Reporte de Compras</option>
+                                <option value="3">Reporte de Nota de Entregas</option>
                             </select>
                         </div>
                         <div class="form-group m-r-10">
@@ -155,6 +156,9 @@
             case "2":
                 ListarRevCompras()
                 break;
+            case "3":
+                ListarRevNotas()
+                break;
         }
     });
 
@@ -172,6 +176,9 @@
                 break;
             case "2":
                 window.location.href = '/Reporte/GetExcelCompras' + "?dIni=" + dIni + "&dFin=" + dFin;
+                break;
+            case "3":
+                window.location.href = '/Reporte/GetExcelNotas' + "?dIni=" + dIni + "&dFin=" + dFin;
                 break;
         }
     });
@@ -227,6 +234,34 @@
                     alinear: "C,C,C,C,C,L,C",
                     cellLen: "40,100,40,60,100,100,150,60",
                     cantRegVertical: 15,
+                    datos: d
+                });
+            }
+        });
+    }
+
+    function ListarRevNotas() {
+
+        var dIni, dFin;
+
+        dIni = $("#txtFI").val();
+        dFin = $("#txtFF").val();
+
+        $.fn.Conexion({
+            direccion: '/Reporte/ListarNotaEntrega',
+            datos: { "dIni": dIni, "dFin": dFin },
+            terminado: function (data) {
+                var d = JSON.parse(data);
+
+                $("#cntListaRep").Tabla({
+                    tblId: "tblRepCompras",
+                    cabecera: "FECHA,N/E,CLIENTE,SERVICIO,DESCRIPCION,PRENDA,PESO,PROD. UNI,MONTO,PENDIENTE,PAGADO,ENTREGADO,ANULADO,B/V,F/,FECHA PAGO",
+                    campos: "dFecReg,nNotaId,cPersDesc,cServ,cProdDesc,cPrenda,cPeso,cDetP,cDetI,cPend,cPag,cEnt,cAnul,cBole,cFact,dFecPag",
+                    scrollVertical: "Si",
+                    tipoCampo: ",,,,,,,,,,,,,,,",
+                    alinear: "C,C,R,C,R,L,L,C,C,C,C,C,C,C,C,C",
+                    cellLen: "100,40,120,60,120,60,60,60,60,40,40,40,40,40,40,100",
+                    cantRegVertical: 50,
                     datos: d
                 });
             }

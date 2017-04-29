@@ -110,7 +110,7 @@ namespace CHUYAChuya.AccesoDatos
                     int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
                     int icPersUbigeo = oIDataReader.GetOrdinal("cPersUbigeo");
 
-                    int icPersNatNombre = oIDataReader.GetOrdinal("cPersNatNombre");
+                    int icPersNatNombres = oIDataReader.GetOrdinal("cPersNatNombres");
                     int icPersNatApellido = oIDataReader.GetOrdinal("cPersNatApellido");
                     int icPersNatDOI = oIDataReader.GetOrdinal("cPersNatDOI");
                     int idPersNatNac = oIDataReader.GetOrdinal("dPersNatNac");
@@ -129,7 +129,7 @@ namespace CHUYAChuya.AccesoDatos
                         oUsuario.oPersNat.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
                         oUsuario.oPersNat.oPers.oPersUbigeo.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[icPersUbigeo]);
 
-                        oUsuario.oPersNat.cPersNatNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatNombre]);
+                        oUsuario.oPersNat.cPersNatNombres = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatNombres]);
                         oUsuario.oPersNat.cPersNatApellido = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatApellido]);
                         oUsuario.oPersNat.cPersNatDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatDOI]);
                         oUsuario.oPersNat.dPersNatNac = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idPersNatNac]);

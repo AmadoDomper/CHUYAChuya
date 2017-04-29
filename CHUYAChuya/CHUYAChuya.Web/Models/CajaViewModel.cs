@@ -10,5 +10,6 @@ namespace CHUYAChuya.Web.Models
     public class CajaViewModel
     {
         public List<Constante> lstUsuarios { get; set; }
+        public List<Constante> lstTpoCom { get; set; }
     }
 }

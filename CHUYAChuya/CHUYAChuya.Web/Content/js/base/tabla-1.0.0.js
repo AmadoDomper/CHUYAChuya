@@ -26,6 +26,7 @@
             */
         var w = m.datos;
         m.tblId = m.tblId || "";
+        m.textSearchId = m.textSearchId || "";
         m.numerado = m.numerado || "No";
         m.contenedor = m.contenedor || this;
         m.cabecera = m.cabecera || "";
@@ -46,9 +47,13 @@
         m.alinear = m.alinear || false;
         m.empty = m.empty || "No existen datos";
         m.edit = m.edit || false;
+        m.search = m.search || false;
         m.check = m.check || false;
+        m.checkHead = m.checkHead || false;
         m.editEvent = m.editEvent || function () { };
         m.checkEvent = m.checkEvent || function () { };
+        m.checkHeadEvent = m.checkHeadEvent || function () { };
+        m.searchEvent = m.searchEvent || function () { };
         m.click = m.click || false;
         m.elim = m.elim || false;
         m.elimEvent = m.elimEvent || function () { };
@@ -78,9 +83,11 @@
 
         //Cabecera
         html += '<thead><tr>';
+        if (m.checkHead) { html += '<th><input style="cursor: pointer;text-align: center;" id="chkAll" type="checkbox"></th>'; }
         if (m.numerado === "Si") { html += '<th>N°</th>'; }
         for (i in col) { html += '<th>' + col[i] + '</th>'; }
         if (m.edit) { html += '<th>Edit.</th>'; }
+        if (m.search) { html += '<th>Det.</th>'; }
         if (m.elim) { html += '<th>Elim.</th>'; }
         html += '</tr></thead>';
 
@@ -116,7 +123,7 @@
                         dat = moment(dat).format("DD/MM/YYYY hh:mm:ss");
                     }
 
-                    if (tipo[k] == "C") {
+                    if (tipo[k] == "C" || tipo[k] == "C1") {
                         dat = '<input type="checkbox"' + (dat ? "checked" : "")+ '>'
                     } else {
                         dat = (typeof (dat) === "boolean" ? "<span style='color:#" + (dat ? "43C73C'" : "C73C3C'") + " class='glyphicon glyphicon-" + (dat ? "ok'" : "remove'") + " aria-hidden='true'></span>" : dat);
@@ -127,6 +134,9 @@
 
                 if (m.edit) {
                     html += '<td class="edit" style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-pencil" aria-hidden="true"></span></td>';
+                }
+                if (m.search) {
+                    html += '<td class="search" style="cursor: pointer;text-align: center;"><span style="color: #3C86C7;font-size:15px;" class="glyphicon glyphicon-search" aria-hidden="true"></span></td>';
                 }
                 if (m.elim) {
                     html += '<td class="elim" style="cursor: pointer;text-align: center;"><span style="color: #C73C3C;font-size:15px;" class="glyphicon glyphicon-trash" aria-hidden="true"></span></td>';
@@ -153,7 +163,7 @@
         //}
         
         if (typeof (m.datos) != 'undefined' && m.datos.length == 0) {
-            html += '<tr><td colspan="' + camp.length + (m.edit ? 1 : 0) + (m.elim ? 1 : 0) + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
+            html += '<tr><td colspan="' + camp.length + (m.edit ? 1 : 0) + (m.elim ? 1 : 0) + (m.search ? 1 : 0) + '"><h1 class="text-center m-t-10"><small>' + m.empty + '</small></h1></td></tr>';
         }
 
 
@@ -189,14 +199,15 @@
         if (m.cellLen) {
             m.cellLen = m.cellLen.split(",");
             var i=0;
-            for (i in m.cellLen) {
+            for (elem in m.cellLen) {
 
-                if (m.cellLen == 0) {
+                if (m.cellLen[elem] == "0") {
                     $('#' +m.tblId + ' th:nth-child(' + (i + 1) + ')').hide();
                     $('#' +m.tblId + ' td:nth-child(' + (i + 1) + ')').hide();
                 } else {
                     $("#" + m.tblId).find('th:eq(' + i + ')').css("width", m.cellLen[i] + "px");
                 }
+                i++;
             }
         }
 
@@ -251,8 +262,9 @@
 
         if (m.check) {
             $("#" + m.tblId + " tbody tr input").bind("click", function (e) {
-                var fila = $(this).parent().parent()
-                m["checkEvent"](fila);
+                var fila = $(this).parent().parent();
+                CheckAll();
+                m["checkEvent"](fila,this);
 
                 if (fila.attr("class") != "seleccionado") {
                     e.stopPropagation();
@@ -260,6 +272,13 @@
             });
         }
 
+        if (m.checkHead) {
+            $('#chkAll').click(function (e) {
+                $(this).closest('table').find('tr:visible td input:checkbox:not(:disabled)').prop('checked', this.checked);
+
+                m["checkHeadEvent"]();
+            });
+        }
 
         if (m.pag) {
             $('#cntPaginacion [data-dt-idx=' + m.pagDato.nPage + ']').parent().addClass("active");
@@ -287,9 +306,39 @@
                     m["pagEvent"](nPag, m.pagDato.nPageSize);
                 }
             });
-
-
         }
+
+        if (m.textSearchId != "") {
+            $('#' + m.textSearchId).keyup(function () {
+                searchTable($(this).val());
+                CheckAll();
+            });
+
+            function searchTable(inputVal) {
+                var table = $("#" + m.tblId);
+                table.find('tr').each(function (index, row) {
+                    var allCells = $(row).find('td');
+                    if (allCells.length > 0) {
+                        var found = false;
+                        allCells.each(function (index, td) {
+                            var regExp = new RegExp(inputVal, 'i');
+                            if (regExp.test($(td).text())) {
+                                found = true;
+                                return false;
+                            }
+                        });
+                        if (found == true) $(row).show(); else $(row).hide();
+                    }
+                });
+            }
+        }
+
+        function CheckAll() {
+            var c = $("#" + m.tblId).find('tr:visible td input:checkbox:not(:checked)').size();
+            var t = $("#" + m.tblId).find('tr:visible td input:checkbox').size();
+            $("#chkAll").prop('checked', c == 0 && t != 0 ? true : false);
+        }
+
     }
 })(jQuery);
 

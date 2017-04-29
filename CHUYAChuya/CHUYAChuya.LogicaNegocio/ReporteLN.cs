@@ -27,9 +27,9 @@ namespace CHUYAChuya.LogicaNegocio
             return oReporteAD.ListarCompras(dIni, dFin);
         }
 
-        
-
-
-
+        public List<RepNotaEntregas> ListarNotaEntrega(DateTime dIni, DateTime dFin)
+        {
+            return oReporteAD.ListarNotaEntrega(dIni, dFin);
+        }
     }
 }

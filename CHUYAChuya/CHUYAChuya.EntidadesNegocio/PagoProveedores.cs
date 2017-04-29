@@ -10,6 +10,7 @@ namespace CHUYAChuya.EntidadesNegocio
     public class PagoProveedores
     {
         private DateTime _dMovFecha;
+        private string _cMovFecha;
         private string _cPersDesc;
         private decimal _nMonto;
 
@@ -18,6 +19,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _dMovFecha; }
             set { _dMovFecha = value; }
+        }
+
+        [JsonProperty(PropertyName = "cMovFecha")]
+        public string cMovFecha
+        {
+            get { return _cMovFecha; }
+            set { _cMovFecha = value; }
         }
 
         [JsonProperty(PropertyName = "cPersDesc")]

@@ -134,5 +134,64 @@ namespace CHUYAChuya.AccesoDatos
             return oListCompras;
         }
 
+        public List<RepNotaEntregas> ListarNotaEntrega(DateTime dIni, DateTime dFin)
+        {
+            List<RepNotaEntregas> oListNotaEntrega = new List<RepNotaEntregas>();
+
+            DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_ObtenerNotaEntregas);
+            oDatabase.AddInParameter(oDbCommand, "@dFechaIni", DbType.Date, (object)dIni ?? DBNull.Value);
+            oDatabase.AddInParameter(oDbCommand, "@dFechaFin", DbType.Date, (object)dFin ?? DBNull.Value);
+
+            using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+            {
+                int idFechaReg = oIDataReader.GetOrdinal("dFechaReg");
+                int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
+                int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
+                int icProdDesc = oIDataReader.GetOrdinal("cProdDesc");
+                int ibProdSerLavado = oIDataReader.GetOrdinal("bProdSerLavado");
+                int ibProdSerSecado = oIDataReader.GetOrdinal("bProdSerSecado");
+                int ibProdSerPlanchado = oIDataReader.GetOrdinal("bProdSerPlanchado");
+                int icPrenda = oIDataReader.GetOrdinal("cPrenda");
+                int icPeso = oIDataReader.GetOrdinal("cPeso");
+                int icDetProdPrecioUnit = oIDataReader.GetOrdinal("cDetProdPrecioUnit");
+                int icDetImporte = oIDataReader.GetOrdinal("cDetImporte");
+                int icPendiente = oIDataReader.GetOrdinal("cPendiente");
+                int icPagado = oIDataReader.GetOrdinal("cPagado");
+                int icEntregado = oIDataReader.GetOrdinal("cEntregado");
+                int icAnulado = oIDataReader.GetOrdinal("cAnulado");
+                int icBoleta = oIDataReader.GetOrdinal("cBoleta");
+                int icFactura = oIDataReader.GetOrdinal("cFactura");
+                int icFechaPago = oIDataReader.GetOrdinal("cFechaPago");
+
+                while (oIDataReader.Read())
+                {
+                    RepNotaEntregas oRep = new RepNotaEntregas();
+
+                    oRep.dFechaReg = DataUtil.DbValueToDefault<String>(oIDataReader[idFechaReg]);
+                    oRep.nNotaEntId = DataUtil.DbValueToDefault<int>(oIDataReader[inNotaEntId]);
+                    oRep.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
+                    oRep.cProdDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icProdDesc]);
+                    oRep.bProdSerLavado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerLavado]);
+                    oRep.bProdSerSecado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerSecado]);
+                    oRep.bProdSerPlanchado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerPlanchado]);
+                    oRep.cPrenda = DataUtil.DbValueToDefault<String>(oIDataReader[icPrenda]);
+                    oRep.cPeso = DataUtil.DbValueToDefault<String>(oIDataReader[icPeso]);
+                    oRep.cDetPrecioUnit = DataUtil.DbValueToDefault<String>(oIDataReader[icDetProdPrecioUnit]);
+                    oRep.cDetImporte = DataUtil.DbValueToDefault<String>(oIDataReader[icDetImporte]);
+                    oRep.cPendiente = DataUtil.DbValueToDefault<String>(oIDataReader[icPendiente]);
+                    oRep.cPagado = DataUtil.DbValueToDefault<String>(oIDataReader[icPagado]);
+                    oRep.cEntregado = DataUtil.DbValueToDefault<String>(oIDataReader[icEntregado]);
+                    oRep.cAnulado = DataUtil.DbValueToDefault<String>(oIDataReader[icAnulado]);
+                    oRep.cBoleta = DataUtil.DbValueToDefault<String>(oIDataReader[icBoleta]);
+                    oRep.cFactura = DataUtil.DbValueToDefault<String>(oIDataReader[icFactura]);
+                    oRep.dFechaPago = DataUtil.DbValueToDefault<String>(oIDataReader[icFechaPago]);
+
+                    oListNotaEntrega.Add(oRep);
+                }
+            }
+
+            return oListNotaEntrega;
+        }
+
     }
 }

@@ -37,24 +37,19 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@cPersDir", SqlDbType.VarChar, 150).Value = (object)oPersNat.oPers.cPersDireccion ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cPersUbigeo", SqlDbType.VarChar, 20).Value = (object)oPersNat.oPers.oPersUbigeo.cConstanteID ?? DBNull.Value;
 
-                    oSqlCommand.Parameters.Add("@cPersNatNombre", SqlDbType.VarChar, 100).Value = oPersNat.cPersNatNombre;
-                    oSqlCommand.Parameters.Add("@cPersNatApellido", SqlDbType.VarChar, 100).Value = oPersNat.cPersNatApellido;
-                    oSqlCommand.Parameters.Add("@cPersNatDOI", SqlDbType.VarChar, 11).Value = oPersNat.cPersNatDOI;
-                    oSqlCommand.Parameters.Add("@dPersNatNac", SqlDbType.DateTime).Value = (oPersNat.dPersNatNac).Add(DateTime.Now.TimeOfDay);
-                    oSqlCommand.Parameters.Add("@cPersNatSexo", SqlDbType.VarChar, 1).Value = oPersNat.oPersNatSexo.cConstanteID;
-
+                    oSqlCommand.Parameters.Add("@cPersNatNombres", SqlDbType.VarChar, 100).Value = (object)oPersNat.cPersNatNombres ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cPersNatApellido", SqlDbType.VarChar, 100).Value = (object)oPersNat.cPersNatApellido ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cPersNatDOI", SqlDbType.VarChar, 11).Value = (object)oPersNat.cPersNatDOI ?? "";
+                    oSqlCommand.Parameters.Add("@dPersNatNac", SqlDbType.DateTime).Value = (oPersNat.dPersNatNac == default(DateTime) ? (object)DBNull.Value : oPersNat.dPersNatNac);
+                    oSqlCommand.Parameters.Add("@cPersNatSexo", SqlDbType.VarChar, 1).Value = (object)oPersNat.oPersNatSexo.cConstanteID ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nRes", System.Data.SqlDbType.Int).Direction = System.Data.ParameterDirection.Output;
 
                     oSqlConnection.Open();
+                    oSqlCommand.ExecuteNonQuery();
 
-                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
-                    {
-                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+                    resultado = (int)oSqlCommand.Parameters["@nRes"].Value;
 
-                        while (oIDataReader.Read())
-                        {
-                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
-                        }
-                    }
+                    oSqlConnection.Close();
 
                 }
             }
@@ -92,7 +87,7 @@ namespace CHUYAChuya.AccesoDatos
                     int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
                     int icPersUbigeo = oIDataReader.GetOrdinal("cPersUbigeo");
 
-                    int icPersNatNombre = oIDataReader.GetOrdinal("cPersNatNombre");
+                    int icPersNatNombres = oIDataReader.GetOrdinal("cPersNatNombres");
                     int icPersNatApellido = oIDataReader.GetOrdinal("cPersNatApellido");
                     int icPersNatDOI = oIDataReader.GetOrdinal("cPersNatDOI");
                     int idPersNatNac = oIDataReader.GetOrdinal("dPersNatNac");
@@ -108,7 +103,7 @@ namespace CHUYAChuya.AccesoDatos
                         oPersonaNat.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
                         oPersonaNat.oPers.oPersUbigeo.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[icPersUbigeo]);
 
-                        oPersonaNat.cPersNatNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatNombre]);
+                        oPersonaNat.cPersNatNombres = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatNombres]);
                         oPersonaNat.cPersNatApellido = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatApellido]);
                         oPersonaNat.cPersNatDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icPersNatDOI]);
                         oPersonaNat.dPersNatNac = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idPersNatNac]);

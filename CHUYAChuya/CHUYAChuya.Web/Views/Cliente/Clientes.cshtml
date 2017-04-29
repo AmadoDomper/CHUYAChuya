@@ -3,7 +3,7 @@
 }
 <div class="col-lg-11 col-lg-offset-0-5">
     <h3 class="text-center">CLIENTES</h3>
-    <input id="hdnEstado" type="hidden" name="PersNat.oPers.nPersId" />
+    <input id="hdnEstado" type="hidden"/>
     <input id="hdnPag" type="hidden" />
     <div id="target1" class="panel move panel-inverse active" style="display: block;">
         <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span> Lista de Clientes</div>
@@ -64,7 +64,7 @@
                         <label class="col-md-4 control-label">Nombre</label>
                         <div class="col-md-7">
                             <input id="hdnPersNatId" type="hidden" name="PersNat.oPers.nPersId" />
-                            <input type="text" id="txtNom" name="PersNat.cPersNatNombre" class="form-control" required>
+                            <input type="text" id="txtNom" name="PersNat.cPersNatNombres" class="form-control" required>
                         </div>
                     </div>
                     <div class="form-group m-b-5">
@@ -76,7 +76,7 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">DOI</label>
                         <div class="col-md-4">
-                            <input type="text" pattern="[0-9]{8}" onkeypress="return val_09(event)" maxlength="8" id="txtDOI" name="PersNat.cPersNatDOI" class="form-control" required>
+                            <input type="text" pattern="[0-9]{8}" onkeypress="return val_09(event)" maxlength="8" id="txtDOI" name="PersNat.cPersNatDOI" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
@@ -103,19 +103,19 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 1</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtNatTel1" onkeypress="return val_09(event)" name="PersNat.oPers.cPersTelefono1" class="form-control">
+                            <input type="text" id="txtNatTel1" onkeypress="return val_09(event)" maxlength="20" name="PersNat.oPers.cPersTelefono1" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 2</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtNatTel2" onkeypress="return val_09(event)" name="PersNat.oPers.cPersTelefono2" class="form-control">
+                            <input type="text" id="txtNatTel2" onkeypress="return val_09(event)" maxlength="20" name="PersNat.oPers.cPersTelefono2" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Dirección</label>
                         <div class="col-md-7">
-                            <input type="text" id="txtNatDir" name="PersNat.oPers.cPersDireccion" class="form-control">
+                            <input type="text" id="txtNatDir" name="PersNat.oPers.cPersDireccion" maxlength="150" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
@@ -168,16 +168,16 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">RUC</label>
                         <div class="col-md-3">
-                            <input type="text" pattern="[0-9]{11}" id="txtRUC" maxlength="11" name="PersJur.cPersJurRUC" class="form-control" required>
+                            <input type="text" pattern="[0-9]{11}" id="txtRUC" maxlength="11" name="PersJur.cPersJurRUC" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group m-b-5">
+@*                    <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Fecha de Constitución</label>
                         <div class="col-md-3">
                             <input type="text" id="txtFechaConst" name="PersJur.dPersJurFecConst" class="form-control" placeholder="dd/mm/yyyy">
                         </div>
-                    </div>
-                    <div class="form-group m-b-5">
+                    </div>*@
+@*                    <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Actividad</label>
                         <div class="col-md-4">
                             <select id="cmbActividad" name="PersJur.oPersJurActividad.cConstanteID" class="form-control">
@@ -188,7 +188,7 @@
                                 <option value="5">5</option>
                             </select>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Email</label>
                         <div class="col-md-7">
@@ -198,19 +198,19 @@
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 1</label>
                         <div class="col-md-4">
-                            <input type="text" id="txtJurTel1" name="PersJur.oPers.cPersTelefono1" class="form-control">
+                            <input type="text" id="txtJurTel1" maxlength="20" name="PersJur.oPers.cPersTelefono1" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Teléfono 2</label>
                         <div class="col-md-4">
-                            <input type="text" onkeypress="return val_09(event)" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control">
+                            <input type="text" onkeypress="return val_09(event)" maxlength="20" id="txtJurTel2" name="PersJur.oPers.cPersTelefono2" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
                         <label class="col-md-4 control-label">Dirección</label>
                         <div class="col-md-7">
-                            <input type="text" onkeypress="return val_09(event)" id="txtJurDir" name="PersJur.oPers.cPersDireccion" class="form-control">
+                            <input type="text" id="txtJurDir" maxlength="150" name="PersJur.oPers.cPersDireccion" class="form-control">
                         </div>
                     </div>
                     <div class="form-group m-b-5">
@@ -290,6 +290,10 @@
         }
     };
 
+    //$("#btnNuevoCliente").bind("click", function () {
+    //    $("#hdnEstado").val("xx");
+    //});
+
     ListaCliente();
 
     function ListaCliente(nPage, nSize) {
@@ -364,14 +368,7 @@
                                     $("#cmbSex input:radio").val([oPers.oSexo.id]);
                                     $("#btnCliente a")[0].click();
                                     $($("#btnCliente a")[1]).attr("disabled", true);
-                                    //CargaDep();
-                                    //CargaProv();
-                                    //CargaDist();
-                                    $("#cmbNatDep").val(oPers.oPers.oUbigeo.id.substring(0, 2))
-                                    $("#cmbNatDep").change();
-                                    $("#cmbNatProv").val(oPers.oPers.oUbigeo.id.substring(2, 4))    
-                                    $("#cmbNatProv").change();
-                                    $("#cmbNatDist").val(oPers.oPers.oUbigeo.id.substring(4, 6))
+                                    ListaCombos(oPers.oPers.oUbigeo.id);
                                 } else if (cTipo == "J") {
                                     $("#hdnPersJurId").val(oPers.oPers.id);
                                     $("#txtEmp").val(oPers.cEmpresa);
@@ -416,7 +413,45 @@
         if (e.which == 13) { ListaCliente(); }
     });
 
+    function ListaCombos(cUbi) {
+        var cDep = cUbi.substring(0, 2);
+        var cPro = cUbi.substring(2, 4);
+        var cDis = cUbi.substring(4, 6);
+        $("#cmbNatDep").val(cDep);
 
+        $.fn.Conexion({
+            direccion: '/Cliente/ListaProv',
+            datos: { "cId": cDep },
+            terminado: function (data) {
+                var cons = JSON.parse(data);
+
+                if ($("#btnCliente a.btn-primary").attr("data-val") == "0") {
+                    CrearLista("#cmbNatProv", cons);
+                } else {
+                    CrearLista("#cmbJurProv", cons);
+                }
+
+                $("#cmbNatProv").val(cUbi.substring(2, 4))
+
+                $.fn.Conexion({
+                    direccion: '/Cliente/ListaDist',
+                    datos: { "cId": cPro },
+                    terminado: function (data) {
+                        var cons = JSON.parse(data);
+
+                        if ($("#btnCliente a.btn-primary").attr("data-val") == "0") {
+                            CrearLista("#cmbNatDist", cons);
+                        } else {
+                            CrearLista("#cmbJurDist", cons);
+                        }
+                        $("#cmbNatDist").val(cDis);
+                    }
+                });
+
+            }
+        });
+
+    }
 
     //Registrar Clientes Natural
 
@@ -496,6 +531,7 @@
         $('#frmClienteJur')[0].reset();
         $("#btnCliente a").attr("disabled", false);
         $("#btnCliente a")[0].click();
+        $("#hdnPersNatId,#hdnEstado").val("");
         $("#msg").html("");
         vista("#target1");
     }
@@ -524,15 +560,20 @@
         });
     }
 
-    $("body").on("change", "#cmbNatDep,#cmbJurDep", function () {
-        Lista("cmbNatProv","cmbJurProv", this.value, '/Cliente/ListaProv');
+    $("#target2").on("change", "#cmbNatDep,#cmbJurDep", function () {
+        //alert("depar");
+        if (this.value != "") {
+            Lista("cmbNatProv", "cmbJurProv", this.value, '/Cliente/ListaProv');
+        } 
     });
 
-    $("body").on("change", "#cmbNatProv,#cmbJurProv", function () {
-        Lista("cmbNatDist", "cmbJurDist", this.value, '/Cliente/ListaDist');
+    $("#target2").on("change", "#cmbNatProv,#cmbJurProv", function () {
+        if (this.value != "") {
+            Lista("cmbNatDist", "cmbJurDist", this.value, '/Cliente/ListaDist');
+        }
     });
 
-    $("body").on("change", "#cmbNatDep,#cmbJurDep,#cmbNatProv,#cmbJurProv", function () {
+    $("#target2").on("change", "#cmbNatDep,#cmbJurDep,#cmbNatProv,#cmbJurProv", function () {
         var combos = [];
 
         switch ($(this).attr("id")) {

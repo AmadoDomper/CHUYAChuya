@@ -22,9 +22,14 @@ namespace CHUYAChuya.LogicaNegocio
             return oNotaEntregaAD.RegistrarNotaEntrega(oNotEnt);
         }
 
-        public int RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo, string cNotaUsuCo, string cNotaUsuAge)
+        public int ModificarComentario(int nNotaId, string cCom)
         {
-            return oNotaEntregaAD.RealizarCobroServicio(nNotaEntId, nPersId, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge);
+            return oNotaEntregaAD.ModificarComentario(nNotaId, cCom);
+        }
+
+        public int RealizarCobroServicio(string cNotaEntId, int nPersId, string cPersNombre, string cPersApe, string cPersDOI, string cPersDirec, int nTipoC, decimal nEfecCo, decimal nCambioCo, string cNotaUsuCo, string cNotaUsuAge, bool bGuaCli)
+        {
+            return oNotaEntregaAD.RealizarCobroServicio(cNotaEntId, nPersId, cPersNombre, cPersApe, cPersDOI, cPersDirec, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge, bGuaCli);
         }
 
         public int RealizarConfirmacionEntrega(int nNotaEntId, string cUsuario, string cUsuarioAge)
@@ -35,6 +40,11 @@ namespace CHUYAChuya.LogicaNegocio
         public ListaPaginada BuscarNotaEntPag( int nNotaEst,int nPage=1, int nSize=10, int nNotaEntId = -1, string cPersDOI = null, string cPersDesc = null, DateTime? dIni = null, DateTime? dFin = null)
         {
             return oNotaEntregaAD.BuscarNotaEntPag(nNotaEst, nPage, nSize, nNotaEntId, cPersDOI, cPersDesc, dIni, dFin);
+        }
+
+        public List<NotaEntrega> BuscarNotaEntPend(int nNotaId, bool bMult)
+        {
+            return oNotaEntregaAD.BuscarNotaEntPend(nNotaId, bMult);
         }
 
         public NotaEntrega CargoDatosNotaEntrega(int nNotadId)

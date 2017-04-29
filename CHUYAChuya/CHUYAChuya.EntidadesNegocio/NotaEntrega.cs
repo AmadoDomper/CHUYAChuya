@@ -13,6 +13,7 @@ namespace CHUYAChuya.EntidadesNegocio
         private Persona _oPers = new Persona();
         private string _cNotaDireccion;
         private string _cNotaComentario;
+        private string _cNotaUsuAtiende;
         private DateTime? _dFechaReg;
         private DateTime? _dFechaEntrega;
         private decimal _nNotaSubTotal;
@@ -24,6 +25,8 @@ namespace CHUYAChuya.EntidadesNegocio
         private Constante _oNotaEstado = new Constante();
         private string _cNotaUsuReg;
         private string _cNotaUsuAge;
+
+        private Boolean _bCheck;
 
         private List<NotaEntProd> _ListaNotaEntProd;
 
@@ -60,6 +63,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _dFechaReg; }
             set { _dFechaReg = value; }
+        }
+
+        [JsonProperty(PropertyName = "cNotaUsuAt")]
+        public string cNotaUsuAtiende
+        {
+            get { return _cNotaUsuAtiende; }
+            set { _cNotaUsuAtiende = value; }
         }
 
         [JsonProperty(PropertyName = "dFecEnt")]
@@ -139,5 +149,11 @@ namespace CHUYAChuya.EntidadesNegocio
             set { _ListaNotaEntProd = value; }
         }
 
+       [JsonProperty(PropertyName = "bCheck")]
+        public Boolean bCheck
+        {
+            get { return _bCheck; }
+            set { _bCheck = value; }
+        }
     }
 }

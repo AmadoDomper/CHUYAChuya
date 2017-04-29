@@ -63,7 +63,7 @@ namespace CHUYAChuya.Web.Controllers.Base
             FormsService.SignOut();
             Roles.DeleteCookie();
             Session.RemoveAll();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LogIn", "LogIn");
         }
 
 	}

@@ -10,7 +10,7 @@ namespace CHUYAChuya.EntidadesNegocio
     public class PersonaNat
     {
         private Persona _oPers = new Persona();
-        private string _cPersNatNombre;
+        private string _cPersNatNombres;
         private string _cPersNatApellido;
         private string _cPersNatDOI;
         private DateTime _dPersNatNac;
@@ -24,10 +24,10 @@ namespace CHUYAChuya.EntidadesNegocio
         }
 
         [JsonProperty(PropertyName = "cNom")]
-        public string cPersNatNombre
+        public string cPersNatNombres
         {
-            get { return _cPersNatNombre; }
-            set { _cPersNatNombre = value; }
+            get { return _cPersNatNombres; }
+            set { _cPersNatNombres = value; }
         }
 
         [JsonProperty(PropertyName = "cApe")]

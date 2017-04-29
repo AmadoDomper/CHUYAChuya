@@ -97,7 +97,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarActualizarProducto(Producto oProducto)
         {
-            int resultado = 0;
+            int resultado = -2;
 
             try
             {
@@ -116,6 +116,7 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@bProdSerSecado", SqlDbType.Bit).Value = (object)oProducto.bProdSerSecado ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@bProdSerPlanchado", SqlDbType.Bit).Value = (object)oProducto.bProdSerPlanchado ?? DBNull.Value;
                     oSqlCommand.Parameters.Add("@cProdUsuReg", SqlDbType.VarChar, 4).Value = (object)oProducto.cProdUsuReg ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@bProdOtros", SqlDbType.Bit).Value = (object)oProducto.bProdOtros ?? DBNull.Value;
 
                     oSqlConnection.Open();
 
@@ -133,7 +134,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                resultado = -1;
+                resultado = -2;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();
@@ -159,10 +160,12 @@ namespace CHUYAChuya.AccesoDatos
                 int inProdId = oIDataReader.GetOrdinal("nProdId");
                 int icProdDesc = oIDataReader.GetOrdinal("cProdDesc");
                 int inProdPrecioUnit = oIDataReader.GetOrdinal("nProdPrecioUnit");
+                int inMedida = oIDataReader.GetOrdinal("nMedida");
                 int icMedida = oIDataReader.GetOrdinal("cMedida");
                 int ibProdSerLavado = oIDataReader.GetOrdinal("bProdSerLavado");
                 int ibProdSerSecado = oIDataReader.GetOrdinal("bProdSerSecado");
                 int ibProdSerPlanchado = oIDataReader.GetOrdinal("bProdSerPlanchado");
+                int ibProdOtros = oIDataReader.GetOrdinal("bOtros");
 
                 while (oIDataReader.Read())
                 {
@@ -171,10 +174,12 @@ namespace CHUYAChuya.AccesoDatos
                     oProducto.nProdId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inProdId]);
                     oProducto.cProdDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icProdDesc]);
                     oProducto.nProdPrecioUnit = DataUtil.DbValueToDefault<decimal>(oIDataReader[inProdPrecioUnit]);
+                    oProducto.oProdMedida.cConstanteID = DataUtil.DbValueToDefault<String>(oIDataReader[inMedida].ToString());
                     oProducto.oProdMedida.cNombre = DataUtil.DbValueToDefault<String>(oIDataReader[icMedida]);
                     oProducto.bProdSerLavado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerLavado]);
                     oProducto.bProdSerSecado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerSecado]);
                     oProducto.bProdSerPlanchado = DataUtil.DbValueToDefault<Boolean>(oIDataReader[ibProdSerPlanchado]);
+                    oProducto.bProdOtros = DataUtil.DbValueToDefault<Boolean>((Boolean)oIDataReader[ibProdOtros]);
 
                     ListaProductos.Add(oProducto);
                 }

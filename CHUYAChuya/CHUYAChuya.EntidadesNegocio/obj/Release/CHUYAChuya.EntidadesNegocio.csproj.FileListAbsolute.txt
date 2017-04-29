@@ -1,0 +1,7 @@
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\bin\Release\CHUYAChuya.EntidadesNegocio.dll
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\bin\Release\CHUYAChuya.EntidadesNegocio.pdb
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\bin\Release\Newtonsoft.Json.dll
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\bin\Release\Newtonsoft.Json.xml
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\obj\Release\CHUYAChuya.EntidadesNegocio.csprojResolveAssemblyReference.cache
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\obj\Release\CHUYAChuya.EntidadesNegocio.dll
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.EntidadesNegocio\obj\Release\CHUYAChuya.EntidadesNegocio.pdb

@@ -10,6 +10,8 @@ namespace CHUYAChuya.Web.Models
     public class NotaEntregaViewModel
     {
         public NotaEntrega oNotEnt { get; set; }
+        public List<Constante> lstTpoDoc{ get; set; }
+        public List<Constante> lstUsuarios { get; set; }
 
     }
 }

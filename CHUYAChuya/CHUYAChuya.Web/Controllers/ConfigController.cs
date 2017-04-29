@@ -60,5 +60,14 @@ namespace CHUYAChuya.Web.Controllers
             return Json(nReg);
         }
 
+        public JsonResult EliminarRol(int nRolId)
+        {
+            int nReg = 0;
+            ConfiguracionLN ConfLN = new ConfiguracionLN();
+            nReg = ConfLN.EliminarRol(nRolId);
+
+            return Json(nReg);
+        }
+
     }
 }

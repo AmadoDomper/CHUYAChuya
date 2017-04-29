@@ -18,6 +18,7 @@ namespace CHUYAChuya.EntidadesNegocio
         private Boolean _bProdSerPlanchado;
         private string _cProdUsuReg;
         private DateTime _dProdReg;
+        private Boolean _bProdOtros;
 
         [JsonProperty(PropertyName = "nPrId")]
         public int nProdId
@@ -80,6 +81,13 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _dProdReg; }
             set { _dProdReg = value; }
+        }
+
+        [JsonProperty(PropertyName = "bProdO")]
+        public Boolean bProdOtros
+        {
+            get { return _bProdOtros; }
+            set { _bProdOtros = value; }
         }
 
     }

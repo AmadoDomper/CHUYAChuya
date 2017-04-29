@@ -21,6 +21,9 @@ namespace CHUYAChuya.EntidadesNegocio
         private string _cPersSexo;
         private string _cPersDOI;
         private string _cPersTipo;
+        private int _nPersTipo;
+        private string _cPersNombre;
+        private string _cPersApellido;
 
 
         [JsonProperty(PropertyName = "id")]
@@ -91,6 +94,27 @@ namespace CHUYAChuya.EntidadesNegocio
         {
             get { return _cPersTipo; }
             set { _cPersTipo = value; }
+        }
+
+        [JsonProperty(PropertyName = "nTipo")]
+        public int nPersTipo
+        {
+            get { return _nPersTipo; }
+            set { _nPersTipo = value; }
+        }
+
+        [JsonProperty(PropertyName = "cPerNom")]
+        public string cPersNombre
+        {
+            get { return _cPersNombre; }
+            set { _cPersNombre = value; }
+        }
+
+        [JsonProperty(PropertyName = "cPerApe")]
+        public string cPersApellido
+        {
+            get { return _cPersApellido; }
+            set { _cPersApellido = value; }
         }
 
 

@@ -39,6 +39,14 @@ namespace CHUYAChuya.Web.Controllers
             return Json(JsonConvert.SerializeObject(ListaNotaEntPag, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
         }
 
+        public JsonResult BuscarNotaEntPend(int nNotaId, bool bMult)
+        {
+            NotaEntregaLN oNotaEntregaLN = new NotaEntregaLN();
+            List<NotaEntrega> ListaNotaEntPag = new List<NotaEntrega>();
+            ListaNotaEntPag = oNotaEntregaLN.BuscarNotaEntPend(nNotaId, bMult);
+            return Json(JsonConvert.SerializeObject(ListaNotaEntPag, Formatting.None, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+        }
+
         [RequiresAuthenticationAttribute]
         public JsonResult RegistrarNotaEntrega(NotaEntregaViewModel oNotaEntregaViewModel)
         {
@@ -57,9 +65,33 @@ namespace CHUYAChuya.Web.Controllers
             
             return Json(nNotaEntId);
         }
+
+
+
+
+        public JsonResult ModificarComentario(int nNotaId, string cCom)
+        {
+            NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
+            int nEst;
+
+            nEst = oNotaEntLN.ModificarComentario(nNotaId, cCom);
+
+            return Json(nEst);
+        }
+
+        public JsonResult ListaConstantes()
+        {
+            ConstanteLN oConstLN = new ConstanteLN();
+            UsuarioLN oUsuarioLN = new UsuarioLN();
+            NotaEntregaViewModel oNotaVM = new NotaEntregaViewModel();
+
+            oNotaVM.lstUsuarios = oUsuarioLN.Usuarios();
+            oNotaVM.lstTpoDoc = oConstLN.ListaConstante(Constantes.TpoDoc);
+            return Json(JsonConvert.SerializeObject(oNotaVM));
+        }
         
         [RequiresAuthenticationAttribute]
-        public JsonResult RealizarCobroServicio(int nNotaEntId, int nPersId, int nTipoC, decimal nEfecCo, decimal nCambioCo)
+        public JsonResult RealizarCobroServicio(string cNotaEntId, int nPersId, string cPersNombre, string cPersApe, string cPersDOI, string cPersDirec, int nTipoC, decimal nEfecCo, decimal nCambioCo, bool bGuaCli)
         {
             NotaEntregaLN oNotaEntLN = new NotaEntregaLN();
 
@@ -67,7 +99,7 @@ namespace CHUYAChuya.Web.Controllers
             string cNotaUsuCo = ((Usuario)Session["Datos"]).cUsuNombre;
             string cNotaUsuAge = "01";
 
-            nTicketId = oNotaEntLN.RealizarCobroServicio(nNotaEntId, nPersId, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge);
+            nTicketId = oNotaEntLN.RealizarCobroServicio(cNotaEntId, nPersId, cPersNombre, cPersApe, cPersDOI, cPersDirec, nTipoC, nEfecCo, nCambioCo, cNotaUsuCo, cNotaUsuAge, bGuaCli);
 
             if (nTicketId > 0)
             {
@@ -207,7 +239,7 @@ namespace CHUYAChuya.Web.Controllers
                 //writer.WriteLine("");
                 CabeceraTicket(writer);
 
-                writer.WriteLine("Fecha: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("HH:mm:ss"));
+                writer.WriteLine("Fecha: " + ((DateTime)oTicket.oMov.dMovFecha).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oMov.dMovFecha).ToString("HH:mm:ss"));
                 writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + "FFGF252758");
                 writer.WriteLine("Usuario: " + ((Usuario)Session["Datos"]).cUsuNombre.PadRight(15) + "Nota Id: " + oTicket.oNotaEntrega.nNotaEntId.ToString().PadLeft(7));
                 writer.WriteLine("");
@@ -237,7 +269,7 @@ namespace CHUYAChuya.Web.Controllers
                     writer.WriteLine("ANTICIPO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaAnticipo.ToString("#,##0.00").PadLeft(16));
                 }
 
-                writer.WriteLine("TOTAL VENTA S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaMontoTotal.ToString("#,##0.00").PadLeft(16));
+                writer.WriteLine("PENDIENTE DE PAGO S/.".PadLeft(24) + oTicket.oNotaEntrega.nNotaMontoTotal.ToString("#,##0.00").PadLeft(16));
                 writer.WriteLine("".PadRight(40, '-'));
 
                 if (oTicket.oNotaEntrega.nNotaEfectivo > 0)
@@ -261,6 +293,7 @@ namespace CHUYAChuya.Web.Controllers
                 }
 
                 writer.WriteLine("Direccion : " + oTicket.oNotaEntrega.oPers.cPersDireccion.PadRight(18));
+                writer.WriteLine("Atend. por: " + oTicket.oNotaEntrega.cNotaUsuAtiende.PadRight(18));
                 writer.WriteLine("");
                 writer.WriteLine("Fecha Entrega: " + Dia((DateTime)oTicket.oNotaEntrega.dFechaEntrega) + " " + ((DateTime)oTicket.oNotaEntrega.dFechaEntrega).ToString("dd/MM/yyyy hh:mm"));
                 writer.WriteLine("".PadRight(40, '-'));
@@ -279,15 +312,17 @@ namespace CHUYAChuya.Web.Controllers
                 writer.WriteLine(char.ConvertFromUtf32(27) + "i");
                 writer.Close();
 
-                using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+                using (StreamWriter writerBat = new StreamWriter(@"C:\TicketBatch\impresion.bat", false))
                 {
-                    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+                    //writerBat.WriteLine(@"type C:\ticket.txt > " + "LPT1");
+                    writerBat.WriteLine(@"type C:\ticket.txt > " + Constantes.ImpRed);
 
                     writerBat.Close();
                 }
 
                 p = new Process();
-                p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+                //p.StartInfo.WorkingDirectory = @"C:\";
+                p.StartInfo.FileName = @"C:\TicketBatch\impresion.bat";
 
                 p.Start();
                 p.Close();
@@ -315,13 +350,10 @@ namespace CHUYAChuya.Web.Controllers
             Ticket oTicket = new Ticket();
             oTicket = oNotaEntregaLN.ObtenerDatosTicket(nTicketId);
 
-
             using (StreamWriter writer = new StreamWriter("C:\\ticket.txt", false, System.Text.Encoding.GetEncoding(850)))
             {
 
                 CabeceraTicket(writer);
-
-
 
                 writer.WriteLine("Fecha: " + ((DateTime)oTicket.oMov.dMovFecha).ToString("dd/MM/yyyy").PadRight(19) + "Hora: " + ((DateTime)oTicket.oMov.dMovFecha).ToString("HH:mm:ss"));
                 writer.WriteLine("Equipo: PC-CAJA-01     Serie: " + oTicket.oImp.nImpSerie);
@@ -367,7 +399,7 @@ namespace CHUYAChuya.Web.Controllers
                 writer.WriteLine("");
                 writer.WriteLine("Cliente   : " + oTicket.oNotaEntrega.oPers.cPersDesc.PadRight(18));
 
-                if (oTicket.oNotaEntrega.oPers.cPersTipo == "N")
+                if (oTicket.oTicketTipo.cConstanteID == "1")
                 {
                     writer.WriteLine("DNI       : " + oTicket.oNotaEntrega.oPers.cPersDOI.PadRight(18));
                 }
@@ -394,15 +426,16 @@ namespace CHUYAChuya.Web.Controllers
                 writer.WriteLine(char.ConvertFromUtf32(27) + "i");
                 writer.Close();
 
-                using (StreamWriter writerBat = new StreamWriter("C:\\TicketBatch\\impresion.bat", false))
+                using (StreamWriter writerBat = new StreamWriter(@"C:\TicketBatch\impresion.bat", false))
                 {
-                    writerBat.WriteLine("type C:\\ticket.txt > " + "LPT1");
+                    //writerBat.WriteLine(@"type C:\ticket.txt > " + @"\\AMADODOMPER\TicketeraRed");
+                    writerBat.WriteLine(@"type C:\ticket.txt > " + Constantes.ImpRed);
 
                     writerBat.Close();
                 }
 
                 p = new Process();
-                p.StartInfo.FileName = "C:\\TicketBatch\\impresion.bat";
+                p.StartInfo.FileName = @"C:\TicketBatch\impresion.bat";
 
                 p.Start();
                 p.Close();

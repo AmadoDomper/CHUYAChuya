@@ -66,6 +66,8 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_ins_ConfirmarEntrega = "stp_ins_ConfirmarEntrega";
         public const string stp_ins_RealizarAnularComprobante = "stp_ins_RealizarAnularComprobante";
         public const string stp_ins_RealizarAnularNota = "stp_ins_RealizarAnularNota";
+        public const string stp_ins_ModificarComentario = "stp_ins_ModificarComentario";
+        public const string stp_sel_BuscarNotaEntPend = "stp_sel_BuscarNotaEntPend";
         #endregion
 
         #region Caja
@@ -92,6 +94,8 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_ins_RealizarCierreCajaDia = "stp_ins_RealizarCierreCajaDia";
         public const string stp_sel_ObtenerDatosCierre = "stp_sel_ObtenerDatosCierre";
         public const string stp_sel_ObtenerDatosCierreDia = "stp_sel_ObtenerDatosCierreDia";
+        public const string stp_sel_UsuarioIniciaDia = "stp_sel_UsuarioIniciaDia";
+        public const string stp_sel_UltimoSaldoCaja = "stp_sel_UltimoSaldoCaja";
         #endregion
 
         #region AperturaCaja
@@ -114,18 +118,21 @@ namespace CHUYAChuya.AccesoDatos.Helper
         public const string stp_sel_ModuloRol = "stp_sel_ModuloRol";
         public const string stp_sel_PermisoRol = "stp_sel_PermisoRol";
         public const string stp_ins_upd_RolPermisos = "stp_ins_upd_RolPermisos";
+        public const string stp_del_EliminarRol = "stp_del_EliminarRol";
         
         #endregion
 
         #region Impresion
         public const string stp_sel_ObtenerDatosTicket = "stp_sel_ObtenerDatosTicket";
         public const string stp_sel_ObtenerDatosNotaEntImp = "stp_sel_ObtenerDatosNotaEntImp";
+        public const string stp_sel_ListaNotaEntProductos_TicketId = "stp_sel_ListaNotaEntProductos_TicketId";
         #endregion
 
 
         #region Reportes
         public const string stp_sel_ObtenerComprasProveedores = "stp_sel_ObtenerComprasProveedores";
         public const string stp_sel_ObtenerVentasIngresos = "stp_sel_ObtenerVentasIngresos";
+        public const string stp_sel_ObtenerNotaEntregas = "stp_sel_ObtenerNotaEntregas";
         #endregion
     }
 }

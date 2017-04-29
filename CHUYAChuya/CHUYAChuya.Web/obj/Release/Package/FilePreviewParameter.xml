@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="appchuyachuya" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\_Projects\\CHUYAChuya\\CHUYAChuya\\CHUYAChuya\\CHUYAChuya\.Web\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\_Projects\\CHUYAChuya\\CHUYAChuya\\CHUYAChuya\\CHUYAChuya\.Web\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="cnsCHUYAChuya-Web.config Connection String" description="" value="Data Source=dbappsgtd.database.windows.net;Initial Catalog=DBCHUYACHUYA_PRO;Persist Security Info=True;User ID=sgtd;Password=@//@*348MIL4" tags="">
+    <parameterEntry kind="XmlFile" scope="C:\\_Projects\\CHUYAChuya\\CHUYAChuya\\CHUYAChuya\\CHUYAChuya\.Web\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='cnsCHUYAChuya']/@connectionString" />
+  </parameter>
+</parameters>

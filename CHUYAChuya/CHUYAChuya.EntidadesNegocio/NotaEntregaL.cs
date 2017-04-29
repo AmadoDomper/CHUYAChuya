@@ -10,6 +10,7 @@ namespace CHUYAChuya.EntidadesNegocio
     public class NotaEntregaL
     {
       private DateTime _dFechaReg;
+      private string _cFechaReg;
 	  private int _nNotaEntId;
 	  private string _cPersDesc;
 	  private decimal _nNotaSubTotal;
@@ -22,6 +23,13 @@ namespace CHUYAChuya.EntidadesNegocio
       {
           get { return _dFechaReg; }
           set { _dFechaReg = value; }
+      }
+
+      [JsonProperty(PropertyName = "cFecReg")]
+      public string cFechaReg
+      {
+          get { return _cFechaReg; }
+          set { _cFechaReg = value; }
       }
 
       [JsonProperty(PropertyName = "nNotaEntId")]

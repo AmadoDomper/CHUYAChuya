@@ -116,5 +116,15 @@ namespace CHUYAChuya.LogicaNegocio
             return oCajaAD.ObtenerDatosCierreDiaImp(nCajeId);
         }
 
+        public string ObtenerUsuarioIniciaDia(string cUsuario)
+        {
+            return oCajaAD.ObtenerUsuarioIniciaDia(cUsuario);
+        }
+
+        public decimal ObtenerUltimoSaldoCaja()
+        {
+            return oCajaAD.ObtenerUltimoSaldoCaja();
+        }
+
     }
 }

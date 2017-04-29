@@ -8,8 +8,6 @@ using System.Web.Security;
 using CHUYAChuya.EntidadesNegocio;
 using CHUYAChuya.LogicaNegocio;
 
-
-
 namespace CHUYAChuya.Seguridad
 {
     class CHUYAChuyaRoleProvider : RoleProvider

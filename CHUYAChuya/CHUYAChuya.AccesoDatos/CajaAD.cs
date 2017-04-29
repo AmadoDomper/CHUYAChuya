@@ -20,7 +20,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarSalidaEfePagoProv(int nPersId, decimal nMontoSalida, string cComprobante, byte nTipoComp, DateTime dFechaEmi, string cUsuario, string cAgencia)
         {
-            int resultado = 0;
+            int resultado = -2;
 
             try
             {
@@ -74,7 +74,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                resultado = -1;
+                resultado = -2;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();
@@ -88,7 +88,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarSalidaEfe(decimal nMontoSalida, string cMotivo, string cUsuario, string cAgencia)
         {
-            int resultado = 0;
+            int resultado = -2;
 
             try
             {
@@ -139,7 +139,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                resultado = -1;
+                resultado = -2;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();
@@ -154,7 +154,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarEntradaEfe(decimal nMontoEntrada, string cUsuario, string cAgencia)
         {
-            int resultado = 0;
+            int resultado = -2;
 
             try
             {
@@ -204,7 +204,7 @@ namespace CHUYAChuya.AccesoDatos
             }
             catch (Exception ex)
             {
-                resultado = -1;
+                resultado = -2;
                 //oError.cErrDescription = ex.Message.ToString();
                 //oError.cErrSource = ex.StackTrace.ToString();
                 //oError.cProceso = ex.TargetSite.ToString();
@@ -313,7 +313,7 @@ namespace CHUYAChuya.AccesoDatos
                 {
                     NotaEntregaL NotaAnticipo = new NotaEntregaL();
 
-                    NotaAnticipo.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
+                    NotaAnticipo.cFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]).ToString("hh:mm tt");
                     NotaAnticipo.nNotaEntId = DataUtil.DbValueToDefault<int>(oIDataReader[inNotaEntId]);
                     NotaAnticipo.cPersDesc = DataUtil.DbValueToDefault<string>(oIDataReader[icPersDesc]);
                     NotaAnticipo.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
@@ -350,7 +350,7 @@ namespace CHUYAChuya.AccesoDatos
                 {
                     NotaEntregaL NotaAnticipo = new NotaEntregaL();
 
-                    NotaAnticipo.dFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]);
+                    NotaAnticipo.cFechaReg = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaReg]).ToString("hh:mm tt");
                     NotaAnticipo.nNotaEntId = DataUtil.DbValueToDefault<int>(oIDataReader[inNotaEntId]);
                     NotaAnticipo.cPersDesc = DataUtil.DbValueToDefault<string>(oIDataReader[icPersDesc]);
                     NotaAnticipo.nNotaSubTotal = DataUtil.DbValueToDefault<decimal>(oIDataReader[inNotaSubTotal]);
@@ -383,7 +383,7 @@ namespace CHUYAChuya.AccesoDatos
                 {
                     PagoProveedores Proveedores = new PagoProveedores();
 
-                    Proveedores.dMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]);
+                    Proveedores.cMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]).ToString("hh:mm tt");
                     Proveedores.cPersDesc = DataUtil.DbValueToDefault<string>(oIDataReader[icPersDesc]);
                     Proveedores.nMonto = DataUtil.DbValueToDefault<decimal>(oIDataReader[inMonto]);
 
@@ -641,9 +641,9 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Connection = oSqlConnection;
 
                     oSqlCommand.Parameters.Add("@cUsuario", SqlDbType.VarChar, 4).Value = (object)cUsuario ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar, 4).Value = (object)cAgencia ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@nCont", SqlDbType.Money, 4).Value = (object)cUsuario ?? DBNull.Value;
-                    oSqlCommand.Parameters.Add("@nDif", SqlDbType.Money, 4).Value = (object)cAgencia ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@cAgencia", SqlDbType.VarChar, 2).Value = (object)cAgencia ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nCont", SqlDbType.Money, 4).Value = (object)nCont ?? DBNull.Value;
+                    oSqlCommand.Parameters.Add("@nDif", SqlDbType.Money, 4).Value = (object)nDif ?? DBNull.Value;
 
                     oSqlConnection.Open();
 
@@ -685,11 +685,11 @@ namespace CHUYAChuya.AccesoDatos
 
                     using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
                     {
-                        int inMovNro = oIDataReader.GetOrdinal("nMovNro");
+                        int inCajaId = oIDataReader.GetOrdinal("nCajaId");
 
                         while (oIDataReader.Read())
                         {
-                            nCajaId = DataUtil.DbValueToDefault<int>(oIDataReader[inMovNro]);
+                            nCajaId = DataUtil.DbValueToDefault<int>(oIDataReader[inCajaId]);
                         }
                     }
                 }
@@ -776,8 +776,8 @@ namespace CHUYAChuya.AccesoDatos
                     int idFechaApertura = oIDataReader.GetOrdinal("dFechaApertura");
                     int idFechaCierre = oIDataReader.GetOrdinal("dFechaCierre");
                     int icUsuario = oIDataReader.GetOrdinal("cUsuario");
-                    int inContado = oIDataReader.GetOrdinal("nContado");
-                    int inDiferencia = oIDataReader.GetOrdinal("nDiferencia");
+                    //int inContado = oIDataReader.GetOrdinal("nContado");
+                    //int inDiferencia = oIDataReader.GetOrdinal("nDiferencia");
 
                     int inCajaInicio = oIDataReader.GetOrdinal("nCajaInicio");
                     int inCajaEntradaEfectivo = oIDataReader.GetOrdinal("nCajaEntradaEfectivo");
@@ -796,8 +796,8 @@ namespace CHUYAChuya.AccesoDatos
                         oTicketC.dFechaApertura = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaApertura]);
                         oTicketC.dFechaCierre = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idFechaCierre]);
                         oTicketC.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuario]);
-                        oTicketC.nContado = DataUtil.DbValueToDefault<decimal>(oIDataReader[inContado]);
-                        oTicketC.nDiferencia = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDiferencia]);
+                        //oTicketC.nContado = DataUtil.DbValueToDefault<decimal>(oIDataReader[inContado]);
+                        //oTicketC.nDiferencia = DataUtil.DbValueToDefault<decimal>(oIDataReader[inDiferencia]);
 
                         oTicketC.nCajaInicio = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaInicio]);
                         oTicketC.nCajaEntEfec = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaEntradaEfectivo]);
@@ -820,6 +820,62 @@ namespace CHUYAChuya.AccesoDatos
                 throw;
             }
         }
+
+
+        public string ObtenerUsuarioIniciaDia(string cUsuario)
+        {
+            try
+            {
+                string cUsuIniDia = "";
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_UsuarioIniciaDia);
+                oDatabase.AddInParameter(oDbCommand, "@cUsuario", DbType.String, (object)cUsuario ?? DBNull.Value);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int icUsuarioSup = oIDataReader.GetOrdinal("cUsuarioSup");
+
+                    while (oIDataReader.Read())
+                    {
+                        cUsuIniDia = DataUtil.DbValueToDefault<String>(oIDataReader[icUsuarioSup]);
+                    }
+                }
+
+                return cUsuIniDia;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public decimal ObtenerUltimoSaldoCaja()
+        {
+            try
+            {
+                decimal nSaldo = 0;
+                DbCommand oDbCommand = oDatabase.GetStoredProcCommand(Procedimiento.stp_sel_UltimoSaldoCaja);
+
+                using (IDataReader oIDataReader = oDatabase.ExecuteReader(oDbCommand))
+                {
+                    int inCajaTotal = oIDataReader.GetOrdinal("nCajaTotal");
+
+                    while (oIDataReader.Read())
+                    {
+                        nSaldo = DataUtil.DbValueToDefault<decimal>(oIDataReader[inCajaTotal]);
+                    }
+                }
+
+                return nSaldo;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        
 
     }
 }

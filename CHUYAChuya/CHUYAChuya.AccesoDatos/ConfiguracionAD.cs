@@ -131,7 +131,7 @@ namespace CHUYAChuya.AccesoDatos
 
         public int RegistrarActualizarRolPermisos(int nRolId, string cRolDesc, List<Menu> ListMenu, List<Modulo> ListModulo, List<Permiso> ListaPermiso)
         {
-            int resultado = 0;
+            int resultado = -1;
 
             try
             {
@@ -148,6 +148,43 @@ namespace CHUYAChuya.AccesoDatos
                     oSqlCommand.Parameters.Add("@T_MenuRol", SqlDbType.Structured).Value = ListaMenuCollection.TSqlDataRecord(ListMenu.ToList());
                     oSqlCommand.Parameters.Add("@T_ModuloRol", SqlDbType.Structured).Value = ListaModuloCollection.TSqlDataRecord(ListModulo.ToList());
                     oSqlCommand.Parameters.Add("@T_PermisoRol", SqlDbType.Structured).Value = ListaPermisoCollection.TSqlDataRecord(ListaPermiso.ToList());
+                    oSqlConnection.Open();
+
+                    using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
+                    {
+                        int iResultado = oIDataReader.GetOrdinal("Resultado");
+
+                        while (oIDataReader.Read())
+                        {
+                            resultado = DataUtil.DbValueToDefault<int>(oIDataReader[iResultado]);
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = -1;
+            }
+            return resultado;
+        }
+
+
+        public int EliminarRol(int nRolId)
+        {
+            int resultado = -1;
+
+            try
+            {
+                using (SqlConnection oSqlConnection = new SqlConnection(Conexion.cnsCHUYAChuyaSQL))
+                {
+                    SqlCommand oSqlCommand = new SqlCommand();
+                    oSqlCommand.CommandText = Procedimiento.stp_del_EliminarRol;
+                    oSqlCommand.CommandType = CommandType.StoredProcedure;
+                    oSqlCommand.Connection = oSqlConnection;
+
+                    oSqlCommand.Parameters.Add("@nRolId", SqlDbType.Int).Value = (object)nRolId ?? DBNull.Value;
+
                     oSqlConnection.Open();
 
                     using (IDataReader oIDataReader = oSqlCommand.ExecuteReader())
