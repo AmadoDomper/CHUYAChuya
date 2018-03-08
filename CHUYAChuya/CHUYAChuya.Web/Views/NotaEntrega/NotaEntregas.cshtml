@@ -6,10 +6,9 @@
     <input id="hdnEstado" type="hidden" />
     <input id="hdnNotaEst" type="hidden" />
     <input id="hdnPag" type="hidden" />
-    <div id="target1" class="panel move panel-inverse active">
+    <div id="target1" class="panel move panel-inverse m-t-5 active">
         <div class="panel-heading"><span class="glyphicon glyphicon-th" aria-hidden="true"></span>Lista de Nota de Entregas</div>
         <div class="panel-body">
-
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -119,7 +118,6 @@
                                         <button id="btnBuscarPers" type="button" class="btn btn-sm btn-default" data-toggle="modal"><span class="glyphicon glyphicon-search"></span></button>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9 ">
                                 <div class="form-group m-b-5">
@@ -1093,11 +1091,11 @@
             CrearHidden("#cntHidden", "oNotEnt.bCheck", bGuaCli);
 
             if (nPersId == 0) {
-                var arrNombre = $("#txtNombrePe").val().split(" ");
+                var arrNombre = $("#txtNotaNombre").val().split(" ");
                 cPersNombre = arrNombre.splice(0, 1).join(" ");
                 cPersApe = arrNombre.join(" ");
-                cPersDOI = $("#txtDOIPe").val();
-                cPersDirec = $("#txtDirecc").val();
+                cPersDOI = $("#txtNotaDOI").val();
+                cPersDirec = $("#txtNotaDirec").val();
                 nPersTipo = $("#cmbTipoC").val();
                 
 
@@ -1157,8 +1155,9 @@
         $("#txtTotalC").val($("#txtTotal").val());
         $('#vntCobroCancelacion').modal('show');
         $("#hdnCliBoId").val($("#hdnPersId").val());
-        $("#txtNombrePe").val($("#lblNom").html());
-        $("#txtDOIPe").val($("#lblDOI").html());
+        $("#txtNombrePe").val($("#txtNotaNombre").val());
+        $("#txtDOIPe").val($("#txtNotaDOI").val());
+        $("#txtDirecc").val($("#txtNotaDirec").val())
     });
 
     $("#btnAceptarC").bind("click", function () {

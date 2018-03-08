@@ -205,7 +205,5 @@ namespace CHUYAChuya.AccesoDatos
             }
             return resultado;
         }
-
-
     }
 }

@@ -15,6 +15,5 @@ namespace CHUYAChuya.Web.Helper
         public const int TpoDoc = 10030;
         public const int TpoComPro = 10033;
 
-
     }
 }

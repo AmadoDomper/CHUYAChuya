@@ -423,7 +423,7 @@
         });
 
         function Limpiar() {
-            $('#frmAperturaCaja,#frmProveedor,#frmOtros,#frmSalidaEfectivo,#frmEntradaEfectivo')[0].reset();
+            $('form').each(function () { this.reset() });
             $("#frmAperturaCaja,#frmEntradaEfectivo,#frmProveedor,#frmSalidaEfectivo,#frmOtros").validator('destroy');
             $("#msgSalEfe,#msgEntEfe,#msgApeCaja").html("");
             $("#hdnProvId,#hdnEstado").val("");

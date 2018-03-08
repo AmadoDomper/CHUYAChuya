@@ -393,6 +393,7 @@ namespace CHUYAChuya.AccesoDatos
                     int inPersId = oIDataReader.GetOrdinal("nPersId");
                     int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
                     int icDOI = oIDataReader.GetOrdinal("cDOI");
+                    int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
                     int icPersTelefono1 = oIDataReader.GetOrdinal("cPersTelefono1");
                     int inNotaEntId = oIDataReader.GetOrdinal("nNotaEntId");
                     int icNotaComentario = oIDataReader.GetOrdinal("cNotaComentario");
@@ -415,6 +416,7 @@ namespace CHUYAChuya.AccesoDatos
                         oNotaEntrega.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
                         oNotaEntrega.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
                         oNotaEntrega.oPers.cPersDOI = DataUtil.DbValueToDefault<String>(oIDataReader[icDOI]);
+                        oNotaEntrega.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);
                         oNotaEntrega.oPers.cPersTelefono1 = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTelefono1]);
                         oNotaEntrega.nNotaEntId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inNotaEntId]);
                         oNotaEntrega.cNotaComentario = DataUtil.DbValueToDefault<String>(oIDataReader[icNotaComentario]);
@@ -505,7 +507,7 @@ namespace CHUYAChuya.AccesoDatos
                     int inMovNro = oIDataReader.GetOrdinal("nMovNro");
                     int idMovFecha = oIDataReader.GetOrdinal("dMovFecha");
                     int icMovUsuario = oIDataReader.GetOrdinal("cMovUsuario");
-                    int inPersId = oIDataReader.GetOrdinal("nPersId");
+                    //int inPersId = oIDataReader.GetOrdinal("nPersId");
                     int icPersTipo = oIDataReader.GetOrdinal("cPersTipo");
                     int icPersDesc = oIDataReader.GetOrdinal("cPersDesc");
                     int icPersDireccion = oIDataReader.GetOrdinal("cPersDireccion");
@@ -530,7 +532,7 @@ namespace CHUYAChuya.AccesoDatos
                         oTicket.oMov.dMovFecha = DataUtil.DbValueToDefault<DateTime>(oIDataReader[idMovFecha]);
                         oTicket.oMov.cUsuario = DataUtil.DbValueToDefault<String>(oIDataReader[icMovUsuario]);
 
-                        oTicket.oNotaEntrega.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
+                        //oTicket.oNotaEntrega.oPers.nPersId = DataUtil.DbValueToDefault<Int32>(oIDataReader[inPersId]);
                         oTicket.oNotaEntrega.oPers.cPersTipo = DataUtil.DbValueToDefault<String>(oIDataReader[icPersTipo]);
                         oTicket.oNotaEntrega.oPers.cPersDesc = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDesc]);
                         oTicket.oNotaEntrega.oPers.cPersDireccion = DataUtil.DbValueToDefault<String>(oIDataReader[icPersDireccion]);

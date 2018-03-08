@@ -6,7 +6,8 @@ using System.Web.Mvc;
 
 namespace CHUYAChuya.Web.Filters
 {
-    public class NoCacheAttribute : ActionFilterAttribute
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
+    public sealed class NoCacheAttribute : ActionFilterAttribute
     {
         public override void OnResultExecuting(ResultExecutingContext filterContext)
         {

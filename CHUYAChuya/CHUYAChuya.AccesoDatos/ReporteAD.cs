@@ -93,7 +93,6 @@ namespace CHUYAChuya.AccesoDatos
                     oListVentas.Add(oRep);
                 }
             }
-
             return oListVentas;
         }
 
@@ -130,7 +129,6 @@ namespace CHUYAChuya.AccesoDatos
                     oListCompras.Add(oRep);
                 }
             }
-
             return oListCompras;
         }
 

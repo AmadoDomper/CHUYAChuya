@@ -266,7 +266,6 @@ namespace CHUYAChuya.Web.Controllers
 
         public void GetExcelNotas(string dIni, string dFin)
         {
-
             List<RepNotaEntregas> oRep = new List<RepNotaEntregas>();
             ReporteLN oReporteLN = new ReporteLN();
             oRep = oReporteLN.ListarNotaEntrega(Convert.ToDateTime(dIni), Convert.ToDateTime(dFin));
@@ -341,7 +340,5 @@ namespace CHUYAChuya.Web.Controllers
                 Response.End();
             }
         }
-
-
     }
 }

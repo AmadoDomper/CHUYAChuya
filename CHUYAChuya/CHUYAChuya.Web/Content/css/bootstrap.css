@@ -913,9 +913,12 @@ a {
   color: #428bca;
   text-decoration: none;
 }
+a.dropdown-toggle {
+    color: #f5f5f5;
+}
 a:hover,
 a:focus {
-  color: #2a6496;
+  color: #f5f5f5;
   text-decoration: underline;
 }
 a:focus {
@@ -3597,7 +3600,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eee;
+  background-color: #917bca;
 }
 .nav > li.disabled > a {
   color: #777;
@@ -3612,7 +3615,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #eee;
+  background-color: #917bca;
   border-color: #428bca;
 }
 .nav .nav-divider {
@@ -4194,11 +4197,12 @@ fieldset[disabled] .navbar-default .btn-link:focus {
   color: #ccc;
 }
 .navbar-inverse {
-  background-color: #222;
-  border-color: #080808;
+    background-color: #222;
+    border-color: #8d6eb3;
+    background-image: linear-gradient(to bottom,#68549A 0,#684fa9 100%);
 }
 .navbar-inverse .navbar-brand {
-  color: #777;
+  color: #f5f5f5;
 }
 .navbar-inverse .navbar-brand:hover,
 .navbar-inverse .navbar-brand:focus {

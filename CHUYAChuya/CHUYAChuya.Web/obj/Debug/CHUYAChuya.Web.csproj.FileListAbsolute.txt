@@ -56,3 +56,4 @@ C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\Microsoft.Pract
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\Microsoft.Practices.Unity.Interception.pdb
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\EPPlus.dll
 C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\EPPlus.xml
+C:\_Projects\CHUYAChuya\CHUYAChuya\CHUYAChuya\CHUYAChuya.Web\bin\CHUYAChuya.Web.dll.config

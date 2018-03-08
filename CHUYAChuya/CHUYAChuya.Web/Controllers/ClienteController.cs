@@ -26,6 +26,11 @@ namespace CHUYAChuya.Web.Controllers
             return View();
         }
 
+        public ActionResult Clientes2()
+        {
+            return View();
+        }
+
         public JsonResult ListaDep()
         {
             ConstanteLN oConstLN = new ConstanteLN();
